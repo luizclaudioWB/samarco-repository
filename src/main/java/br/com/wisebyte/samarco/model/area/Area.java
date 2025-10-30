@@ -1,6 +1,8 @@
-package br.com.wisebyte.samarco.model.planejamento;
+package br.com.wisebyte.samarco.model.area;
 
 import br.com.wisebyte.samarco.model.BaseModel;
+import br.com.wisebyte.samarco.model.planejamento.Planejamento;
+import br.com.wisebyte.samarco.model.unidade.Unidade;
 import br.com.wisebyte.samarco.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,25 +18,26 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
 @Table
-public class Revisao extends BaseModel {
+@SuperBuilder
+public class Area extends BaseModel {
 
-    @Column( nullable = false )
-    private Short numeroRevisao;
+    @JoinColumn( nullable = false)
+    @ManyToOne(fetch = LAZY)
+    private Unidade unidade;
 
     @JoinColumn( nullable = false)
     @ManyToOne(fetch = LAZY)
     private Usuario usuario;
 
-    @JoinColumn( nullable = false)
-    @ManyToOne(fetch = LAZY)
-    private Planejamento planejamento;
+    @Column( nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipoArea tipoArea;
 
-    @Column( nullable = false )
-    private String descricao;
+    @Column( nullable = false)
+    private String nomeArea;
 
-    @Column( nullable = false )
-    private boolean master;
+    @Column( nullable = false)
+    private boolean ativo;
 
 }

@@ -15,6 +15,7 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table
 public class Usuario {
 

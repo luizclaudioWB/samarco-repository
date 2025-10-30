@@ -9,12 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "ano", "estado" }) })
 public class AliquotaImpostos extends BaseModel {
 
