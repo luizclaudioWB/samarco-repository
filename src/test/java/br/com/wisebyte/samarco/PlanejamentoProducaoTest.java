@@ -9,8 +9,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
 import static java.lang.Double.parseDouble;
 import static java.math.BigDecimal.valueOf;
 
