@@ -1,8 +1,6 @@
 package br.com.wisebyte.samarco;
 
 import br.com.wisebyte.samarco.model.area.Area;
-import br.com.wisebyte.samarco.model.estado.AliquotaImpostos;
-import br.com.wisebyte.samarco.model.estado.Estado;
 import br.com.wisebyte.samarco.model.planejamento.Planejamento;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.model.unidade.Unidade;
@@ -68,7 +66,7 @@ public class CadastrosTest {
     void criaPlanejamento( ) {
         entityManager.merge(
                 Planejamento.builder( )
-                        .ano( Short.valueOf( "2026" ) )
+                        .ano( Short.valueOf( "2026" ).intValue( ) )
                         .corrente( true )
                         .descricao( "Planejamento Principal do ano de 2026" )
                         .mensagem( "Planejamento Principal do ano de 2026" )
@@ -79,34 +77,13 @@ public class CadastrosTest {
     void criaRevisao( ) {
         entityManager.persist(
                 Revisao.builder( )
-                        .numeroRevisao( Short.valueOf( "1" ) )
+                        .numeroRevisao( Short.valueOf( "1" ).intValue( ) )
                         .planejamento( entityManager.find( Planejamento.class, 1L ) )
-                        .master( true )
+                        .oficial( true )
                         .descricao( "Primeiro Planejamento de 2026" )
                         .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
                         .build( )
         );
-    }
-
-    void criaAliquotaImpostos ( ) {
-        AliquotaImpostos mg = AliquotaImpostos.builder( )
-                .ano( Short.valueOf( "2026" ) )
-                .estado( Estado.MG )
-                .percentualIcms( 18.0 )
-                .percentualPis( 1.65 )
-                .percentualCofins( 7.6 )
-                .percentualIpca( 2.16 )
-                .build( );
-        entityManager.persist( mg );
-        AliquotaImpostos es = AliquotaImpostos.builder( )
-                .ano( Short.valueOf( "2026" ) )
-                .estado( Estado.ES )
-                .percentualIcms( 17.0 )
-                .percentualPis( 1.65 )
-                .percentualCofins( 7.6 )
-                .percentualIpca( 2.16 )
-                .build( );
-        entityManager.persist( es );
     }
 
     public void criaAreasDeGermano() {
@@ -263,7 +240,6 @@ public class CadastrosTest {
         criaUnidades( );
         criaPlanejamento( );
         criaRevisao( );
-        criaAliquotaImpostos( );
         criaAreas( );
     }
 }

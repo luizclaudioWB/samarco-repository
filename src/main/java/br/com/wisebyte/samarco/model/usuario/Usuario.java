@@ -22,6 +22,8 @@ public class Usuario {
     @Id
     private String usuario;
 
+    private String senha;
+
     private String nome;
 
     @CreationTimestamp

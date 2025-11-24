@@ -1,9 +1,8 @@
 package br.com.wisebyte.samarco.model.unidade;
 
 import br.com.wisebyte.samarco.model.BaseModel;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import br.com.wisebyte.samarco.model.estado.Estado;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +18,19 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Unidade extends BaseModel {
 
+    @Column( nullable = false )
     private String nomeUnidade;
 
+    @Column( nullable = false )
     private Boolean unidadeGeradora;
 
     @OneToOne
     private Unidade unidadeRecebedoraCreditosDeInjecao;
 
+    @Column( nullable = false )
     private Boolean conectadaRedeBasica;
+
+    @Column( nullable = false )
+    @Enumerated( EnumType.STRING )
+    private Estado estado;
 }

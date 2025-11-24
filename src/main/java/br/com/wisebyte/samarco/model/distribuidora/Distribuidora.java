@@ -1,9 +1,8 @@
 package br.com.wisebyte.samarco.model.distribuidora;
 
 import br.com.wisebyte.samarco.model.BaseModel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import br.com.wisebyte.samarco.model.estado.Estado;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +28,6 @@ public class Distribuidora  extends BaseModel {
     private String siglaAgente;
 
     @Column( nullable = false)
-    private Integer qtdeDeHorasPonta;
+    @Enumerated( EnumType.STRING )
+    private Estado estado;
 }

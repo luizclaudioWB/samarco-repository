@@ -25,11 +25,11 @@ public class BaseModel implements Serializable {
 
     @CreationTimestamp
     @Setter( AccessLevel.NONE )
-    Instant createDate;
+    Instant createdDate;
 
     @UpdateTimestamp
     @Setter( AccessLevel.NONE )
-    Instant lastUpdate;
+    Instant lastUpdated;
 
     @Version
     @Setter( AccessLevel.NONE )

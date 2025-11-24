@@ -1,0 +1,15 @@
+package br.com.wisebyte.samarco.repository.unidade;
+
+import br.com.wisebyte.samarco.model.unidade.Unidade;
+import jakarta.data.repository.BasicRepository;
+import jakarta.data.repository.Find;
+import jakarta.data.repository.Repository;
+
+import java.util.List;
+
+@Repository
+public interface UnidadeRepository extends BasicRepository<Unidade, Long> {
+
+    @Find
+    List<Unidade> findByUnidadeRecebedoraCreditosDeInjecao( Unidade unidade );
+}

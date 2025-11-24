@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 public class Planejamento extends BaseModel {
 
     @Column( unique = true)
-    private Short ano;
+    private Integer ano;
 
     @Lob
     @Column( nullable = false)

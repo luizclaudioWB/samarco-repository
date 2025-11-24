@@ -21,7 +21,7 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Revisao extends BaseModel {
 
     @Column( nullable = false )
-    private Short numeroRevisao;
+    private Integer numeroRevisao;
 
     @JoinColumn( nullable = false)
     @ManyToOne(fetch = LAZY)
@@ -35,6 +35,6 @@ public class Revisao extends BaseModel {
     private String descricao;
 
     @Column( nullable = false )
-    private boolean master;
+    private boolean oficial;
 
 }
