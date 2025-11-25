@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
 
 @ApplicationScoped
-public class ExcluirUnidadeUC {
+public class DeleteUnidadeUC {
 
     @Inject
     UnidadeRepository unidadeRepository;
@@ -16,15 +16,12 @@ public class ExcluirUnidadeUC {
     @Inject
     UnidadeValidationBusiness validator;
 
-    public void excluir( @NotNull UnidadeDTO dto ) {
-        if ( !validator.validadeIdCannotBeNull( dto ) ) {
-            throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Id da unidade não pode ser nulo" );
-        }
-        if ( !validator.validadeUnidadeWithAssociation( dto ) ) {
-            throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade está associada a outra entidade" );
-        }
-        if ( !validator.existeUnidade( dto ) ) {
+    public void delete( @NotNull UnidadeDTO dto ) {
+        if ( !validator.exists( dto.getId( ) ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade não encontrada" );
+        }
+        if ( !validator.unidadeWithAssociation( dto ) ) {
+            throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade está associada a outra entidade" );
         }
         unidadeRepository.deleteById( dto.getId( ) );
     }

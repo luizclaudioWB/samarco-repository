@@ -1,9 +1,9 @@
 package br.com.wisebyte.samarco.graphql.mutation.distribuidora;
 
 import br.com.wisebyte.samarco.annotation.SecuredAccess;
-import br.com.wisebyte.samarco.business.distribuidora.AlterarDistribuidoraUC;
-import br.com.wisebyte.samarco.business.distribuidora.CadastrarDistribuidoraUC;
-import br.com.wisebyte.samarco.business.distribuidora.ExcluirDistribuidoraUC;
+import br.com.wisebyte.samarco.business.distribuidora.CreateDistribuidoraUC;
+import br.com.wisebyte.samarco.business.distribuidora.DeleteDistribuidoraUC;
+import br.com.wisebyte.samarco.business.distribuidora.UpdateDistribuidoraUC;
 import br.com.wisebyte.samarco.dto.distribuidora.DistribuidoraDTO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -18,20 +18,20 @@ import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 public class DistribuidoraMutation {
 
     @Inject
-    CadastrarDistribuidoraUC cadastrarDistribuidora;
+    CreateDistribuidoraUC cadastrarDistribuidora;
 
     @Inject
-    AlterarDistribuidoraUC alterarDistribuidora;
+    UpdateDistribuidoraUC alterarDistribuidora;
 
     @Inject
-    ExcluirDistribuidoraUC excluirDistribuidora;
+    DeleteDistribuidoraUC excluirDistribuidora;
 
     @Mutation( value = "cadastrarDistribuidora" )
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {CADASTRAR_DISTRIBUIDORA} )
     public DistribuidoraDTO cadastrarDistribuidora( DistribuidoraDTO dto ) {
-        return cadastrarDistribuidora.cadastrar( dto );
+        return cadastrarDistribuidora.create( dto );
     }
 
     @Mutation( value = "alterarDistribuidora" )
@@ -39,7 +39,7 @@ public class DistribuidoraMutation {
             roles = {ADMIN},
             permissionsRequired = {ALTERAR_DISTRIBUIDORA} )
     public DistribuidoraDTO alterarUnidade( DistribuidoraDTO dto ) {
-        return alterarDistribuidora.alterar( dto );
+        return alterarDistribuidora.update( dto );
     }
 
     @Mutation( value = "excluirDistribuidora" )
@@ -47,7 +47,7 @@ public class DistribuidoraMutation {
             roles = {ADMIN},
             permissionsRequired = {EXCLUIR_DISTRIBUIDORA} )
     public DistribuidoraDTO excluirUnidade( DistribuidoraDTO dto ) {
-        excluirDistribuidora.excluir( dto );
+        excluirDistribuidora.delete( dto );
         return dto;
     }
 }

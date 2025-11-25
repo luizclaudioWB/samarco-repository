@@ -8,7 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class ExcluirDistribuidoraUC {
+public class CreateDistribuidoraUC {
 
     @Inject
     DistribuidoraRepository distribuidoraRepository;
@@ -19,13 +19,10 @@ public class ExcluirDistribuidoraUC {
     @Inject
     DistribuidoraValidationBusiness validator;
 
-    public void excluir( DistribuidoraDTO dto ) {
-        if ( validator.idIsNull( dto ) ) {
-            throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Id da distribuidora não deve ser nulo" );
+    public DistribuidoraDTO create( DistribuidoraDTO dto ) {
+        if ( !validator.idIsNull( dto ) ) {
+            throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Id da distribuidora deve ser nulo" );
         }
-        if ( !validator.existeDistribuidora( dto ) ) {
-            throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Distribuidora não encontrada" );
-        }
-        distribuidoraRepository.deleteById( dto.getId( ) );
+        return distribuidoraMapper.toDTO( distribuidoraRepository.save( distribuidoraMapper.toEntity( dto ) ) );
     }
 }

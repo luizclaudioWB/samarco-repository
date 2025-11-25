@@ -12,30 +12,30 @@ public class UnidadeValidationBusiness {
     @Inject
     UnidadeRepository unidadeRepository;
 
-    public boolean validadeIdCannotBeNull( UnidadeDTO dto ) {
-        return dto.getId( ) != null;
+
+    public boolean unidadeGeradoraCannotBeNull( UnidadeDTO dto ) {
+        boolean hasValue = dto.getGeraEnergia( ) != null;
+        boolean geraEnergia = hasValue && (dto.getGeraEnergia( ).equals( Boolean.TRUE ));
+        boolean hasUnidadeRecebedoraCreditosDeInjecao = geraEnergia && dto.getUnidadeRecebedoraCreditosDeInjecao( ) != null;
+        boolean existsUnidadeRecebedoraCreditosDeInjecao = hasUnidadeRecebedoraCreditosDeInjecao && exists( dto.getUnidadeRecebedoraCreditosDeInjecao( ) );
+        return !hasValue || !geraEnergia || (hasUnidadeRecebedoraCreditosDeInjecao && existsUnidadeRecebedoraCreditosDeInjecao);
     }
 
-    public boolean validadeUnidadeGeradoraCannotBeNull( UnidadeDTO dto ) {
-        return dto.getGeraEnergia( ) != null && (
-                dto.getGeraEnergia( ).equals( Boolean.FALSE ) ||
-                        dto.getGeraEnergia( ).equals( Boolean.TRUE ) &&
-                                dto.getUnidadeRecebedoraCreditosDeInjecao( ) != null &&
-                                validadeExistsUnidadeGeradora( dto ));
+    public boolean exists( Long id ) {
+        if ( id == null ) {
+            return false;
+        }
+        return unidadeRepository.findById( id ).isPresent( );
     }
 
-    public boolean validadeExistsUnidadeGeradora( UnidadeDTO dto ) {
-        return unidadeRepository.findById( dto.getUnidadeRecebedoraCreditosDeInjecao( ) ).orElse( null ) != null;
-    }
-
-    public boolean validadeUnidadesIdsCannotBeEqual( UnidadeDTO dto ) {
+    public boolean idsCannotBeEqual( UnidadeDTO dto ) {
         return dto.getGeraEnergia( ) != null && (
                 dto.getGeraEnergia( ).equals( Boolean.FALSE ) ||
                         dto.getGeraEnergia( ).equals( Boolean.TRUE ) &&
                                 !dto.getUnidadeRecebedoraCreditosDeInjecao( ).equals( dto.getId( ) ));
     }
 
-    public boolean validadeUnidadeWithAssociation( UnidadeDTO dto ) {
+    public boolean unidadeWithAssociation( UnidadeDTO dto ) {
         Unidade unidade = unidadeRepository.findById( dto.getUnidadeRecebedoraCreditosDeInjecao( ) ).orElse( null );
         if ( null == unidade ) {
             return false;
@@ -43,7 +43,4 @@ public class UnidadeValidationBusiness {
         return unidadeRepository.findByUnidadeRecebedoraCreditosDeInjecao( unidade ).isEmpty( );
     }
 
-    public boolean existeUnidade( UnidadeDTO dto ) {
-        return unidadeRepository.findById( dto.getId( ) ).isPresent( );
-    }
 }

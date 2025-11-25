@@ -10,7 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
 
 @ApplicationScoped
-public class AlterarUnidadeUC {
+public class UpdateUnidadeUC {
 
     @Inject
     UnidadeRepository unidadeRepository;
@@ -21,17 +21,17 @@ public class AlterarUnidadeUC {
     @Inject
     UnidadeValidationBusiness validator;
 
-    public UnidadeDTO alterar( @NotNull UnidadeDTO dto ) {
+    public UnidadeDTO update( @NotNull UnidadeDTO dto ) {
         if ( !validator.validadeIdCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Id da unidade não pode ser nulo" );
         }
-        if ( !validator.validadeUnidadesIdsCannotBeEqual( dto ) ) {
+        if ( !validator.idsCannotBeEqual( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser igual ao id da unidade" );
         }
-        if ( !validator.validadeUnidadeGeradoraCannotBeNull( dto ) ) {
+        if ( !validator.unidadeGeradoraCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser nulo" );
         }
-        if ( !validator.existeUnidade( dto ) ) {
+        if ( !validator.exists( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade não encontrada" );
         }
         Unidade entity = unidadeRepository.findById( dto.getId( ) ).orElseThrow( );

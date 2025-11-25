@@ -10,7 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
 
 @ApplicationScoped
-public class CadastrarUnidadeUC {
+public class CreateUnidadeUC {
 
     @Inject
     UnidadeRepository unidadeRepository;
@@ -21,12 +21,12 @@ public class CadastrarUnidadeUC {
     @Inject
     UnidadeValidationBusiness validator;
 
-    public UnidadeDTO cadastrar( @NotNull UnidadeDTO dto ) {
-        if ( !validator.validadeUnidadeGeradoraCannotBeNull( dto ) ) {
+    public UnidadeDTO create( @NotNull UnidadeDTO dto ) {
+        if ( !validator.unidadeGeradoraCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Cadastro inválido", "Erro nos dados informados para cadastro" );
         }
-        if ( validator.existeUnidade( dto ) ) {
-            throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade já cadastrada" );
+        if ( dto.getId( ) != null ) {
+            throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade Id deve ser nulo" );
         }
         Unidade entity = unidadeMapper.toEntity( dto );
         return unidadeMapper.toDTO( unidadeRepository.save( entity ) );

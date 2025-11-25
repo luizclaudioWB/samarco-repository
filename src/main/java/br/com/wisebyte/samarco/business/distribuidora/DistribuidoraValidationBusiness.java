@@ -15,10 +15,6 @@ public class DistribuidoraValidationBusiness {
         return dto.getId( ) == null;
     }
 
-    public boolean idIsNotNull( DistribuidoraDTO dto ) {
-        return dto.getId( ) != null;
-    }
-
     public boolean existeDistribuidora( DistribuidoraDTO dto ) {
         return distribuidoraRepository.findById( dto.getId( ) ).isPresent( );
     }

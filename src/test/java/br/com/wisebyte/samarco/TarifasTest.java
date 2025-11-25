@@ -348,7 +348,7 @@ public class TarifasTest {
     @Transactional
     public void testeTarifas( ) throws IOException {
         cadastraDistribuidoras( );
-//        cadastraFornecedor( );
+        cadastraFornecedor( );
 //        cadastraTarifaPlanejamento( );
 //        cadastraAliquotaImpostos( );
 //        cadastraTarifaDistribuidoraONS();
