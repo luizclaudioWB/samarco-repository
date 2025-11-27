@@ -6,6 +6,7 @@ import br.com.wisebyte.samarco.mapper.distribuidora.DistribuidoraMapper;
 import br.com.wisebyte.samarco.repository.distribuidora.DistribuidoraRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class CreateDistribuidoraUC {
@@ -19,6 +20,7 @@ public class CreateDistribuidoraUC {
     @Inject
     DistribuidoraValidationBusiness validator;
 
+    @Transactional
     public DistribuidoraDTO create( DistribuidoraDTO dto ) {
         if ( !validator.idIsNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Id da distribuidora deve ser nulo" );

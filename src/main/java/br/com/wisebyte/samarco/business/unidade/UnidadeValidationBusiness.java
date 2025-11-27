@@ -36,7 +36,7 @@ public class UnidadeValidationBusiness {
     }
 
     public boolean unidadeWithAssociation( UnidadeDTO dto ) {
-        Unidade unidade = unidadeRepository.findById( dto.getUnidadeRecebedoraCreditosDeInjecao( ) ).orElse( null );
+        Unidade unidade = unidadeRepository.findById( dto.getId( ) ).orElse( null );
         if ( null == unidade ) {
             return false;
         }

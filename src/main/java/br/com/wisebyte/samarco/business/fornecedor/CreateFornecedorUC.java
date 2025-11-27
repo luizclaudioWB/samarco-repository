@@ -6,6 +6,7 @@ import br.com.wisebyte.samarco.mapper.fornecedor.FornecedorMapper;
 import br.com.wisebyte.samarco.repository.fornecedor.FornecedorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 @ApplicationScoped
@@ -20,8 +21,9 @@ public class CreateFornecedorUC {
     @Inject
     FornecedorValidatorBusiness validatorBusiness;
 
+    @Transactional
     public FornecedorDTO create( @NotNull FornecedorDTO dto ) {
-        if ( validatorBusiness.idIsNull( dto ) ) {
+        if ( !validatorBusiness.idIsNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Fornecedor", "Fornecedor Id", "Id do Fornecedor deve ser nulo" );
         }
         return fornecedorMapper.toDTO( fornecedorRepository.save( fornecedorMapper.toEntity( dto ) ) );

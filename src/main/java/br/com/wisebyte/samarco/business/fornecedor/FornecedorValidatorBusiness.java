@@ -15,7 +15,7 @@ public class FornecedorValidatorBusiness {
         return dto.getId( ) == null;
     }
 
-    public boolean exists( FornecedorDTO dto ) {
+    public boolean existeFornecedor( FornecedorDTO dto ) {
         return fornecedorRepository.findById( dto.getId( ) ).isPresent( );
     }
 
