@@ -22,7 +22,7 @@ public class UpdateUnidadeUC {
     UnidadeValidationBusiness validator;
 
     public UnidadeDTO update( @NotNull UnidadeDTO dto ) {
-        if ( !validator.validadeIdCannotBeNull( dto ) ) {
+        if ( !validator.exists( dto.getId() ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Id da unidade não pode ser nulo" );
         }
         if ( !validator.idsCannotBeEqual( dto ) ) {
@@ -31,7 +31,7 @@ public class UpdateUnidadeUC {
         if ( !validator.unidadeGeradoraCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser nulo" );
         }
-        if ( !validator.exists( dto ) ) {
+        if ( !validator.exists(dto.getId() ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade não encontrada" );
         }
         Unidade entity = unidadeRepository.findById( dto.getId( ) ).orElseThrow( );
@@ -39,7 +39,7 @@ public class UpdateUnidadeUC {
         return unidadeMapper.toDTO( unidadeRepository.save( entity ) );
     }
 
-    private void applyNewValues( Unidade unidade, @NotNull UnidadeDTO dto ) {
+     void applyNewValues( Unidade unidade, @NotNull UnidadeDTO dto ) {
         unidade.setNomeUnidade( dto.getNome( ) );
         unidade.setEstado( dto.getEstado( ) );
         unidade.setConectadaRedeBasica( dto.getConectadaRedeBasica( ) );

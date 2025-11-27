@@ -11,5 +11,5 @@ import java.util.List;
 public interface UnidadeRepository extends BasicRepository<Unidade, Long> {
 
     @Find
-    List<Unidade> findByUnidadeRecebedoraCreditosDeInjecao( Unidade unidade );
+    List<Unidade> findByUnidadeRecebedoraCreditosDeInjecao( Unidade unidadeRecebedoraCreditosDeInjecao );
 }
