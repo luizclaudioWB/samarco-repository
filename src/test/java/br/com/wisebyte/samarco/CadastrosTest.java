@@ -1,6 +1,7 @@
 package br.com.wisebyte.samarco;
 
 import br.com.wisebyte.samarco.model.area.Area;
+import br.com.wisebyte.samarco.model.estado.Estado;
 import br.com.wisebyte.samarco.model.planejamento.Planejamento;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.model.unidade.Unidade;
@@ -33,6 +34,7 @@ public class CadastrosTest {
                 .nomeUnidade( "Guilman Amorim" )
                 .unidadeGeradora( true )
                 .conectadaRedeBasica( false )
+                .estado( Estado.MG )
                 .build( );
         guilmanAmorim = entityManager.merge( guilmanAmorim );
         Unidade germano = Unidade.builder( )
@@ -40,18 +42,21 @@ public class CadastrosTest {
                 .unidadeGeradora( false )
                 .conectadaRedeBasica( false )
                 .unidadeRecebedoraCreditosDeInjecao( guilmanAmorim )
+                .estado( Estado.MG )
                 .build( );
         entityManager.persist( germano );
         Unidade matipo = Unidade.builder( )
                 .nomeUnidade( "Matipó" )
                 .unidadeGeradora( false )
                 .conectadaRedeBasica( false )
+                .estado( Estado.MG )
                 .build( );
         entityManager.persist( matipo );
         Unidade munizFreire = Unidade.builder( )
                 .nomeUnidade( "Muniz Freire" )
                 .unidadeGeradora( true )
                 .conectadaRedeBasica( false )
+                .estado( Estado.ES )
                 .build( );
         munizFreire = entityManager.merge( munizFreire );
         Unidade ubu = Unidade.builder( )
@@ -59,6 +64,7 @@ public class CadastrosTest {
                 .unidadeGeradora( false )
                 .unidadeRecebedoraCreditosDeInjecao( munizFreire )
                 .conectadaRedeBasica( false )
+                .estado( Estado.ES )
                 .build( );
         entityManager.persist( ubu );
     }

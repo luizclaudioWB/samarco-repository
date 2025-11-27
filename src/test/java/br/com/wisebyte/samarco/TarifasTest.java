@@ -349,13 +349,13 @@ public class TarifasTest {
     public void testeTarifas( ) throws IOException {
         cadastraDistribuidoras( );
         cadastraFornecedor( );
-//        cadastraTarifaPlanejamento( );
-//        cadastraAliquotaImpostos( );
-//        cadastraTarifaDistribuidoraONS();
-//        cadastraTarifaDistribuidoraEDP( );
-//        cadastraTarifaDistribuidoraEnergisa( );
-//        cadastraTarifaFornecedor( );
-//        printValores( );
+        cadastraTarifaPlanejamento( );
+        cadastraAliquotaImpostos( );
+        cadastraTarifaDistribuidoraONS( );
+        cadastraTarifaDistribuidoraEDP( );
+        cadastraTarifaDistribuidoraEnergisa( );
+        cadastraTarifaFornecedor( );
+        printValores( );
     }
 
     void cadastraDistribuidoras( ) {
