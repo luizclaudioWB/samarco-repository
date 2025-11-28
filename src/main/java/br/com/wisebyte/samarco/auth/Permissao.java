@@ -12,7 +12,11 @@ public enum Permissao {
     EXCLUIR_FORNECEDOR( "Permite excluir o fornecedor" ),
     CADASTRAR_USUARIO( "Permite cadastrar o usuario" ),
     ALTERAR_USUARIO( "Permite alterar o usuario" ),
-    EXCLUIR_USUARIO( "Permite excluir o usuario" );
+    EXCLUIR_USUARIO( "Permite excluir o usuario" ),
+    CADASTRAR_AREA( "Permite cadastrar área" ),
+    ALTERAR_AREA( "Permite alterar área" ),
+    EXCLUIR_AREA( "Permite excluir área" ),
+    LISTAR_AREA( "Permite listar áreas" );
 
     private final String descricao;
 
