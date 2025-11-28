@@ -10,6 +10,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
 
 
 @ApplicationScoped
@@ -26,6 +28,10 @@ public class CreatePlanejamentoUC {
 
     @Inject
     CreateRevisaoUC createRevisaoUC;
+
+    @Inject
+    @Claim( standard = Claims.preferred_username )
+    String username;
 
     @Transactional
     public PlanejamentoDTO create(@NotNull PlanejamentoDTO dto) {
