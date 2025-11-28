@@ -31,7 +31,7 @@ public class AreaQuery {
             roles = {ADMIN},
             permissionsRequired = {LISTAR_AREA} )
     public List<AreaDTO> listarAreas( ) {
-        return areaRepository.findAll( ).stream( )
+        return areaRepository.findAll( )
                 .map( areaMapper::toDTO )
                 .collect( Collectors.toList( ) );
     }

@@ -37,4 +37,6 @@ public class Revisao extends BaseModel {
     @Column( nullable = false )
     private boolean oficial;
 
+    private boolean finished;
+
 }

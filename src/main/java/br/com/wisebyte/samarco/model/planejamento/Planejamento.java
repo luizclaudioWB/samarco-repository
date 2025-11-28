@@ -10,17 +10,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Formula;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
+@Table(uniqueConstraints = {
+    @jakarta.persistence.UniqueConstraint(name = "uk_planejamento_ano", columnNames = {"ano"})
+})
 @SuperBuilder
 public class Planejamento extends BaseModel {
 
-    @Column( unique = true)
+    @Column(nullable = false)
     private Integer ano;
 
     @Lob
@@ -30,6 +33,7 @@ public class Planejamento extends BaseModel {
     @Lob
     private String mensagem;
 
-    @Column( nullable = false)
+    @Formula("YEAR(CURRENT_DATE) = ano")
+    @Column( insertable = false, updatable = false )
     private Boolean corrente;
 }

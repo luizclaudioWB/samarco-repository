@@ -16,7 +16,16 @@ public enum Permissao {
     CADASTRAR_AREA( "Permite cadastrar área" ),
     ALTERAR_AREA( "Permite alterar área" ),
     EXCLUIR_AREA( "Permite excluir área" ),
-    LISTAR_AREA( "Permite listar áreas" );
+    LISTAR_AREA( "Permite listar áreas" ),
+    CADASTRAR_PLANEJAMENTO( "Permite cadastrar planejamento" ),
+    ALTERAR_PLANEJAMENTO( "Permite alterar planejamento" ),
+    EXCLUIR_PLANEJAMENTO( "Permite excluir planejamento" ),
+    LISTAR_PLANEJAMENTO( "Permite listar planejamentos" ),
+    CADASTRAR_REVISAO( "Permite cadastrar revisão" ),
+    ALTERAR_REVISAO( "Permite alterar revisão" ),
+    EXCLUIR_REVISAO( "Permite excluir revisão" ),
+    LISTAR_REVISAO( "Permite listar revisões" ),
+    FINALIZAR_REVISAO( "Permite finalizar revisão (tornar imutável)" );
 
     private final String descricao;
 
