@@ -62,13 +62,13 @@ public class CreatePlanejamentoUC {
             );
         }
 
-        if (dto.getUsuarioId() == null || dto.getUsuarioId().trim().isEmpty()) {
-            throw new ValidadeExceptionBusiness(
-                    "Planejamento",
-                    "Usuario",
-                    "ID do usuário é obrigatório para criar o planejamento"
-            );
-        }
+//        if (dto.getUsuarioId() == null || dto.getUsuarioId().trim().isEmpty()) {
+//            throw new ValidadeExceptionBusiness(
+//                    "Planejamento",
+//                    "Usuario",
+//                    "ID do usuário é obrigatório para criar o planejamento"
+//            );
+//        }
 
         Planejamento planejamento = planejamentoMapper.toEntity(dto);
 

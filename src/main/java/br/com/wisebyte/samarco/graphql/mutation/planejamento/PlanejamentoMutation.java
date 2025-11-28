@@ -33,7 +33,8 @@ public class PlanejamentoMutation {
             permissionsRequired = {CADASTRAR_PLANEJAMENTO}
     )
     public PlanejamentoDTO cadastrarPlanejamento(PlanejamentoDTO dto) {
-        return cadastrarPlanejamento.create(dto);
+        return cadastrarPlanejamento.
+                create(dto);
     }
 
     @Mutation(value = "alterarPlanejamento")
