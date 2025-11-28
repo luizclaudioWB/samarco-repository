@@ -18,6 +18,4 @@ public class PlanejamentoDTO {
     private String mensagem;
 
     private Boolean corrente;
-
-    private String usuarioId;
 }

@@ -10,8 +10,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
-import org.eclipse.microprofile.jwt.Claim;
-import org.eclipse.microprofile.jwt.Claims;
 
 
 @ApplicationScoped
@@ -29,12 +27,10 @@ public class CreatePlanejamentoUC {
     @Inject
     CreateRevisaoUC createRevisaoUC;
 
-    @Inject
-    @Claim( standard = Claims.preferred_username )
-    String username;
+
 
     @Transactional
-    public PlanejamentoDTO create(@NotNull PlanejamentoDTO dto) {
+    public PlanejamentoDTO create(@NotNull PlanejamentoDTO dto, String username) {
 
         if (!validatorBusiness.idIsNull(dto)) {
             throw new ValidadeExceptionBusiness(
@@ -68,13 +64,13 @@ public class CreatePlanejamentoUC {
             );
         }
 
-//        if (dto.getUsuarioId() == null || dto.getUsuarioId().trim().isEmpty()) {
-//            throw new ValidadeExceptionBusiness(
-//                    "Planejamento",
-//                    "Usuario",
-//                    "ID do usuário é obrigatório para criar o planejamento"
-//            );
-//        }
+        if (username == null || username.trim().isEmpty()) {
+            throw new ValidadeExceptionBusiness(
+                    "Planejamento",
+                    "Usuario",
+                    "ID do usuário é obrigatório para criar o planejamento"
+            );
+        }
 
         Planejamento planejamento = planejamentoMapper.toEntity(dto);
 
@@ -86,7 +82,7 @@ public class CreatePlanejamentoUC {
         // com oficial=true e finished=false
         createRevisaoUC.createInternal(
             1,                          // numeroRevisao = 1 (primeira revisão)
-            dto.getUsuarioId(),         // usuário que está criando
+            username,         // usuário que está criando
             saved.getId(),              // planejamento recém-criado
             "Revisão Oficial",          // descrição padrão
             true,                       // oficial = true (ÚNICA revisão oficial)

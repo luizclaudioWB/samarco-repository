@@ -7,8 +7,11 @@ import br.com.wisebyte.samarco.business.planejamento.UpdatePlanejamentoUC;
 import br.com.wisebyte.samarco.dto.planejamento.PlanejamentoDTO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Mutation;
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
 
 import static br.com.wisebyte.samarco.auth.Permissao.*;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
@@ -26,6 +29,13 @@ public class PlanejamentoMutation {
     @Inject
     DeletePlanejamentoUC excluirPlanejamento;
 
+    @Inject
+    @Claim( standard = Claims.preferred_username )
+    String username;
+
+    @Inject
+    @ConfigProperty(name = "quarkus.profile")
+    String activeProfile;
 
     @Mutation(value = "cadastrarPlanejamento")
     @SecuredAccess(
@@ -33,8 +43,8 @@ public class PlanejamentoMutation {
             permissionsRequired = {CADASTRAR_PLANEJAMENTO}
     )
     public PlanejamentoDTO cadastrarPlanejamento(PlanejamentoDTO dto) {
-        return cadastrarPlanejamento.
-                create(dto);
+        String user = activeProfile.equals("dev") ? "leandro.samarco@gmail.com" : username;
+        return cadastrarPlanejamento.create(dto, user);
     }
 
     @Mutation(value = "alterarPlanejamento")
