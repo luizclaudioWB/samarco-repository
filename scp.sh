@@ -8,4 +8,4 @@ cd target
 zip -r samarco.zip quarkus-app
 
 # Envia para o servidor miadev
-scp samarco.zip miadev:/tmp
+scp samarco.zip mia:/tmp
