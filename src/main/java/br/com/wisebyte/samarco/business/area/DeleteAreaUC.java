@@ -22,7 +22,7 @@ public class DeleteAreaUC {
             throw new ValidadeExceptionBusiness( "Area", "Area Id", "Id da Área não deve ser nulo" );
         }
 
-        if ( !validator.existeArea( dto ) ) {
+        if ( !validator.areaExists( dto ) ) {
             throw new ValidadeExceptionBusiness( "Area", "Area Id", "Área não encontrada" );
         }
 

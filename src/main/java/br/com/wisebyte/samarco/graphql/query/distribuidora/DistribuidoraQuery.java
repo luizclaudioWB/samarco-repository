@@ -12,7 +12,7 @@ import org.eclipse.microprofile.graphql.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.wisebyte.samarco.auth.Permissao.LISTAR_DISTRIBUIDORA;
+import static br.com.wisebyte.samarco.auth.Permissao.*;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 
 @GraphQLApi
@@ -28,7 +28,7 @@ public class DistribuidoraQuery {
     @Query( value = "listarDistribuidoras" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_DISTRIBUIDORA} )
+            permissionsRequired = {LIST_DISTRIBUTORS} )
     public List<DistribuidoraDTO> listarDistribuidoras( ) {
         return distribuidoraRepository.findAll( )
                 .map( distribuidoraMapper::toDTO )
@@ -38,7 +38,7 @@ public class DistribuidoraQuery {
     @Query( value = "buscarDistribuidoraPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_DISTRIBUIDORA} )
+            permissionsRequired = {GET_DISTRIBUTOR_BY_ID} )
     public DistribuidoraDTO buscarDistribuidoraPorId( Long id ) {
         return distribuidoraRepository.findById( id )
                 .map( distribuidoraMapper::toDTO )

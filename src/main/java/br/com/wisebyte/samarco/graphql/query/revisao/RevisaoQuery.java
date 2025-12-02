@@ -13,7 +13,7 @@ import org.eclipse.microprofile.graphql.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.wisebyte.samarco.auth.Permissao.LISTAR_REVISAO;
+import static br.com.wisebyte.samarco.auth.Permissao.*;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 
 @GraphQLApi
@@ -32,7 +32,7 @@ public class RevisaoQuery {
     @Query( value = "listarRevisoes" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_REVISAO} )
+            permissionsRequired = {LIST_REVISIONS} )
     public List<RevisaoDTO> listarRevisoes( ) {
         return revisaoRepository.findAll( )
                 .map( revisaoMapper::toDTO )
@@ -42,7 +42,7 @@ public class RevisaoQuery {
     @Query( value = "buscarRevisaoPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_REVISAO} )
+            permissionsRequired = {GET_REVISION_BY_ID} )
     public RevisaoDTO buscarRevisaoPorId( Long id ) {
         return revisaoRepository.findById( id )
                 .map( revisaoMapper::toDTO )
@@ -52,7 +52,7 @@ public class RevisaoQuery {
     @Query( value = "listarRevisoesOficiais" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_REVISAO} )
+            permissionsRequired = {LIST_OFFICIAL_REVISIONS} )
     public List<RevisaoDTO> listarRevisoesOficiais( ) {
         return revisaoRepository.findByOficial( true ).stream( )
                 .map( revisaoMapper::toDTO )
@@ -62,7 +62,7 @@ public class RevisaoQuery {
     @Query( value = "listarRevisoesPorPlanejamento" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_REVISAO} )
+            permissionsRequired = {LIST_REVISIONS_BY_PLANNING} )
     public List<RevisaoDTO> listarRevisoesPorPlanejamento( Long planejamentoId ) {
         return planejamentoRepository.findById( planejamentoId )
                 .map( planejamento -> revisaoRepository.findByPlanejamento( planejamento ).stream( )

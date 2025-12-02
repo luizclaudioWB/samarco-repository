@@ -23,10 +23,10 @@ public class CreateUsuarioUC {
 
     @Transactional
     public UsuarioDTO create( @NotNull UsuarioDTO dto ) {
-        if ( validator.usuarioIsNullOrEmpty( dto ) ) {
+        if ( validator.userIsNullOrEmpty( dto ) ) {
             throw new ValidadeExceptionBusiness( "Usuario", "Usuario", "Usuario não deve ser nulo ou vazio" );
         }
-        if ( validator.existeUsuario( dto ) ) {
+        if ( validator.userExists( dto ) ) {
             throw new ValidadeExceptionBusiness( "Usuario", "Usuario", "Usuario já existe" );
         }
         return usuarioMapper.toDTO( usuarioRepository.save( usuarioMapper.toEntity( dto ) ) );

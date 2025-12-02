@@ -24,7 +24,7 @@ public class CreateUnidadeUC {
 
     @Transactional
     public UnidadeDTO create( @NotNull UnidadeDTO dto ) {
-        if ( !validator.unidadeGeradoraCannotBeNull( dto ) ) {
+        if ( !validator.generatorUnitCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Cadastro inválido", "Erro nos dados informados para cadastro" );
         }
         if ( dto.getId( ) != null ) {

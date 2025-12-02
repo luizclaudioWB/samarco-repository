@@ -40,7 +40,7 @@ public class PlanejamentoMutation {
     @Mutation(value = "cadastrarPlanejamento")
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {CADASTRAR_PLANEJAMENTO}
+            permissionsRequired = {CREATE_PLANNING}
     )
     public PlanejamentoDTO cadastrarPlanejamento(PlanejamentoDTO dto) {
         String user = activeProfile.equals("dev") ? "leandro.samarco@gmail.com" : username;
@@ -50,7 +50,7 @@ public class PlanejamentoMutation {
     @Mutation(value = "alterarPlanejamento")
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {ALTERAR_PLANEJAMENTO}
+            permissionsRequired = {UPDATE_PLANNING}
     )
     public PlanejamentoDTO alterarPlanejamento(PlanejamentoDTO dto) {
         return alterarPlanejamento.update(dto);
@@ -59,7 +59,7 @@ public class PlanejamentoMutation {
     @Mutation(value = "excluirPlanejamento")
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {EXCLUIR_PLANEJAMENTO}
+            permissionsRequired = {DELETE_PLANNING}
     )
     public PlanejamentoDTO excluirPlanejamento(PlanejamentoDTO dto) {
         excluirPlanejamento.delete(dto);

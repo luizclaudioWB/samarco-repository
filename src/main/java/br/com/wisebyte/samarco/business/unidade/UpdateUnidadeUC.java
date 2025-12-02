@@ -30,7 +30,7 @@ public class UpdateUnidadeUC {
         if ( !validator.idsCannotBeEqual( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser igual ao id da unidade" );
         }
-        if ( !validator.unidadeGeradoraCannotBeNull( dto ) ) {
+        if ( !validator.generatorUnitCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser nulo" );
         }
         if ( !validator.exists(dto.getId() ) ) {

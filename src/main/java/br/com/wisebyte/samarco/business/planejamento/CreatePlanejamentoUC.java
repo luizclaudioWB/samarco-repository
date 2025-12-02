@@ -40,7 +40,7 @@ public class CreatePlanejamentoUC {
             );
         }
 
-        if (!validatorBusiness.anoValido(dto)) {
+        if (!validatorBusiness.isYearValid(dto)) {
             throw new ValidadeExceptionBusiness(
                     "Planejamento",
                     "Ano",
@@ -48,7 +48,7 @@ public class CreatePlanejamentoUC {
             );
         }
 
-        if (validatorBusiness.existePlanejamentoParaAno(dto)) {
+        if (validatorBusiness.planningExistsForYear(dto)) {
             throw new ValidadeExceptionBusiness(
                     "Planejamento",
                     "Ano",
@@ -56,7 +56,7 @@ public class CreatePlanejamentoUC {
             );
         }
 
-        if (!validatorBusiness.descricaoValida(dto)) {
+        if (!validatorBusiness.isDescriptionValid(dto)) {
             throw new ValidadeExceptionBusiness(
                     "Planejamento",
                     "Descrição",

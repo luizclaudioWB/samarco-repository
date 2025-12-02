@@ -27,11 +27,11 @@ public class CreateAreaUC {
             throw new ValidadeExceptionBusiness( "Area", "Area Id", "Id da Área deve ser nulo" );
         }
 
-        if ( !validatorBusiness.existeUnidade( dto.getUnidadeId( ) ) ) {
+        if ( !validatorBusiness.unitExists( dto.getUnidadeId( ) ) ) {
             throw new ValidadeExceptionBusiness( "Area", "Unidade", "Unidade não encontrada" );
         }
 
-        if ( !validatorBusiness.existeUsuario( dto.getUsuarioId( ) ) ) {
+        if ( !validatorBusiness.userExists( dto.getUsuarioId( ) ) ) {
             throw new ValidadeExceptionBusiness( "Area", "Usuario", "Usuário não encontrado" );
         }
 

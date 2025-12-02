@@ -48,11 +48,11 @@ public class UpdateRevisaoUC {
             );
         }
 
-        if (!validator.existePlanejamento(inputDTO.getPlanejamentoId())) {
+        if (!validator.planningExists(inputDTO.getPlanejamentoId())) {
             throw new ValidadeExceptionBusiness("Revisao", "Planejamento", "Planejamento não encontrado");
         }
 
-        if (!validator.existeUsuario(inputDTO.getUsuarioId())) {
+        if (!validator.userExists(inputDTO.getUsuarioId())) {
             throw new ValidadeExceptionBusiness("Revisao", "Usuario", "Usuário não encontrado");
         }
 

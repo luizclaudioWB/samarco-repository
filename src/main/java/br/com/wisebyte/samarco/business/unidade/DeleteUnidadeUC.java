@@ -22,7 +22,7 @@ public class DeleteUnidadeUC {
         if ( !validator.exists( dto.getId( ) ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade não encontrada" );
         }
-        if ( !validator.unidadeWithAssociation( dto ) ) {
+        if ( !validator.unitHasAssociation( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade está associada a outra entidade" );
         }
         unidadeRepository.deleteById( dto.getId( ) );

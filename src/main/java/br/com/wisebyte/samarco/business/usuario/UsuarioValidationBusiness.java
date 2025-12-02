@@ -11,11 +11,11 @@ public class UsuarioValidationBusiness {
     @Inject
     UsuarioRepository usuarioRepository;
 
-    public boolean usuarioIsNullOrEmpty( UsuarioDTO dto ) {
+    public boolean userIsNullOrEmpty( UsuarioDTO dto ) {
         return dto.getUsuario( ) == null || dto.getUsuario( ).isBlank( );
     }
 
-    public boolean existeUsuario( UsuarioDTO dto ) {
+    public boolean userExists( UsuarioDTO dto ) {
         return usuarioRepository.findByUsuario( dto.getUsuario( ) ).isPresent( );
     }
 

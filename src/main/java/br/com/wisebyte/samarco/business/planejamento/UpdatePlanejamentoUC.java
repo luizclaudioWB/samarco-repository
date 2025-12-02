@@ -34,7 +34,7 @@ public class UpdatePlanejamentoUC {
             );
         }
 
-        if (!validator.existePlanejamento(dto)) {
+        if (!validator.planningExists(dto)) {
             throw new ValidadeExceptionBusiness(
                     "Planejamento",
                     "Planejamento Id",
@@ -42,7 +42,7 @@ public class UpdatePlanejamentoUC {
             );
         }
 
-        if (!validator.anoValido(dto)) {
+        if (!validator.isYearValid(dto)) {
             throw new ValidadeExceptionBusiness(
                     "Planejamento",
                     "Ano",
@@ -52,7 +52,7 @@ public class UpdatePlanejamentoUC {
 
         //  Não pode existir OUTRO planejamento com o mesmo ano
         // (permitimos atualizar o ano do próprio planejamento)
-        if (validator.existeOutroPlanejamentoParaAno(dto)) {
+        if (validator.anotherPlanningExistsForYear(dto)) {
             throw new ValidadeExceptionBusiness(
                     "Planejamento",
                     "Ano",
@@ -61,7 +61,7 @@ public class UpdatePlanejamentoUC {
         }
 
         // Descrição deve ser válida (não nula e não vazia)
-        if (!validator.descricaoValida(dto)) {
+        if (!validator.isDescriptionValid(dto)) {
             throw new ValidadeExceptionBusiness(
                     "Planejamento",
                     "Descrição",

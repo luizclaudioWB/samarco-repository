@@ -29,7 +29,7 @@ public class AreaQuery {
     @Query( value = "listarAreas" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_AREA} )
+            permissionsRequired = {LIST_AREAS} )
     public List<AreaDTO> listarAreas( ) {
         return areaRepository.findAll( )
                 .map( areaMapper::toDTO )
@@ -39,7 +39,7 @@ public class AreaQuery {
     @Query( value = "buscarAreaPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_AREA} )
+            permissionsRequired = {GET_AREA_BY_ID} )
     public AreaDTO buscarAreaPorId( Long id ) {
         return areaRepository.findById( id )
                 .map( areaMapper::toDTO )
@@ -49,7 +49,7 @@ public class AreaQuery {
     @Query( value = "listarAreasPorTipo" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_AREA} )
+            permissionsRequired = {LIST_AREAS_BY_TYPE} )
     public List<AreaDTO> listarAreasPorTipo( TipoArea tipoArea ) {
         return areaRepository.findByTipoArea( tipoArea ).stream( )
                 .map( areaMapper::toDTO )
@@ -59,7 +59,7 @@ public class AreaQuery {
     @Query( value = "listarAreasAtivas" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_AREA} )
+            permissionsRequired = {LIST_ACTIVE_AREAS} )
     public List<AreaDTO> listarAreasAtivas( ) {
         return areaRepository.findByAtivo( true ).stream( )
                 .map( areaMapper::toDTO )

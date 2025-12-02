@@ -12,7 +12,7 @@ import org.eclipse.microprofile.graphql.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.wisebyte.samarco.auth.Permissao.LISTAR_USUARIO;
+import static br.com.wisebyte.samarco.auth.Permissao.*;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 
 @GraphQLApi
@@ -28,7 +28,7 @@ public class UsuarioQuery {
     @Query( value = "listarUsuarios" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_USUARIO} )
+            permissionsRequired = {LIST_USERS} )
     public List<UsuarioDTO> listarUsuarios( ) {
         return usuarioRepository.findAll( )
                 .map( usuarioMapper::toDTO )
@@ -38,7 +38,7 @@ public class UsuarioQuery {
     @Query( value = "buscarUsuarioPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_USUARIO} )
+            permissionsRequired = {GET_USER_BY_ID} )
     public UsuarioDTO buscarUsuarioPorId( String id ) {
         return usuarioRepository.findById( id )
                 .map( usuarioMapper::toDTO )
@@ -48,7 +48,7 @@ public class UsuarioQuery {
     @Query( value = "buscarUsuarioPorNome" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_USUARIO} )
+            permissionsRequired = {GET_USER_BY_NAME} )
     public UsuarioDTO buscarUsuarioPorNome( String usuario ) {
         return usuarioRepository.findByUsuario( usuario )
                 .map( usuarioMapper::toDTO )

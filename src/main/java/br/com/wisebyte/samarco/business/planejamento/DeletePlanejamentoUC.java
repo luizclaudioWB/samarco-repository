@@ -29,7 +29,7 @@ public class DeletePlanejamentoUC {
             );
         }
 
-        if (!validator.existePlanejamento(dto)) {
+        if (!validator.planningExists(dto)) {
             throw new ValidadeExceptionBusiness(
                     "Planejamento",
                     "Planejamento Id",

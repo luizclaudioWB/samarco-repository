@@ -12,7 +12,7 @@ import org.eclipse.microprofile.graphql.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.wisebyte.samarco.auth.Permissao.LISTAR_FORNECEDOR;
+import static br.com.wisebyte.samarco.auth.Permissao.*;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 
 @GraphQLApi
@@ -28,7 +28,7 @@ public class FornecedorQuery {
     @Query( value = "listarFornecedores" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_FORNECEDOR} )
+            permissionsRequired = {LIST_SUPPLIERS} )
     public List<FornecedorDTO> listarFornecedores( ) {
         return fornecedorRepository.findAll( )
                 .map( fornecedorMapper::toDTO )
@@ -38,7 +38,7 @@ public class FornecedorQuery {
     @Query( value = "buscarFornecedorPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_FORNECEDOR} )
+            permissionsRequired = {GET_SUPPLIER_BY_ID} )
     public FornecedorDTO buscarFornecedorPorId( Long id ) {
         return fornecedorRepository.findById( id )
                 .map( fornecedorMapper::toDTO )

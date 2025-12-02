@@ -13,7 +13,7 @@ public class UnidadeValidationBusiness {
     UnidadeRepository unidadeRepository;
 
 
-    public boolean unidadeGeradoraCannotBeNull( UnidadeDTO dto ) {
+    public boolean generatorUnitCannotBeNull( UnidadeDTO dto ) {
         boolean hasValue = dto.getGeraEnergia( ) != null;
         boolean geraEnergia = hasValue && (dto.getGeraEnergia( ).equals( Boolean.TRUE ));
         boolean hasUnidadeRecebedoraCreditosDeInjecao = geraEnergia && dto.getUnidadeRecebedoraCreditosDeInjecao( ) != null;
@@ -35,7 +35,7 @@ public class UnidadeValidationBusiness {
                                 !dto.getUnidadeRecebedoraCreditosDeInjecao( ).equals( dto.getId( ) ));
     }
 
-    public boolean unidadeWithAssociation( UnidadeDTO dto ) {
+    public boolean unitHasAssociation( UnidadeDTO dto ) {
         Unidade unidade = unidadeRepository.findById( dto.getId( ) ).orElse( null );
         if ( null == unidade ) {
             return false;

@@ -23,25 +23,25 @@ public class RevisaoValidationBusiness {
         return dto.getId( ) == null;
     }
 
-    public boolean existeRevisao( RevisaoDTO dto ) {
+    public boolean revisionExists( RevisaoDTO dto ) {
         return revisaoRepository.findById( dto.getId( ) ).isPresent( );
     }
 
-    public boolean existePlanejamento( Long planejamentoId ) {
+    public boolean planningExists( Long planejamentoId ) {
         if ( planejamentoId == null ) return false;
         return planejamentoRepository.findById( planejamentoId ).isPresent( );
     }
 
-    public boolean existeUsuario( String usuarioId ) {
+    public boolean userExists( String usuarioId ) {
         if ( usuarioId == null ) return false;
         return usuarioRepository.findById( usuarioId ).isPresent( );
     }
 
-    public boolean descricaoValida( RevisaoDTO dto ) {
+    public boolean isDescriptionValid( RevisaoDTO dto ) {
         return dto.getDescricao( ) != null && !dto.getDescricao( ).trim( ).isEmpty( );
     }
 
-    public boolean numeroRevisaoValido( RevisaoDTO dto ) {
+    public boolean isRevisionNumberValid( RevisaoDTO dto ) {
         return dto.getNumeroRevisao( ) != null && dto.getNumeroRevisao( ) > 0;
     }
 }

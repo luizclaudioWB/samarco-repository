@@ -29,7 +29,7 @@ public class UsuarioMutation {
     @Mutation( value = "cadastrarUsuario" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {CADASTRAR_USUARIO} )
+            permissionsRequired = {CREATE_USER} )
     public UsuarioDTO cadastrarUsuario( UsuarioDTO dto ) {
         return cadastrarUsuario.create( dto );
     }
@@ -37,7 +37,7 @@ public class UsuarioMutation {
     @Mutation( value = "alterarUsuario" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {ALTERAR_USUARIO} )
+            permissionsRequired = {UPDATE_USER} )
     public UsuarioDTO alterarUsuario( UsuarioDTO dto ) {
         return alterarUsuario.update( dto );
     }
@@ -45,7 +45,7 @@ public class UsuarioMutation {
     @Mutation( value = "excluirUsuario" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {EXCLUIR_USUARIO} )
+            permissionsRequired = {DELETE_USER} )
     public UsuarioDTO excluirUsuario( UsuarioDTO dto ) {
         excluirUsuario.delete( dto );
         return dto;

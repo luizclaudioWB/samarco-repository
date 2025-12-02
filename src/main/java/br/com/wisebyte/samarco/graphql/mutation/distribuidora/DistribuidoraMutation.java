@@ -29,7 +29,7 @@ public class DistribuidoraMutation {
     @Mutation( value = "cadastrarDistribuidora" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {CADASTRAR_DISTRIBUIDORA} )
+            permissionsRequired = {CREATE_DISTRIBUTOR} )
     public DistribuidoraDTO cadastrarDistribuidora( DistribuidoraDTO dto ) {
         return cadastrarDistribuidora.create( dto );
     }
@@ -37,7 +37,7 @@ public class DistribuidoraMutation {
     @Mutation( value = "alterarDistribuidora" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {ALTERAR_DISTRIBUIDORA} )
+            permissionsRequired = {UPDATE_DISTRIBUTOR} )
     public DistribuidoraDTO alterarUnidade( DistribuidoraDTO dto ) {
         return alterarDistribuidora.update( dto );
     }
@@ -45,7 +45,7 @@ public class DistribuidoraMutation {
     @Mutation( value = "excluirDistribuidora" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {EXCLUIR_DISTRIBUIDORA} )
+            permissionsRequired = {DELETE_DISTRIBUTOR} )
     public DistribuidoraDTO excluirUnidade( DistribuidoraDTO dto ) {
         excluirDistribuidora.delete( dto );
         return dto;

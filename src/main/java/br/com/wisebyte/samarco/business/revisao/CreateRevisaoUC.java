@@ -38,11 +38,11 @@ public class CreateRevisaoUC {
             throw new ValidadeExceptionBusiness("Revisao", "Revisao Id", "Id da Revisão deve ser nulo para criação");
         }
 
-        if (!validatorBusiness.existePlanejamento(inputDTO.getPlanejamentoId())) {
+        if (!validatorBusiness.planningExists(inputDTO.getPlanejamentoId())) {
             throw new ValidadeExceptionBusiness("Revisao", "Planejamento", "Planejamento não encontrado");
         }
 
-        if (!validatorBusiness.existeUsuario(inputDTO.getUsuarioId())) {
+        if (!validatorBusiness.userExists(inputDTO.getUsuarioId())) {
             throw new ValidadeExceptionBusiness("Revisao", "Usuario", "Usuário não encontrado");
         }
 
@@ -75,11 +75,11 @@ public class CreateRevisaoUC {
         boolean oficial,
         boolean finished
     ) {
-        if (!validatorBusiness.existePlanejamento(planejamentoId)) {
+        if (!validatorBusiness.planningExists(planejamentoId)) {
             throw new ValidadeExceptionBusiness("Revisao", "Planejamento", "Planejamento não encontrado");
         }
 
-        if (!validatorBusiness.existeUsuario(usuarioId)) {
+        if (!validatorBusiness.userExists(usuarioId)) {
             throw new ValidadeExceptionBusiness("Revisao", "Usuario", "Usuário não encontrado");
         }
 

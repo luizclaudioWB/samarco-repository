@@ -18,14 +18,14 @@ public class PlanejamentoValidationBusiness {
         return dto.getId() == null;
     }
 
-    public boolean existePlanejamento(PlanejamentoDTO dto) {
+    public boolean planningExists(PlanejamentoDTO dto) {
         if (dto.getId() == null) {
             return false;
         }
         return planejamentoRepository.findById(dto.getId()).isPresent();
     }
 
-    public boolean existePlanejamentoParaAno(PlanejamentoDTO dto) {
+    public boolean planningExistsForYear(PlanejamentoDTO dto) {
         if (dto.getAno() == null) {
             return false;
         }
@@ -33,7 +33,7 @@ public class PlanejamentoValidationBusiness {
     }
 
 
-    public boolean existeOutroPlanejamentoParaAno(PlanejamentoDTO dto) {
+    public boolean anotherPlanningExistsForYear(PlanejamentoDTO dto) {
         if (dto.getAno() == null || dto.getId() == null) {
             return false;
         }
@@ -50,12 +50,12 @@ public class PlanejamentoValidationBusiness {
         return !planejamento.get().getId().equals(dto.getId());
     }
 
-    public boolean existePlanejamentoCorrente() {
+    public boolean currentPlanningExists() {
         return planejamentoRepository.findByCorrente(true).isPresent();
     }
 
 
-    public boolean existeOutroPlanejamentoCorrente(PlanejamentoDTO dto) {
+    public boolean anotherCurrentPlanningExists(PlanejamentoDTO dto) {
         if (dto.getId() == null) {
             return false;
         }
@@ -72,12 +72,12 @@ public class PlanejamentoValidationBusiness {
         return !planejamentoCorrente.get().getId().equals(dto.getId());
     }
 
-    public boolean descricaoValida(PlanejamentoDTO dto) {
+    public boolean isDescriptionValid(PlanejamentoDTO dto) {
         return dto.getDescricao() != null && !dto.getDescricao().trim().isEmpty();
     }
 
 
-    public boolean anoValido(PlanejamentoDTO dto) {
+    public boolean isYearValid(PlanejamentoDTO dto) {
         if (dto.getAno() == null) {
             return false;
         }

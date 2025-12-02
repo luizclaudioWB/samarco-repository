@@ -21,7 +21,7 @@ public class DeleteDistribuidoraUC {
         if ( validator.idIsNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Id da distribuidora não deve ser nulo" );
         }
-        if ( !validator.existeDistribuidora( dto ) ) {
+        if ( !validator.distributorExists( dto ) ) {
             throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Distribuidora não encontrada" );
         }
         distribuidoraRepository.deleteById( dto.getId( ) );

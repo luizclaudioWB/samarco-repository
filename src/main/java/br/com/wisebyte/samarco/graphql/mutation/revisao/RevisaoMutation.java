@@ -34,7 +34,7 @@ public class RevisaoMutation {
     @Mutation( value = "cadastrarRevisao" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {CADASTRAR_REVISAO} )
+            permissionsRequired = {CREATE_REVISION} )
     public RevisaoDTO cadastrarRevisao( RevisaoInputDTO dto ) {
         return cadastrarRevisao.create( dto );
     }
@@ -42,7 +42,7 @@ public class RevisaoMutation {
     @Mutation( value = "alterarRevisao" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {ALTERAR_REVISAO} )
+            permissionsRequired = {UPDATE_REVISION} )
     public RevisaoDTO alterarRevisao( RevisaoInputDTO dto ) {
         return alterarRevisao.update( dto );
     }
@@ -50,7 +50,7 @@ public class RevisaoMutation {
     @Mutation( value = "excluirRevisao" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {EXCLUIR_REVISAO} )
+            permissionsRequired = {DELETE_REVISION} )
     public RevisaoDTO excluirRevisao( RevisaoDTO dto ) {
         excluirRevisao.delete( dto );
         return dto;
@@ -59,7 +59,7 @@ public class RevisaoMutation {
     @Mutation( value = "finalizarRevisao" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {FINALIZAR_REVISAO} )
+            permissionsRequired = {FINALIZE_REVISION} )
     public RevisaoDTO finalizarRevisao( Long revisaoId ) {
         return finalizarRevisaoUC.finalizar( revisaoId );
     }

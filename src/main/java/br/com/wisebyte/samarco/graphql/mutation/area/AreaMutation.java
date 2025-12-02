@@ -29,7 +29,7 @@ public class AreaMutation {
     @Mutation( value = "cadastrarArea" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {CADASTRAR_AREA} )
+            permissionsRequired = {CREATE_AREA} )
     public AreaDTO cadastrarArea( AreaDTO dto ) {
         return cadastrarArea.create( dto );
     }
@@ -37,7 +37,7 @@ public class AreaMutation {
     @Mutation( value = "alterarArea" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {ALTERAR_AREA} )
+            permissionsRequired = {UPDATE_AREA} )
     public AreaDTO alterarArea( AreaDTO dto ) {
         return alterarArea.update( dto );
     }
@@ -45,7 +45,7 @@ public class AreaMutation {
     @Mutation( value = "excluirArea" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {EXCLUIR_AREA} )
+            permissionsRequired = {DELETE_AREA} )
     public AreaDTO excluirArea( AreaDTO dto ) {
         excluirArea.delete( dto );
         return dto;

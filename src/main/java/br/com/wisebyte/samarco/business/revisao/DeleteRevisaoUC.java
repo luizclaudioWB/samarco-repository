@@ -22,7 +22,7 @@ public class DeleteRevisaoUC {
             throw new ValidadeExceptionBusiness( "Revisao", "Revisao Id", "Id da Revisão não deve ser nulo" );
         }
 
-        if ( !validator.existeRevisao( dto ) ) {
+        if ( !validator.revisionExists( dto ) ) {
             throw new ValidadeExceptionBusiness( "Revisao", "Revisao Id", "Revisão não encontrada" );
         }
 

@@ -23,16 +23,16 @@ public class AreaValidatorBusiness {
         return dto.getId( ) == null;
     }
 
-    public boolean existeArea( AreaDTO dto ) {
+    public boolean areaExists( AreaDTO dto ) {
         return areaRepository.findById( dto.getId( ) ).isPresent( );
     }
 
-    public boolean existeUnidade( Long unidadeId ) {
+    public boolean unitExists( Long unidadeId ) {
         if ( unidadeId == null ) return false;
         return unidadeRepository.findById( unidadeId ).isPresent( );
     }
 
-    public boolean existeUsuario( String usuarioId ) {
+    public boolean userExists( String usuarioId ) {
         if ( usuarioId == null ) return false;
         return usuarioRepository.findById( usuarioId ).isPresent( );
     }

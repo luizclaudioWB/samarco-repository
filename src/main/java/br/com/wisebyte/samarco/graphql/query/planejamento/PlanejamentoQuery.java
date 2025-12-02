@@ -12,7 +12,7 @@ import org.eclipse.microprofile.graphql.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.wisebyte.samarco.auth.Permissao.LISTAR_PLANEJAMENTO;
+import static br.com.wisebyte.samarco.auth.Permissao.*;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 
 
@@ -27,49 +27,45 @@ public class PlanejamentoQuery {
     PlanejamentoMapper planejamentoMapper;
 
 
-    @Query(value = "listarPlanejamentos")
+    @Query( value = "listarPlanejamentos" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_PLANEJAMENTO}
-    )
-    public List<PlanejamentoDTO> listarPlanejamentos() {
-        return planejamentoRepository.findAll()
-                .map(planejamentoMapper::toDTO)
-                .collect(Collectors.toList());
+            permissionsRequired = {LIST_PLANNINGS} )
+    public List<PlanejamentoDTO> listarPlanejamentos( ) {
+        return planejamentoRepository.findAll( )
+                .map( planejamentoMapper::toDTO )
+                .collect( Collectors.toList( ) );
     }
 
 
-    @Query(value = "buscarPlanejamentoPorId")
+    @Query( value = "buscarPlanejamentoPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_PLANEJAMENTO}
-    )
-    public PlanejamentoDTO buscarPlanejamentoPorId(Long id) {
-        return planejamentoRepository.findById(id)
-                .map(planejamentoMapper::toDTO)
-                .orElse(null);
+            permissionsRequired = {GET_PLANNING_BY_ID} )
+    public PlanejamentoDTO buscarPlanejamentoPorId( Long id ) {
+        return planejamentoRepository.findById( id )
+                .map( planejamentoMapper::toDTO )
+                .orElse( null );
     }
 
-    @Query(value = "buscarPlanejamentoPorAno")
+    @Query( value = "buscarPlanejamentoPorAno" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_PLANEJAMENTO}
-    )
-    public PlanejamentoDTO buscarPlanejamentoPorAno(Integer ano) {
-        return planejamentoRepository.findByAno(ano)
-                .map(planejamentoMapper::toDTO)
-                .orElse(null);
+            permissionsRequired = {GET_PLANNING_BY_YEAR} )
+    public PlanejamentoDTO buscarPlanejamentoPorAno( Integer ano ) {
+        return planejamentoRepository.findByAno( ano )
+                .map( planejamentoMapper::toDTO )
+                .orElse( null );
     }
 
 
-    @Query(value = "buscarPlanejamentoCorrente")
+    @Query( value = "buscarPlanejamentoCorrente" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LISTAR_PLANEJAMENTO}
-    )
-    public PlanejamentoDTO buscarPlanejamentoCorrente() {
-        return planejamentoRepository.findByCorrente(true)
-                .map(planejamentoMapper::toDTO)
-                .orElse(null);
+            permissionsRequired = {GET_CURRENT_PLANNING} )
+    public PlanejamentoDTO buscarPlanejamentoCorrente( ) {
+        return planejamentoRepository.findByCorrente( true )
+                .map( planejamentoMapper::toDTO )
+                .orElse( null );
     }
 }

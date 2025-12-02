@@ -29,7 +29,7 @@ public class FornecedorMutation {
     @Mutation( value = "cadastrarFornecedor" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {CADASTRAR_FORNECEDOR} )
+            permissionsRequired = {CREATE_SUPPLIER} )
     public FornecedorDTO cadastrarFornecedor( FornecedorDTO dto ) {
         return cadastrarFornecedor.create( dto );
     }
@@ -37,7 +37,7 @@ public class FornecedorMutation {
     @Mutation( value = "alterarFornecedor" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {ALTERAR_FORNECEDOR} )
+            permissionsRequired = {UPDATE_SUPPLIER} )
     public FornecedorDTO alterarFornecedor( FornecedorDTO dto ) {
         return alterarFornecedor.update( dto );
     }
@@ -45,7 +45,7 @@ public class FornecedorMutation {
     @Mutation( value = "excluirFornecedor" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {EXCLUIR_FORNECEDOR} )
+            permissionsRequired = {DELETE_SUPPLIER} )
     public FornecedorDTO excluirFornecedor( FornecedorDTO dto ) {
         excluirFornecedor.delete( dto );
         return dto;

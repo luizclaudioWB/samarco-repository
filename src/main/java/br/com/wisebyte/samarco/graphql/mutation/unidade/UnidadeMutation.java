@@ -29,7 +29,7 @@ public class UnidadeMutation {
     @Mutation( value = "cadastrarUnidade" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {CADASTRAR_UNIDADE} )
+            permissionsRequired = {CREATE_UNIT} )
     public UnidadeDTO cadastrarUnidade( UnidadeDTO unidade ) {
         return cadastrarUnidade.create( unidade );
     }
@@ -37,7 +37,7 @@ public class UnidadeMutation {
     @Mutation( value = "alterarUnidade" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {ALTERAR_UNIDADE} )
+            permissionsRequired = {UPDATE_UNIT} )
     public UnidadeDTO alterarUnidade( UnidadeDTO unidade ) {
         return alterarUnidade.update( unidade );
     }
@@ -45,7 +45,7 @@ public class UnidadeMutation {
     @Mutation( value = "excluirUnidade" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {EXCLUIR_UNIDADE} )
+            permissionsRequired = {DELETE_UNIT} )
     public UnidadeDTO excluirUnidade( UnidadeDTO unidade ) {
         excluirUnidade.delete( unidade );
         return unidade;

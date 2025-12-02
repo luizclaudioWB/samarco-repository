@@ -23,10 +23,10 @@ public class UpdateUsuarioUC {
 
     @Transactional
     public UsuarioDTO update( UsuarioDTO dto ) {
-        if ( validator.usuarioIsNullOrEmpty( dto ) ) {
+        if ( validator.userIsNullOrEmpty( dto ) ) {
             throw new ValidadeExceptionBusiness( "Usuario", "Usuario", "Usuario não deve ser nulo ou vazio" );
         }
-        if ( !validator.existeUsuario( dto ) ) {
+        if ( !validator.userExists( dto ) ) {
             throw new ValidadeExceptionBusiness( "Usuario", "Usuario", "Usuario não encontrado" );
         }
         Usuario usuario = usuarioRepository.findByUsuario( dto.getUsuario( ) ).orElseThrow( );

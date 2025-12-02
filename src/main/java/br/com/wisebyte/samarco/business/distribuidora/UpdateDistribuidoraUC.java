@@ -26,7 +26,7 @@ public class UpdateDistribuidoraUC {
         if ( validator.idIsNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Id da distribuidora não deve ser nulo" );
         }
-        if ( !validator.existeDistribuidora( dto ) ) {
+        if ( !validator.distributorExists( dto ) ) {
             throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Distribuidora não encontrada" );
         }
         Distribuidora distribuidora = distribuidoraRepository.findById( dto.getId( ) ).orElseThrow( );

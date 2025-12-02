@@ -21,7 +21,7 @@ public class DeleteFornecedorUC {
         if ( validator.idIsNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Fornecedor", "Fornecedor Id", "Id do Fornecedor não deve ser nulo" );
         }
-        if ( !validator.existeFornecedor( dto ) ) {
+        if ( !validator.supplierExists( dto ) ) {
             throw new ValidadeExceptionBusiness( "Fornecedor", "Fornecedor Id", "Fornecedor não encontrado" );
         }
         fornecedorRepository.deleteById( dto.getId( ) );
