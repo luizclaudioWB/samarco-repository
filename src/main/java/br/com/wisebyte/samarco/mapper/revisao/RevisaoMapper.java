@@ -1,5 +1,6 @@
 package br.com.wisebyte.samarco.mapper.revisao;
 
+import br.com.wisebyte.samarco.core.mapper.EntityMapper;
 import br.com.wisebyte.samarco.dto.revisao.RevisaoDTO;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.repository.planejamento.PlanejamentoRepository;
@@ -8,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class RevisaoMapper {
+public class RevisaoMapper implements EntityMapper<Revisao, RevisaoDTO> {
 
     @Inject
     PlanejamentoRepository planejamentoRepository;
@@ -16,6 +17,7 @@ public class RevisaoMapper {
     @Inject
     UsuarioRepository usuarioRepository;
 
+    @Override
     public Revisao toEntity( RevisaoDTO dto ) {
         return Revisao.builder( )
                 .id( dto.getId( ) )
@@ -35,6 +37,7 @@ public class RevisaoMapper {
                 .build( );
     }
 
+    @Override
     public RevisaoDTO toDTO( Revisao entity ) {
         return RevisaoDTO.builder( )
                 .id( entity.getId( ) )

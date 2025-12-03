@@ -1,12 +1,13 @@
 package br.com.wisebyte.samarco.mapper.usuario;
-
+import br.com.wisebyte.samarco.core.mapper.EntityMapper;
 import br.com.wisebyte.samarco.dto.usuario.UsuarioDTO;
 import br.com.wisebyte.samarco.model.usuario.Usuario;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class UsuarioMapper {
+public class UsuarioMapper implements EntityMapper<Usuario, UsuarioDTO> {
 
+    @Override
     public Usuario toEntity( UsuarioDTO dto ) {
         return Usuario.builder( )
                 .usuario( dto.getUsuario( ) )
@@ -15,6 +16,7 @@ public class UsuarioMapper {
                 .build( );
     }
 
+    @Override
     public UsuarioDTO toDTO( Usuario entity ) {
         return UsuarioDTO.builder( )
                 .usuario( entity.getUsuario( ) )

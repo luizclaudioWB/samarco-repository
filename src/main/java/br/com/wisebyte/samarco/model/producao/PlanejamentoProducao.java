@@ -21,8 +21,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @SuperBuilder
 @Table(
-        uniqueConstraints = { 
-                @UniqueConstraint(columnNames = { "ano" }) 
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_planejamento_producao_revisao_area",
+                        columnNames = { "revisao_id", "area_id" }
+                )
         }
 )
 public class PlanejamentoProducao extends BaseModel {

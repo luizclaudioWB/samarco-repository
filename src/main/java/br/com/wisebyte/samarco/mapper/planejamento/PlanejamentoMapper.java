@@ -1,13 +1,15 @@
 package br.com.wisebyte.samarco.mapper.planejamento;
 
+import br.com.wisebyte.samarco.core.mapper.EntityMapper;
 import br.com.wisebyte.samarco.dto.planejamento.PlanejamentoDTO;
 import br.com.wisebyte.samarco.model.planejamento.Planejamento;
 import jakarta.enterprise.context.ApplicationScoped;
 
 
 @ApplicationScoped
-public class PlanejamentoMapper {
+public class PlanejamentoMapper implements EntityMapper<Planejamento, PlanejamentoDTO> {
 
+    @Override
     public Planejamento toEntity(PlanejamentoDTO dto) {
         return Planejamento.builder()
                 .id(dto.getId())
@@ -18,6 +20,7 @@ public class PlanejamentoMapper {
                 .build();
     }
 
+    @Override
     public PlanejamentoDTO toDTO(Planejamento entity) {
         return PlanejamentoDTO.builder()
                 .id(entity.getId())

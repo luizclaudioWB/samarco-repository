@@ -1,5 +1,6 @@
 package br.com.wisebyte.samarco.mapper.area;
 
+import br.com.wisebyte.samarco.core.mapper.EntityMapper;
 import br.com.wisebyte.samarco.dto.area.AreaDTO;
 import br.com.wisebyte.samarco.model.area.Area;
 import br.com.wisebyte.samarco.repository.unidade.UnidadeRepository;
@@ -8,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class AreaMapper {
+public class AreaMapper implements EntityMapper<Area, AreaDTO> {
 
     @Inject
     UnidadeRepository unidadeRepository;
@@ -16,6 +17,7 @@ public class AreaMapper {
     @Inject
     UsuarioRepository usuarioRepository;
 
+    @Override
     public Area toEntity( AreaDTO dto ) {
         return Area.builder( )
                 .id( dto.getId( ) )
@@ -35,6 +37,7 @@ public class AreaMapper {
                 .build( );
     }
 
+    @Override
     public AreaDTO toDTO( Area entity ) {
         return AreaDTO.builder( )
                 .id( entity.getId( ) )
