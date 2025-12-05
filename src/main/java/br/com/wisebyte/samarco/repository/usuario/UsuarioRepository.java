@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends BasicRepository<Usuario, String> {
 
-    @Query( "SELECT u FROM Usuario u WHERE u.usuario = :usuario" )
+    @Query( "WHERE usuario = :usuario" )
     Optional<Usuario> findByUsuario( String usuario );
 }
