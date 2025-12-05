@@ -5,6 +5,7 @@ import br.com.wisebyte.samarco.dto.distribuidora.DistribuidoraDTO;
 import br.com.wisebyte.samarco.repository.distribuidora.DistribuidoraRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class DeleteDistribuidoraUC {
@@ -15,6 +16,7 @@ public class DeleteDistribuidoraUC {
     @Inject
     DistribuidoraValidationBusiness validator;
 
+    @Transactional
     public void delete( DistribuidoraDTO dto ) {
         if ( validator.idIsNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora Id", "Id da distribuidora não deve ser nulo" );

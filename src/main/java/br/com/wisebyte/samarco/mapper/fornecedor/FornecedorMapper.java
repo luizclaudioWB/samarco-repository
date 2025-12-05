@@ -9,6 +9,7 @@ public class FornecedorMapper {
 
     public Fornecedor toEntity( FornecedorDTO dto ) {
         return Fornecedor.builder( )
+                .id( dto.getId( ) )
                 .nome( dto.getNome( ) )
                 .cnpj( dto.getCnpj( ) )
                 .inicioDatabase( dto.getInicioDatabase( ) )
@@ -19,6 +20,7 @@ public class FornecedorMapper {
 
     public FornecedorDTO toDTO( Fornecedor entity ) {
         return FornecedorDTO.builder( )
+                .id( entity.getId( ) )
                 .nome( entity.getNome( ) )
                 .cnpj( entity.getCnpj( ) )
                 .inicioDatabase( entity.getInicioDatabase( ) )

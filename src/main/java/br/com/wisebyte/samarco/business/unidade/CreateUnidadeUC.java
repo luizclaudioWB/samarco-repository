@@ -7,6 +7,7 @@ import br.com.wisebyte.samarco.model.unidade.Unidade;
 import br.com.wisebyte.samarco.repository.unidade.UnidadeRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 @ApplicationScoped
@@ -21,6 +22,7 @@ public class CreateUnidadeUC {
     @Inject
     UnidadeValidationBusiness validator;
 
+    @Transactional
     public UnidadeDTO create( @NotNull UnidadeDTO dto ) {
         if ( !validator.unidadeGeradoraCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Cadastro inválido", "Erro nos dados informados para cadastro" );
