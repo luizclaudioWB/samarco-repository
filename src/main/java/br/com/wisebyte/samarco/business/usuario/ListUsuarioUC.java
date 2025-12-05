@@ -20,8 +20,7 @@ public class ListUsuarioUC {
             String sortField,
             String sortDirection,
             Integer page,
-            Integer size
-    ) {
+            Integer size ) {
         QueryManager<Usuario> queryManager = new QueryManager<>( Usuario.class );
         buildParams( filters, queryManager );
         return queryManager.buildQuery( entityManager, sortField, sortDirection, page, size );
