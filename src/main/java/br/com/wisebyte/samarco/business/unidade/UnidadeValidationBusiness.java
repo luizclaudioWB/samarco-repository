@@ -29,10 +29,18 @@ public class UnidadeValidationBusiness {
     }
 
     public boolean idsCannotBeEqual( UnidadeDTO dto ) {
-        return dto.getGeraEnergia( ) != null && (
-                dto.getGeraEnergia( ).equals( Boolean.FALSE ) ||
-                        dto.getGeraEnergia( ).equals( Boolean.TRUE ) &&
-                                !dto.getUnidadeRecebedoraCreditosDeInjecao( ).equals( dto.getId( ) ));
+        if ( dto.getGeraEnergia( ) == null ) {
+            return false;
+        }
+        if ( dto.getGeraEnergia( ).equals( Boolean.FALSE ) ) {
+            return true;
+        }
+        // Se geraEnergia é true, precisa verificar se unidadeRecebedoraCreditosDeInjecao não é null
+        // e se não é igual ao próprio id
+        if ( dto.getUnidadeRecebedoraCreditosDeInjecao( ) == null ) {
+            return false;
+        }
+        return !dto.getUnidadeRecebedoraCreditosDeInjecao( ).equals( dto.getId( ) );
     }
 
     public boolean unitHasAssociation( UnidadeDTO dto ) {
