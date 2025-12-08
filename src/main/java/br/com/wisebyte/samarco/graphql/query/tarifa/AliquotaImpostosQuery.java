@@ -18,55 +18,38 @@ import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 @RequestScoped
 public class AliquotaImpostosQuery {
 
-
     @Inject
     QueryAliquotaImpostosUC queryAliquotaImpostosUC;
 
-    @Query( "aliquotasImpostos" )
+    @Query( value = "aliquotasImpostos" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_TAX_RATES}
-    )
+            permissionsRequired = {LIST_TAX_RATES} )
     public QueryList<AliquotaImpostosDTO> listarAliquotasImpostosPaginado( @NotNull Integer page, @NotNull Integer size ) {
         return queryAliquotaImpostosUC.list( page, size );
     }
 
-
-    @Query( "aliquotasImpostosPorId" )
+    @Query( value = "aliquotaImpostosPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {GET_TAX_RATE_BY_ID}
-    )
-    public AliquotaImpostosDTO buscarAliquotaImpostosPorId(Long id) {
-
+            permissionsRequired = {GET_TAX_RATE_BY_ID} )
+    public AliquotaImpostosDTO buscarAliquotaImpostosPorId( Long id ) {
+        return queryAliquotaImpostosUC.findById( id );
     }
 
-
-    @Query( "aliquotasImpostosPorEstado" )
+    @Query( value = "aliquotasImpostosPorEstado" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_TAX_RATES_BY_STATE}
-    )
+            permissionsRequired = {LIST_TAX_RATES_BY_STATE} )
     public QueryList<AliquotaImpostosDTO> listarAliquotasPorEstado( Estado estado ) {
-
+        return queryAliquotaImpostosUC.findByEstado( estado );
     }
 
-    @Query( "aliquotasImpostosPorAno" )
+    @Query( value = "aliquotasImpostosPorPlanejamento" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_TAX_RATES}
-    )
-    public QueryList<AliquotaImpostosDTO> listarAliquotasPorAno( Integer ano ) {
-
-    }
-
-
-    @Query( "aliquotasImpostosPorPlanejamento" )
-    @SecuredAccess(
-            roles = {ADMIN},
-            permissionsRequired = {LIST_TAX_RATES}
-    )
+            permissionsRequired = {LIST_TAX_RATES} )
     public QueryList<AliquotaImpostosDTO> listarAliquotasPorTarifaPlanejamento( Long tarifaPlanejamentoId ) {
-
+        return queryAliquotaImpostosUC.findByTarifaPlanejamento( tarifaPlanejamentoId );
     }
 }

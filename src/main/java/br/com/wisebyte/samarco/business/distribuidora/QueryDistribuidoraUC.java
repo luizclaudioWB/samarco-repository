@@ -14,7 +14,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
 
 @ApplicationScoped
-public class QueryDistribuidoraUC {
+public class  QueryDistribuidoraUC {
 
     @Inject
     DistribuidoraRepository distribuidoraRepository;

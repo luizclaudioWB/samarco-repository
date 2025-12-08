@@ -1,10 +1,8 @@
 package br.com.wisebyte.samarco.graphql.query.tarifa;
 
 import br.com.wisebyte.samarco.annotation.SecuredAccess;
-import br.com.wisebyte.samarco.business.tarifa.ListTarifaFornecedorUC;
-import br.com.wisebyte.samarco.core.graphql.ListResults;
-import br.com.wisebyte.samarco.dto.graphql.FilterInput;
-import br.com.wisebyte.samarco.dto.graphql.SortDirectionDTO;
+import br.com.wisebyte.samarco.business.tarifa.QueryTarifaFornecedorUC;
+import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaFornecedorDTO;
 import br.com.wisebyte.samarco.mapper.tarifa.TarifaFornecedorMapper;
 import br.com.wisebyte.samarco.model.fornecedor.Fornecedor;
@@ -18,9 +16,8 @@ import jakarta.validation.constraints.NotNull;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Query;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static br.com.wisebyte.samarco.auth.Permissao.*;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
@@ -28,6 +25,9 @@ import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 @GraphQLApi
 @RequestScoped
 public class TarifaFornecedorQuery {
+
+    @Inject
+    QueryTarifaFornecedorUC queryTarifaFornecedorUC;
 
     @Inject
     TarifaFornecedorRepository repository;
@@ -41,121 +41,79 @@ public class TarifaFornecedorQuery {
     @Inject
     TarifaFornecedorMapper mapper;
 
-    @Inject
-    ListTarifaFornecedorUC listTarifaFornecedorUC;
-
-    @Query("listarTarifasFornecedorPaginado")
+    @Query( value = "tarifasFornecedor" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_SUPPLIER_RATES}
-    )
-    public ListResults<TarifaFornecedorDTO> listarTarifasFornecedorPaginado(
-            List<FilterInput> filters,
-            String sortBy,
-            SortDirectionDTO sortDirection,
-            @NotNull Integer page,
-            @NotNull Integer size) {
-        Map<String, Object> finalFilters = Optional.ofNullable(filters)
-                .orElse(Collections.emptyList())
-                .stream()
-                .filter(f -> f.key() != null && f.value() != null)
-                .collect(Collectors.toMap(FilterInput::key, FilterInput::value, (a, b) -> b));
-
-        String column = Optional.ofNullable(sortBy).orElse("id");
-        String sortDir = Optional.ofNullable(sortDirection)
-                .map(SortDirectionDTO::name)
-                .orElse("ASC");
-
-        return mapper.toDTO(listTarifaFornecedorUC.list(finalFilters, column, sortDir, page, size));
+            permissionsRequired = {LIST_SUPPLIER_RATES} )
+    public QueryList<TarifaFornecedorDTO> listarTarifasFornecedor( @NotNull Integer page, @NotNull Integer size ) {
+        return queryTarifaFornecedorUC.list( page, size );
     }
 
-    @Query("listarTarifasFornecedor")
+    @Query( value = "tarifaFornecedorPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_SUPPLIER_RATES}
-    )
-    public List<TarifaFornecedorDTO> listarTarifasFornecedor() {
-        return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .map(mapper::toDTO)
-                .collect(Collectors.toList());
+            permissionsRequired = {GET_SUPPLIER_RATE_BY_ID} )
+    public TarifaFornecedorDTO buscarTarifaFornecedorPorId( Long id ) {
+        return queryTarifaFornecedorUC.findById( id );
     }
 
-    @Query("buscarTarifaFornecedorPorId")
+    @Query( value = "tarifasFornecedorPorTarifaPlanejamento" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {GET_SUPPLIER_RATE_BY_ID}
-    )
-    public TarifaFornecedorDTO buscarTarifaFornecedorPorId(Long id) {
-        return repository.findById(id)
-                .map(mapper::toDTO)
-                .orElse(null);
-    }
-
-    @Query("listarTarifasFornecedorPorTarifaPlanejamento")
-    @SecuredAccess(
-            roles = {ADMIN},
-            permissionsRequired = {LIST_SUPPLIER_RATES}
-    )
-    public List<TarifaFornecedorDTO> listarTarifasFornecedorPorTarifaPlanejamento(
-            Long tarifaPlanejamentoId
-    ) {
+            permissionsRequired = {LIST_SUPPLIER_RATES} )
+    public List<TarifaFornecedorDTO> listarTarifasFornecedorPorTarifaPlanejamento( Long tarifaPlanejamentoId ) {
         TarifaPlanejamento tp = tarifaPlanejamentoRepository
-                .findById(tarifaPlanejamentoId)
-                .orElse(null);
+                .findById( tarifaPlanejamentoId )
+                .orElse( null );
 
-        if (tp == null) {
-            return List.of();
+        if ( tp == null ) {
+            return List.of( );
         }
 
-        return repository.findByPlanejamento(tp).stream()
-                .map(mapper::toDTO)
-                .collect(Collectors.toList());
+        return repository.findByPlanejamento( tp ).stream( )
+                .map( mapper::toDTO )
+                .collect( Collectors.toList( ) );
     }
 
-    @Query("listarTarifasFornecedorPorFornecedor")
+    @Query( value = "tarifasFornecedorPorFornecedor" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_SUPPLIER_RATES}
-    )
-    public List<TarifaFornecedorDTO> listarTarifasFornecedorPorFornecedor(
-            Long fornecedorId
-    ) {
+            permissionsRequired = {LIST_SUPPLIER_RATES} )
+    public List<TarifaFornecedorDTO> listarTarifasFornecedorPorFornecedor( Long fornecedorId ) {
         Fornecedor fornecedor = fornecedorRepository
-                .findById(fornecedorId)
-                .orElse(null);
+                .findById( fornecedorId )
+                .orElse( null );
 
-        if (fornecedor == null) {
-            return List.of();
+        if ( fornecedor == null ) {
+            return List.of( );
         }
 
-        return repository.findByFornecedor(fornecedor).stream()
-                .map(mapper::toDTO)
-                .collect(Collectors.toList());
+        return repository.findByFornecedor( fornecedor ).stream( )
+                .map( mapper::toDTO )
+                .collect( Collectors.toList( ) );
     }
 
-    @Query("listarTarifasFornecedorPorPlanejamentoEFornecedor")
+    @Query( value = "tarifasFornecedorPorPlanejamentoEFornecedor" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_SUPPLIER_RATES}
-    )
+            permissionsRequired = {LIST_SUPPLIER_RATES} )
     public List<TarifaFornecedorDTO> listarTarifasFornecedorPorPlanejamentoEFornecedor(
             Long tarifaPlanejamentoId,
-            Long fornecedorId
-    ) {
+            Long fornecedorId ) {
         TarifaPlanejamento tp = tarifaPlanejamentoRepository
-                .findById(tarifaPlanejamentoId)
-                .orElse(null);
+                .findById( tarifaPlanejamentoId )
+                .orElse( null );
 
         Fornecedor fornecedor = fornecedorRepository
-                .findById(fornecedorId)
-                .orElse(null);
+                .findById( fornecedorId )
+                .orElse( null );
 
-        if (tp == null || fornecedor == null) {
-            return List.of();
+        if ( tp == null || fornecedor == null ) {
+            return List.of( );
         }
 
-        return repository.findByPlanejamentoAndFornecedor(tp, fornecedor).stream()
-                .map(mapper::toDTO)
-                .collect(Collectors.toList());
+        return repository.findByPlanejamentoAndFornecedor( tp, fornecedor ).stream( )
+                .map( mapper::toDTO )
+                .collect( Collectors.toList( ) );
     }
 }

@@ -1,0 +1,38 @@
+package br.com.wisebyte.samarco.business.tarifa;
+
+import br.com.wisebyte.samarco.dto.QueryList;
+import br.com.wisebyte.samarco.dto.tarifa.TarifaPlanejamentoDTO;
+import br.com.wisebyte.samarco.mapper.tarifa.TarifaPlanejamentoMapper;
+import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaPlanejamento;
+import br.com.wisebyte.samarco.model.planejamento.tarifa._TarifaPlanejamento;
+import br.com.wisebyte.samarco.repository.tarifa.TarifaPlanejamentoRepository;
+import jakarta.data.Order;
+import jakarta.data.page.Page;
+import jakarta.data.page.PageRequest;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
+
+@ApplicationScoped
+public class QueryTarifaPlanejamentoUC {
+
+    @Inject
+    TarifaPlanejamentoRepository tarifaPlanejamentoRepository;
+
+    @Inject
+    TarifaPlanejamentoMapper tarifaPlanejamentoMapper;
+
+    public QueryList<TarifaPlanejamentoDTO> list( @NotNull Integer page, @NotNull Integer size ) {
+        Page<TarifaPlanejamento> all = tarifaPlanejamentoRepository.findAll( PageRequest.ofPage( page, size, true ), Order.by( _TarifaPlanejamento.id.desc( ) ) );
+        return QueryList.<TarifaPlanejamentoDTO>builder( )
+                .totalElements( all.totalElements( ) )
+                .totalPages( all.totalPages( ) )
+                .results( all.content( ).stream( ).map( tarifaPlanejamentoMapper::toDTO ).toList( ) )
+                .build( );
+    }
+
+    public TarifaPlanejamentoDTO findById( Long id ) {
+        return tarifaPlanejamentoRepository.findById( id ).map( tarifaPlanejamentoMapper::toDTO ).orElse( null );
+    }
+
+}
