@@ -20,10 +20,8 @@ public class UsuarioQuery {
     @Inject
     QueryUsuarioUC queryUsuarioUC;
 
-    @Query( value = "listarUsuarios" )
-    @SecuredAccess(
-            roles = {ADMIN},
-            permissionsRequired = {LIST_USERS} )
+    @Query( value = "users" )
+    @SecuredAccess( roles = {ADMIN}, permissionsRequired = {LIST_USERS} )
     public QueryList<UsuarioDTO> listarUsuariosPaginado( @NotNull Integer page, @NotNull Integer size ) {
         return queryUsuarioUC.findUsers( page, size );
     }

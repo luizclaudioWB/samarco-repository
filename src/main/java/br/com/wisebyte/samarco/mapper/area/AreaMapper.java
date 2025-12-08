@@ -18,42 +18,26 @@ public class AreaMapper implements EntityMapper<Area, AreaDTO> {
     UsuarioRepository usuarioRepository;
 
     @Override
-    public Area toEntity( AreaDTO dto ) {
-        return Area.builder( )
-                .id( dto.getId( ) )
-                .nomeArea( dto.getNomeArea( ) )
-                .tipoArea( dto.getTipoArea( ) )
-                .ativo( dto.isAtivo( ) )
-                .unidade(
-                        dto.getUnidadeId( ) != null
-                                ? unidadeRepository.findById( dto.getUnidadeId( ) ).orElse( null )
-                                : null
-                )
-                .usuario(
-                        dto.getUsuarioId( ) != null
-                                ? usuarioRepository.findById( dto.getUsuarioId( ) ).orElse( null )
-                                : null
-                )
-                .build( );
-    }
-
-    @Override
     public AreaDTO toDTO( Area entity ) {
         return AreaDTO.builder( )
                 .id( entity.getId( ) )
                 .nomeArea( entity.getNomeArea( ) )
                 .tipoArea( entity.getTipoArea( ) )
                 .ativo( entity.isAtivo( ) )
-                .unidadeId(
-                        entity.getUnidade( ) != null
-                                ? entity.getUnidade( ).getId( )
-                                : null
-                )
-                .usuarioId(
-                        entity.getUsuario( ) != null
-                                ? entity.getUsuario( ).getUsuario( )
-                                : null
-                )
+                .unidadeId( entity.getUnidade( ) != null ? entity.getUnidade( ).getId( ) : null )
+                .usuarioId( entity.getUsuario( ) != null ? entity.getUsuario( ).getUsuario( ) : null )
+                .build( );
+    }
+
+    @Override
+    public Area toEntity( AreaDTO dto ) {
+        return Area.builder( )
+                .id( dto.getId( ) )
+                .nomeArea( dto.getNomeArea( ) )
+                .tipoArea( dto.getTipoArea( ) )
+                .ativo( dto.isAtivo( ) )
+                .unidade( dto.getUnidadeId( ) != null ? unidadeRepository.findById( dto.getUnidadeId( ) ).orElse( null ) : null )
+                .usuario( dto.getUsuarioId( ) != null ? usuarioRepository.findById( dto.getUsuarioId( ) ).orElse( null ) : null )
                 .build( );
     }
 }

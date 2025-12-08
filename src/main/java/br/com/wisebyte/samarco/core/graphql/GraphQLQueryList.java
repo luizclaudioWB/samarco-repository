@@ -11,5 +11,4 @@ public record GraphQLQueryList<ENTITY>(
         Integer totalOfPages,
         Integer page,
         Integer size
-) {
-}
+) { }

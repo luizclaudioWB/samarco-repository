@@ -15,41 +15,30 @@ public class AliquotaImpostosMapper implements EntityMapper<AliquotaImpostos, Al
 
 
     @Override
-    public AliquotaImpostos toEntity(AliquotaImpostosDTO dto) {
-        return AliquotaImpostos.builder()
-                .id(dto.getId())
-                .planejamento(
-                        dto.getTarifaPlanejamentoId() != null
-                                ? tarifaPlanejamentoRepository
-                                    .findById(dto.getTarifaPlanejamentoId())
-                                    .orElse(null)
-                                : null
-                )
-                .ano(dto.getAno())
-                .estado(dto.getEstado())
-                .percentualPis(dto.getPercentualPis())
-                .percentualCofins(dto.getPercentualCofins())
-                .percentualIcms(dto.getPercentualIcms())
-                .percentualIpca(dto.getPercentualIpca())
-                .build();
+    public AliquotaImpostosDTO toDTO( AliquotaImpostos entity ) {
+        return AliquotaImpostosDTO.builder( )
+                .id( entity.getId( ) )
+                .tarifaPlanejamentoId( entity.getPlanejamento( ) != null ? entity.getPlanejamento( ).getId( ) : null )
+                .ano( entity.getAno( ) )
+                .estado( entity.getEstado( ) )
+                .percentualPis( entity.getPercentualPis( ) )
+                .percentualCofins( entity.getPercentualCofins( ) )
+                .percentualIcms( entity.getPercentualIcms( ) )
+                .percentualIpca( entity.getPercentualIpca( ) )
+                .build( );
     }
 
-
     @Override
-    public AliquotaImpostosDTO toDTO(AliquotaImpostos entity) {
-        return AliquotaImpostosDTO.builder()
-                .id(entity.getId())
-                .tarifaPlanejamentoId(
-                        entity.getPlanejamento() != null
-                                ? entity.getPlanejamento().getId()
-                                : null
-                )
-                .ano(entity.getAno())
-                .estado(entity.getEstado())
-                .percentualPis(entity.getPercentualPis())
-                .percentualCofins(entity.getPercentualCofins())
-                .percentualIcms(entity.getPercentualIcms())
-                .percentualIpca(entity.getPercentualIpca())
-                .build();
+    public AliquotaImpostos toEntity( AliquotaImpostosDTO dto ) {
+        return AliquotaImpostos.builder( )
+                .id( dto.getId( ) )
+                .planejamento( dto.getTarifaPlanejamentoId( ) != null ? tarifaPlanejamentoRepository.findById( dto.getTarifaPlanejamentoId( ) ).orElse( null ) : null )
+                .ano( dto.getAno( ) )
+                .estado( dto.getEstado( ) )
+                .percentualPis( dto.getPercentualPis( ) )
+                .percentualCofins( dto.getPercentualCofins( ) )
+                .percentualIcms( dto.getPercentualIcms( ) )
+                .percentualIpca( dto.getPercentualIpca( ) )
+                .build( );
     }
 }

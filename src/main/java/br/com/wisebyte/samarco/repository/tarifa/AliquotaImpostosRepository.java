@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface AliquotaImpostosRepository extends BasicRepository<AliquotaImpostos, Long> {
 
     @Find
-    List<AliquotaImpostos> findByPlanejamento(TarifaPlanejamento planejamento);
+    List<AliquotaImpostos> findByTarifaPlanejamento( TarifaPlanejamento planejamento );
 
     @Find
     Optional<AliquotaImpostos> findByPlanejamentoAndAnoAndEstado(
