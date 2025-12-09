@@ -33,7 +33,7 @@ public class AliquotaImpostosQuery {
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {GET_TAX_RATE_BY_ID} )
-    public AliquotaImpostosDTO buscarAliquotaImpostosPorId( Long id ) {
+    public AliquotaImpostosDTO buscarAliquotaImpostosPorId( @NotNull Long id ) {
         return queryAliquotaImpostosUC.findById( id );
     }
 
@@ -41,7 +41,7 @@ public class AliquotaImpostosQuery {
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {LIST_TAX_RATES_BY_STATE} )
-    public QueryList<AliquotaImpostosDTO> listarAliquotasPorEstado( Estado estado ) {
+    public QueryList<AliquotaImpostosDTO> listarAliquotasPorEstado( @NotNull Estado estado ) {
         return queryAliquotaImpostosUC.findByEstado( estado );
     }
 
@@ -49,7 +49,7 @@ public class AliquotaImpostosQuery {
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {LIST_TAX_RATES} )
-    public QueryList<AliquotaImpostosDTO> listarAliquotasPorTarifaPlanejamento( Long tarifaPlanejamentoId ) {
+    public QueryList<AliquotaImpostosDTO> listarAliquotasPorTarifaPlanejamento( @NotNull Long tarifaPlanejamentoId ) {
         return queryAliquotaImpostosUC.findByTarifaPlanejamento( tarifaPlanejamentoId );
     }
 }

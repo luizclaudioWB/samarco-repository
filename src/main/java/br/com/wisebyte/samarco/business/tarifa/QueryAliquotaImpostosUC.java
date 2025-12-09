@@ -13,6 +13,7 @@ import jakarta.data.page.Page;
 import jakarta.data.page.PageRequest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
 
 @ApplicationScoped
 public class QueryAliquotaImpostosUC {
@@ -40,7 +41,7 @@ public class QueryAliquotaImpostosUC {
         return mapper.toQueryDTO( repository.findByEstado( estado ) );
     }
 
-    public QueryList<AliquotaImpostosDTO> findByTarifaPlanejamento( Long tarifaPlanejamentoId ) {
+    public QueryList<AliquotaImpostosDTO> findByTarifaPlanejamento( @NotNull Long tarifaPlanejamentoId ) {
         return mapper.toQueryDTO( repository.findByTarifaPlanejamento( TarifaPlanejamento.builder( ).id( tarifaPlanejamentoId ).build( ) ) );
     }
 

@@ -28,7 +28,6 @@ public class RevisaoQuery {
         return queryRevisaoUC.list( page, size );
     }
 
-
     @Query( value = "revisaoPorId" )
     @SecuredAccess(
             roles = {ADMIN},
