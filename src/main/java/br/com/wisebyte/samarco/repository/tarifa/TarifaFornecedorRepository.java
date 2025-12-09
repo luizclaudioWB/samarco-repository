@@ -13,7 +13,7 @@ import java.util.List;
 public interface TarifaFornecedorRepository extends BasicRepository<TarifaFornecedor, Long> {
 
     @Find
-    List<TarifaFornecedor> findByPlanejamento(TarifaPlanejamento planejamento);
+    List<TarifaFornecedor> findByTarifaPlanejamento( TarifaPlanejamento planejamento );
 
     @Find
     List<TarifaFornecedor> findByFornecedor(Fornecedor fornecedor);

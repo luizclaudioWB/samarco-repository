@@ -3,7 +3,9 @@ package br.com.wisebyte.samarco.business.tarifa;
 import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaFornecedorDTO;
 import br.com.wisebyte.samarco.mapper.tarifa.TarifaFornecedorMapper;
+import br.com.wisebyte.samarco.model.fornecedor.Fornecedor;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaFornecedor;
+import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaPlanejamento;
 import br.com.wisebyte.samarco.model.planejamento.tarifa._TarifaFornecedor;
 import br.com.wisebyte.samarco.repository.tarifa.TarifaFornecedorRepository;
 import jakarta.data.Order;
@@ -35,4 +37,11 @@ public class QueryTarifaFornecedorUC {
         return tarifaFornecedorRepository.findById( id ).map( tarifaFornecedorMapper::toDTO ).orElse( null );
     }
 
+    public QueryList<TarifaFornecedorDTO> findByTarifaPlanejamento( @NotNull Long tarifaPlanejamentoId ) {
+        return tarifaFornecedorMapper.toQueryDTO( tarifaFornecedorRepository.findByTarifaPlanejamento( TarifaPlanejamento.builder( ).id( tarifaPlanejamentoId ).build( ) ) );
+    }
+
+    public QueryList<TarifaFornecedorDTO> findByFornecedor( @NotNull Long fornecedorId ) {
+        return tarifaFornecedorMapper.toQueryDTO( tarifaFornecedorRepository.findByFornecedor( Fornecedor.builder( ).id( fornecedorId ).build( ) ) );
+    }
 }
