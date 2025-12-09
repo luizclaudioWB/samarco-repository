@@ -25,7 +25,7 @@ public class Unidade extends BaseModel {
     private Boolean unidadeGeradora;
 
     @OneToOne
-    private Unidade unidadeRecebedoraCreditosDeInjecao;
+    private Unidade unidadeCedenteCreditosDeInjecao;
 
     @Column( nullable = false )
     private Boolean conectadaRedeBasica;

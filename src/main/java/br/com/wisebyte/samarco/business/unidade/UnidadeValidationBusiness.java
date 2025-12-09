@@ -13,12 +13,10 @@ public class UnidadeValidationBusiness {
     UnidadeRepository unidadeRepository;
 
 
-    public boolean generatorUnitCannotBeNull( UnidadeDTO dto ) {
-        boolean hasValue = dto.getGeraEnergia( ) != null;
-        boolean geraEnergia = hasValue && (dto.getGeraEnergia( ).equals( Boolean.TRUE ));
-        boolean hasUnidadeRecebedoraCreditosDeInjecao = geraEnergia && dto.getUnidadeRecebedoraCreditosDeInjecao( ) != null;
-        boolean existsUnidadeRecebedoraCreditosDeInjecao = hasUnidadeRecebedoraCreditosDeInjecao && exists( dto.getUnidadeRecebedoraCreditosDeInjecao( ) );
-        return !hasValue || !geraEnergia || (hasUnidadeRecebedoraCreditosDeInjecao && existsUnidadeRecebedoraCreditosDeInjecao);
+    public boolean cedenteUnitCannotBeNull( UnidadeDTO dto ) {
+        boolean hasUnidadeRecebedoraCreditosDeInjecao = dto.getUnidadeCedenteCreditosDeInjecao( ) != null;
+        boolean existsUnidadeCedenteCreditosDeInjecao = hasUnidadeRecebedoraCreditosDeInjecao && exists( dto.getUnidadeCedenteCreditosDeInjecao( ) );
+        return !hasUnidadeRecebedoraCreditosDeInjecao || existsUnidadeCedenteCreditosDeInjecao;
     }
 
     public boolean exists( Long id ) {
@@ -37,10 +35,10 @@ public class UnidadeValidationBusiness {
         }
         // Se geraEnergia é true, precisa verificar se unidadeRecebedoraCreditosDeInjecao não é null
         // e se não é igual ao próprio id
-        if ( dto.getUnidadeRecebedoraCreditosDeInjecao( ) == null ) {
+        if ( dto.getUnidadeCedenteCreditosDeInjecao( ) == null ) {
             return false;
         }
-        return !dto.getUnidadeRecebedoraCreditosDeInjecao( ).equals( dto.getId( ) );
+        return !dto.getUnidadeCedenteCreditosDeInjecao( ).equals( dto.getId( ) );
     }
 
     public boolean unitHasAssociation( UnidadeDTO dto ) {
@@ -48,7 +46,7 @@ public class UnidadeValidationBusiness {
         if ( null == unidade ) {
             return false;
         }
-        return unidadeRepository.findByUnidadeRecebedoraCreditosDeInjecao( unidade ).isEmpty( );
+        return unidadeRepository.findByUnidadeCedenteCreditosDeInjecao( unidade ).isEmpty( );
     }
 
 }

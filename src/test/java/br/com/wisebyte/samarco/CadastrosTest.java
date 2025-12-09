@@ -24,7 +24,7 @@ public class CadastrosTest {
         entityManager.persist(
                 Usuario.builder( )
                         .nome( "Leandro" )
-                        .usuario( "leandro@samarco.com.br" )
+                        .usuario( "leandro@wisebyte.com.br" )
                         .build( )
         );
     }
@@ -41,7 +41,7 @@ public class CadastrosTest {
                 .nomeUnidade( "Germano" )
                 .unidadeGeradora( false )
                 .conectadaRedeBasica( false )
-                .unidadeRecebedoraCreditosDeInjecao( guilmanAmorim )
+                .unidadeCedenteCreditosDeInjecao( guilmanAmorim )
                 .estado( Estado.MG )
                 .build( );
         entityManager.persist( germano );
@@ -62,7 +62,7 @@ public class CadastrosTest {
         Unidade ubu = Unidade.builder( )
                 .nomeUnidade( "UBU" )
                 .unidadeGeradora( false )
-                .unidadeRecebedoraCreditosDeInjecao( munizFreire )
+                .unidadeCedenteCreditosDeInjecao( munizFreire )
                 .conectadaRedeBasica( false )
                 .estado( Estado.ES )
                 .build( );

@@ -30,7 +30,7 @@ public class UpdateUnidadeUC {
         if ( !validator.idsCannotBeEqual( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser igual ao id da unidade" );
         }
-        if ( !validator.generatorUnitCannotBeNull( dto ) ) {
+        if ( !validator.cedenteUnitCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser nulo" );
         }
         if ( !validator.exists(dto.getId() ) ) {
@@ -47,8 +47,8 @@ public class UpdateUnidadeUC {
         unidade.setConectadaRedeBasica( dto.getConectadaRedeBasica( ) );
         unidade.setUnidadeGeradora( dto.getGeraEnergia( ) );
         if ( unidade.getUnidadeGeradora( ) != null && unidade.getUnidadeGeradora( ) ) {
-            unidadeRepository.findById( dto.getUnidadeRecebedoraCreditosDeInjecao( ) )
-                    .ifPresent( unidade::setUnidadeRecebedoraCreditosDeInjecao );
+            unidadeRepository.findById( dto.getUnidadeCedenteCreditosDeInjecao( ) )
+                    .ifPresent( unidade::setUnidadeCedenteCreditosDeInjecao );
         }
     }
 

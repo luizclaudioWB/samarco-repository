@@ -16,7 +16,7 @@ public class UnidadeDTO {
 
     private Boolean geraEnergia;
 
-    private Long unidadeRecebedoraCreditosDeInjecao;
+    private Long unidadeCedenteCreditosDeInjecao;
 
     private Boolean conectadaRedeBasica;
 

@@ -55,7 +55,7 @@ public class UnidadeQuery {
             permissionsRequired = {LIST_UNITS_BY_INJECTION_CREDIT_RECEIVER} )
     public List<UnidadeDTO> listarUnidadesPorRecebedoraCreditosDeInjecao( Long unidadeId ) {
         return unidadeRepository.findById( unidadeId )
-                .map( unidade -> unidadeRepository.findByUnidadeRecebedoraCreditosDeInjecao( unidade ).stream( )
+                .map( unidade -> unidadeRepository.findByUnidadeCedenteCreditosDeInjecao( unidade ).stream( )
                         .map( unidadeMapper::toDTO )
                         .collect( Collectors.toList( ) )
                 )
