@@ -43,7 +43,7 @@ public class PlanejamentoMutation {
             permissionsRequired = {CREATE_PLANNING}
     )
     public PlanejamentoDTO cadastrarPlanejamento(PlanejamentoDTO dto) {
-        String user = activeProfile.equals("dev") ? "leandro.samarco@gmail.com" : username;
+        String user = activeProfile.equals( "dev" ) ? "leandro@wisebyte.com.br" : username;
         return cadastrarPlanejamento.create(dto, user);
     }
 
