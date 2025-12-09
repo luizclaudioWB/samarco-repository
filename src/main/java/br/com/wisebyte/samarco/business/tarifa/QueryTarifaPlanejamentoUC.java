@@ -3,6 +3,7 @@ package br.com.wisebyte.samarco.business.tarifa;
 import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaPlanejamentoDTO;
 import br.com.wisebyte.samarco.mapper.tarifa.TarifaPlanejamentoMapper;
+import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaPlanejamento;
 import br.com.wisebyte.samarco.model.planejamento.tarifa._TarifaPlanejamento;
 import br.com.wisebyte.samarco.repository.tarifa.TarifaPlanejamentoRepository;
@@ -17,22 +18,25 @@ import jakarta.validation.constraints.NotNull;
 public class QueryTarifaPlanejamentoUC {
 
     @Inject
-    TarifaPlanejamentoRepository tarifaPlanejamentoRepository;
+    TarifaPlanejamentoRepository repository;
 
     @Inject
-    TarifaPlanejamentoMapper tarifaPlanejamentoMapper;
+    TarifaPlanejamentoMapper mapper;
 
     public QueryList<TarifaPlanejamentoDTO> list( @NotNull Integer page, @NotNull Integer size ) {
-        Page<TarifaPlanejamento> all = tarifaPlanejamentoRepository.findAll( PageRequest.ofPage( page, size, true ), Order.by( _TarifaPlanejamento.id.desc( ) ) );
+        Page<TarifaPlanejamento> all = repository.findAll( PageRequest.ofPage( page, size, true ), Order.by( _TarifaPlanejamento.id.desc( ) ) );
         return QueryList.<TarifaPlanejamentoDTO>builder( )
                 .totalElements( all.totalElements( ) )
                 .totalPages( all.totalPages( ) )
-                .results( all.content( ).stream( ).map( tarifaPlanejamentoMapper::toDTO ).toList( ) )
+                .results( all.content( ).stream( ).map( mapper::toDTO ).toList( ) )
                 .build( );
     }
 
     public TarifaPlanejamentoDTO findById( Long id ) {
-        return tarifaPlanejamentoRepository.findById( id ).map( tarifaPlanejamentoMapper::toDTO ).orElse( null );
+        return repository.findById( id ).map( mapper::toDTO ).orElse( null );
     }
 
+    public TarifaPlanejamentoDTO findByRevisao( @NotNull Long revisaoId ) {
+        return repository.findByRevisao( Revisao.builder( ).id( revisaoId ).build( ) ).stream( ).map( mapper::toDTO ).findFirst( ).orElse( null );
+    }
 }

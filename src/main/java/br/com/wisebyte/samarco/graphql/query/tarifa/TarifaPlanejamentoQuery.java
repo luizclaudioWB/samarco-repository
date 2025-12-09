@@ -5,7 +5,6 @@ import br.com.wisebyte.samarco.business.tarifa.QueryTarifaPlanejamentoUC;
 import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaPlanejamentoDTO;
 import br.com.wisebyte.samarco.mapper.tarifa.TarifaPlanejamentoMapper;
-import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.repository.revisao.RevisaoRepository;
 import br.com.wisebyte.samarco.repository.tarifa.TarifaPlanejamentoRepository;
 import jakarta.enterprise.context.RequestScoped;
@@ -45,7 +44,7 @@ public class TarifaPlanejamentoQuery {
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {GET_RATE_PLANNING_BY_ID} )
-    public TarifaPlanejamentoDTO buscarTarifaPlanejamentoPorId( Long id ) {
+    public TarifaPlanejamentoDTO buscarTarifaPlanejamentoPorId( @NotNull Long id ) {
         return queryTarifaPlanejamentoUC.findById( id );
     }
 
@@ -53,15 +52,7 @@ public class TarifaPlanejamentoQuery {
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {GET_RATE_PLANNING_BY_REVISION} )
-    public TarifaPlanejamentoDTO buscarTarifaPlanejamentoPorRevisao( Long revisaoId ) {
-        Revisao revisao = revisaoRepository.findById( revisaoId ).orElse( null );
-
-        if ( revisao == null ) {
-            return null;
-        }
-
-        return repository.findByRevisao( revisao )
-                .map( mapper::toDTO )
-                .orElse( null );
+    public TarifaPlanejamentoDTO buscarTarifaPlanejamentoPorRevisao( @NotNull Long revisaoId ) {
+        return queryTarifaPlanejamentoUC.findByRevisao( revisaoId );
     }
 }
