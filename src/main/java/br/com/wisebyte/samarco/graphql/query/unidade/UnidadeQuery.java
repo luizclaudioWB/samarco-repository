@@ -41,6 +41,14 @@ public class UnidadeQuery {
         return queryUnidadeUC.list( page, size );
     }
 
+    @Query( value = "unidadesGeradoras" )
+    @SecuredAccess(
+            roles = {ADMIN},
+            permissionsRequired = {LIST_UNITS} )
+    public QueryList<UnidadeDTO> listarUnidadesGeradoras( @NotNull Integer page, @NotNull Integer size ) {
+        return queryUnidadeUC.listGeradoras( page, size );
+    }
+
     @Query( value = "unidadePorId" )
     @SecuredAccess(
             roles = {ADMIN},
