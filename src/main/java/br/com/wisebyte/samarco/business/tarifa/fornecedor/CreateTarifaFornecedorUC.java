@@ -1,10 +1,9 @@
-package br.com.wisebyte.samarco.business.tarifa;
+package br.com.wisebyte.samarco.business.tarifa.fornecedor;
 
 import br.com.wisebyte.samarco.business.exception.ValidadeExceptionBusiness;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaFornecedorDTO;
 import br.com.wisebyte.samarco.mapper.tarifa.TarifaFornecedorMapper;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaFornecedor;
-import br.com.wisebyte.samarco.repository.fornecedor.FornecedorRepository;
 import br.com.wisebyte.samarco.repository.tarifa.TarifaFornecedorRepository;
 import io.smallrye.common.constraint.NotNull;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -13,13 +12,10 @@ import jakarta.transaction.Transactional;
 
 
 @ApplicationScoped
-public class UpdateTarifaFornecedorUC {
+public class CreateTarifaFornecedorUC {
 
     @Inject
     TarifaFornecedorRepository repository;
-
-    @Inject
-    FornecedorRepository fornecedorRepository;
 
     @Inject
     TarifaFornecedorMapper mapper;
@@ -28,33 +24,37 @@ public class UpdateTarifaFornecedorUC {
     TarifaFornecedorValidationBusiness validator;
 
     @Transactional
-    public TarifaFornecedorDTO update(@NotNull TarifaFornecedorDTO dto) {
+    public TarifaFornecedorDTO create(@NotNull TarifaFornecedorDTO dto) {
 
-        // 1. ID deve ser informado
-        if (validator.idIsNull(dto)) {
+        // 1. Campos obrigatorios
+        if (!validator.camposObrigatoriosPreenchidos(dto)) {
             throw new ValidadeExceptionBusiness(
                     "TarifaFornecedor",
-                    "Id",
-                    "ID e obrigatorio para atualizacao"
+                    "Campos",
+                    "Todos os campos obrigatorios devem ser preenchidos"
             );
         }
 
-        // 2. Tarifa deve existir
-        if (!validator.exists(dto.getId())) {
+        // 2. TarifaPlanejamento deve existir
+        if (!validator.tarifaPlanejamentoExists(dto.getTarifaPlanejamentoId())) {
             throw new ValidadeExceptionBusiness(
                     "TarifaFornecedor",
-                    "Id",
-                    "Tarifa de Fornecedor nao encontrada"
+                    "TarifaPlanejamento",
+                    "Tarifa de Planejamento nao encontrada"
             );
         }
 
-        // 3. Busca entidade existente
-        TarifaFornecedor existing = repository.findById(dto.getId()).orElseThrow();
+        // 3. Fornecedor deve existir
+        if (!validator.fornecedorExists(dto.getFornecedorId())) {
+            throw new ValidadeExceptionBusiness(
+                    "TarifaFornecedor",
+                    "Fornecedor",
+                    "Fornecedor nao encontrado"
+            );
+        }
 
-        // 4. Revisao atual nao pode estar finalizada
-        if (existing.getPlanejamento() != null &&
-                existing.getPlanejamento().getRevisao() != null &&
-                existing.getPlanejamento().getRevisao().isFinished()) {
+        // 4. Revisao nao pode estar finalizada
+        if (!validator.revisaoNaoFinalizada(dto.getTarifaPlanejamentoId())) {
             throw new ValidadeExceptionBusiness(
                     "TarifaFornecedor",
                     "Revisao",
@@ -80,23 +80,9 @@ public class UpdateTarifaFornecedorUC {
             );
         }
 
-        // 7. Aplica novos valores
-        applyNewValues(existing, dto);
-
-        TarifaFornecedor saved = repository.save(existing);
+        // 7. Persistencia
+        TarifaFornecedor entity = mapper.toEntity(dto);
+        TarifaFornecedor saved = repository.save(entity);
         return mapper.toDTO(saved);
-    }
-
-    private void applyNewValues(TarifaFornecedor entity, TarifaFornecedorDTO dto) {
-        // Atualiza fornecedor se informado
-        if (dto.getFornecedorId() != null) {
-            entity.setFornecedor(
-                    fornecedorRepository.findById(dto.getFornecedorId()).orElse(null)
-            );
-        }
-
-        entity.setIpcaRealizada(dto.getIpcaRealizada());
-        entity.setIpcaProjetado(dto.getIpcaProjetado());
-        entity.setMontante(dto.getMontante());
     }
 }

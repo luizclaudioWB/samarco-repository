@@ -1,8 +1,8 @@
-package br.com.wisebyte.samarco.business.tarifa;
+package br.com.wisebyte.samarco.business.tarifa.fornecedor;
 
 import br.com.wisebyte.samarco.core.graphql.GraphQLQueryList;
 import br.com.wisebyte.samarco.core.query.QueryManager;
-import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaDistribuidora;
+import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaFornecedor;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -10,24 +10,24 @@ import jakarta.persistence.EntityManager;
 import java.util.Map;
 
 @ApplicationScoped
-public class ListTarifaDistribuidoraUC {
+public class ListTarifaFornecedorUC {
 
     @Inject
     EntityManager entityManager;
 
-    public GraphQLQueryList<TarifaDistribuidora> list(
+    public GraphQLQueryList<TarifaFornecedor> list(
             Map<String, Object> filters,
             String sortField,
             String sortDirection,
             Integer page,
             Integer size
     ) {
-        QueryManager<TarifaDistribuidora> queryManager = new QueryManager<>( TarifaDistribuidora.class );
+        QueryManager<TarifaFornecedor> queryManager = new QueryManager<>( TarifaFornecedor.class );
         buildParams( filters, queryManager );
         return queryManager.buildQuery( entityManager, sortField, sortDirection, page, size );
     }
 
-    private void buildParams( Map<String, Object> filters, QueryManager<TarifaDistribuidora> queryManager ) {
+    private void buildParams( Map<String, Object> filters, QueryManager<TarifaFornecedor> queryManager ) {
         if ( filters == null ) return;
 
         var tarifaPlanejamentoId = filters.get( "tarifaPlanejamentoId" );
@@ -38,12 +38,12 @@ public class ListTarifaDistribuidoraUC {
             queryManager.addEqualsParam( "planejamento.id", "tarifaPlanejamentoId", id );
         }
 
-        var distribuidoraId = filters.get( "distribuidoraId" );
-        if ( distribuidoraId != null ) {
-            Long id = distribuidoraId instanceof Long
-                    ? (Long) distribuidoraId
-                    : Long.parseLong( distribuidoraId.toString() );
-            queryManager.addEqualsParam( "distribuidora.id", "distribuidoraId", id );
+        var fornecedorId = filters.get( "fornecedorId" );
+        if ( fornecedorId != null ) {
+            Long id = fornecedorId instanceof Long
+                    ? (Long) fornecedorId
+                    : Long.parseLong( fornecedorId.toString() );
+            queryManager.addEqualsParam( "fornecedor.id", "fornecedorId", id );
         }
     }
 }

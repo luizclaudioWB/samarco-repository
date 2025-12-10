@@ -8,14 +8,10 @@ import br.com.wisebyte.samarco.model.planejamento.tarifa.AliquotaImpostos;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaDistribuidora;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaFornecedor;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaPlanejamento;
-import br.com.wisebyte.samarco.rest.client.bc.ANEELAPIRestClient;
-import br.com.wisebyte.samarco.rest.client.bc.BancoCentralRestClient;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.vertx.http.runtime.HttpCertificateUpdateEventListener;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -38,16 +34,33 @@ public class TarifasTest {
     @Inject
     EntityManager entityManager;
 
-    @Inject
-    @RestClient
-    BancoCentralRestClient bancoCentralRestClient;
 
-    @Inject
-    @RestClient // Injete o cliente que definimos
-    ANEELAPIRestClient aneelapiRestClient;
-
-    @Inject
-    HttpCertificateUpdateEventListener httpCertificateUpdateEventListener;
+    void cadastraDistribuidoras( ) {
+        entityManager.persist(
+                Distribuidora.builder( )
+                        .nome( "ONS" )
+                        .cnpj( "02.831.210/0001-57" )
+                        .siglaAgente( "ONS" )
+                        .estado( Estado.RJ )
+                        .build( )
+        );
+        entityManager.persist(
+                Distribuidora.builder( )
+                        .nome( "EDP" )
+                        .cnpj( "28.152.650/0001-71" )
+                        .siglaAgente( "EDP" )
+                        .estado( Estado.ES )
+                        .build( )
+        );
+        entityManager.persist(
+                Distribuidora.builder( )
+                        .nome( "ENERGISA" )
+                        .cnpj( "19.527.639/0001-58" )
+                        .siglaAgente( "ENERGISA" )
+                        .estado( Estado.MG )
+                        .build( )
+        );
+    }
 
     void cadastraFornecedor( ) {
         entityManager.persist(
@@ -347,41 +360,14 @@ public class TarifasTest {
     @Test
     @Transactional
     public void testeTarifas( ) throws IOException {
-        cadastraDistribuidoras( );
-        cadastraFornecedor( );
-        cadastraTarifaPlanejamento( );
-        cadastraAliquotaImpostos( );
-        cadastraTarifaDistribuidoraONS( );
-        cadastraTarifaDistribuidoraEDP( );
-        cadastraTarifaDistribuidoraEnergisa( );
-        cadastraTarifaFornecedor( );
+//        cadastraDistribuidoras( );
+//        cadastraFornecedor( );
+//        cadastraTarifaPlanejamento( );
+//        cadastraAliquotaImpostos( );
+//        cadastraTarifaDistribuidoraONS( );
+//        cadastraTarifaDistribuidoraEDP( );
+//        cadastraTarifaDistribuidoraEnergisa( );
+//        cadastraTarifaFornecedor( );
         printValores( );
-    }
-
-    void cadastraDistribuidoras( ) {
-        entityManager.persist(
-                Distribuidora.builder( )
-                        .nome( "ONS" )
-                        .cnpj( "02.831.210/0001-57" )
-                        .siglaAgente( "ONS" )
-                        .estado( Estado.RJ )
-                        .build( )
-        );
-        entityManager.persist(
-                Distribuidora.builder( )
-                        .nome( "EDP" )
-                        .cnpj( "28.152.650/0001-71" )
-                        .siglaAgente( "EDP" )
-                        .estado( Estado.ES )
-                        .build( )
-        );
-        entityManager.persist(
-                Distribuidora.builder( )
-                        .nome( "ENERGISA" )
-                        .cnpj( "19.527.639/0001-58" )
-                        .siglaAgente( "ENERGISA" )
-                        .estado( Estado.MG )
-                        .build( )
-        );
     }
 }

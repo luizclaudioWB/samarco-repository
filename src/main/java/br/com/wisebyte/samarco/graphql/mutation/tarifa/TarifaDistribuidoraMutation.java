@@ -1,9 +1,9 @@
 package br.com.wisebyte.samarco.graphql.mutation.tarifa;
 
 import br.com.wisebyte.samarco.annotation.SecuredAccess;
-import br.com.wisebyte.samarco.business.tarifa.CreateTarifaDistribuidoraUC;
-import br.com.wisebyte.samarco.business.tarifa.DeleteTarifaDistribuidoraUC;
-import br.com.wisebyte.samarco.business.tarifa.UpdateTarifaDistribuidoraUC;
+import br.com.wisebyte.samarco.business.tarifa.distribuidora.CreateTarifaDistribuidoraUC;
+import br.com.wisebyte.samarco.business.tarifa.distribuidora.DeleteTarifaDistribuidoraUC;
+import br.com.wisebyte.samarco.business.tarifa.distribuidora.UpdateTarifaDistribuidoraUC;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaDistribuidoraDTO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;

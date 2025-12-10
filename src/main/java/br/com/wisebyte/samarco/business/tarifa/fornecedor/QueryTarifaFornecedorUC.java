@@ -1,4 +1,4 @@
-package br.com.wisebyte.samarco.business.tarifa;
+package br.com.wisebyte.samarco.business.tarifa.fornecedor;
 
 import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaFornecedorDTO;

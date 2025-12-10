@@ -1,4 +1,4 @@
-package br.com.wisebyte.samarco.business.tarifa;
+package br.com.wisebyte.samarco.business.tarifa.planejamento;
 
 import br.com.wisebyte.samarco.core.graphql.GraphQLQueryList;
 import br.com.wisebyte.samarco.core.query.QueryManager;

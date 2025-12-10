@@ -1,4 +1,4 @@
-package br.com.wisebyte.samarco.business.tarifa;
+package br.com.wisebyte.samarco.business.tarifa.planejamento;
 
 import br.com.wisebyte.samarco.business.exception.ValidadeExceptionBusiness;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaPlanejamentoDTO;

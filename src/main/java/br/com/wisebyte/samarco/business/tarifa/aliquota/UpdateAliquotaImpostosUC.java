@@ -1,4 +1,4 @@
-package br.com.wisebyte.samarco.business.tarifa;
+package br.com.wisebyte.samarco.business.tarifa.aliquota;
 
 import br.com.wisebyte.samarco.business.exception.ValidadeExceptionBusiness;
 import br.com.wisebyte.samarco.dto.tarifa.AliquotaImpostosDTO;
@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 
 
 @ApplicationScoped
-public class CreateAliquotaImpostosUC {
+public class UpdateAliquotaImpostosUC {
 
     @Inject
     AliquotaImpostosRepository repository;
@@ -24,18 +24,27 @@ public class CreateAliquotaImpostosUC {
     AliquotaImpostosValidationBusiness validator;
 
     @Transactional
-    public AliquotaImpostosDTO create(@NotNull AliquotaImpostosDTO dto) {
+    public AliquotaImpostosDTO update(@NotNull AliquotaImpostosDTO dto) {
 
-        // Validacao 1: TarifaPlanejamento deve existir
-        if (!validator.tarifaPlanejamentoExists(dto.getTarifaPlanejamentoId())) {
+        // Validacao 1: ID deve ser informado
+        if (validator.idIsNull(dto)) {
             throw new ValidadeExceptionBusiness(
                     "AliquotaImpostos",
-                    "TarifaPlanejamento",
-                    "Tarifa de Planejamento nao encontrada"
+                    "Id",
+                    "ID e obrigatorio para atualizacao"
             );
         }
 
-        // Validacao 2: Revisao nao pode estar finalizada
+        // Validacao 2: Aliquota deve existir
+        if (!validator.exists(dto.getId())) {
+            throw new ValidadeExceptionBusiness(
+                    "AliquotaImpostos",
+                    "Id",
+                    "Aliquota nao encontrada"
+            );
+        }
+
+        // Validacao 3: Revisao nao pode estar finalizada
         if (!validator.revisaoNaoFinalizada(dto.getTarifaPlanejamentoId())) {
             throw new ValidadeExceptionBusiness(
                     "AliquotaImpostos",
@@ -44,7 +53,7 @@ public class CreateAliquotaImpostosUC {
             );
         }
 
-        // Validacao 3: Estado deve ser informado
+        // Validacao 4: Estado deve ser informado
         if (!validator.estadoInformado(dto)) {
             throw new ValidadeExceptionBusiness(
                     "AliquotaImpostos",
@@ -53,7 +62,7 @@ public class CreateAliquotaImpostosUC {
             );
         }
 
-        // Validacao 4: Ano deve ser valido
+        // Validacao 5: Ano deve ser valido
         if (!validator.anoValido(dto)) {
             throw new ValidadeExceptionBusiness(
                     "AliquotaImpostos",
@@ -62,7 +71,7 @@ public class CreateAliquotaImpostosUC {
             );
         }
 
-        // Validacao 5: Combinacao (planejamento + ano + estado) deve ser unica
+        // Validacao 6: Combinacao deve continuar unica
         if (!validator.combinacaoUnica(dto)) {
             throw new ValidadeExceptionBusiness(
                     "AliquotaImpostos",
@@ -71,7 +80,7 @@ public class CreateAliquotaImpostosUC {
             );
         }
 
-        // Validacao 6: Percentuais devem estar entre 0 e 100
+        // Validacao 7: Percentuais devem estar entre 0 e 100
         if (!validator.percentuaisValidos(dto)) {
             throw new ValidadeExceptionBusiness(
                     "AliquotaImpostos",
@@ -80,9 +89,20 @@ public class CreateAliquotaImpostosUC {
             );
         }
 
-        // Conversao e persistencia
-        AliquotaImpostos entity = mapper.toEntity(dto);
-        AliquotaImpostos saved = repository.save(entity);
+        // Busca entidade existente e aplica novos valores
+        AliquotaImpostos existing = repository.findById(dto.getId()).orElseThrow();
+        applyNewValues(existing, dto);
+
+        AliquotaImpostos saved = repository.save(existing);
         return mapper.toDTO(saved);
+    }
+
+    private void applyNewValues(AliquotaImpostos entity, AliquotaImpostosDTO dto) {
+        entity.setAno(dto.getAno());
+        entity.setEstado(dto.getEstado());
+        entity.setPercentualPis(dto.getPercentualPis());
+        entity.setPercentualCofins(dto.getPercentualCofins());
+        entity.setPercentualIcms(dto.getPercentualIcms());
+        entity.setPercentualIpca(dto.getPercentualIpca());
     }
 }

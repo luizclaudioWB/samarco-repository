@@ -1,4 +1,4 @@
-package br.com.wisebyte.samarco.business.tarifa;
+package br.com.wisebyte.samarco.business.tarifa.planejamento;
 
 import br.com.wisebyte.samarco.dto.tarifa.TarifaPlanejamentoDTO;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;

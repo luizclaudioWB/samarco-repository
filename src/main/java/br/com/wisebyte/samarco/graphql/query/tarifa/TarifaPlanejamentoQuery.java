@@ -1,7 +1,7 @@
 package br.com.wisebyte.samarco.graphql.query.tarifa;
 
 import br.com.wisebyte.samarco.annotation.SecuredAccess;
-import br.com.wisebyte.samarco.business.tarifa.QueryTarifaPlanejamentoUC;
+import br.com.wisebyte.samarco.business.tarifa.planejamento.QueryTarifaPlanejamentoUC;
 import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaPlanejamentoDTO;
 import br.com.wisebyte.samarco.mapper.tarifa.TarifaPlanejamentoMapper;
