@@ -31,6 +31,15 @@ public class QueryUnidadeUC {
                 .build( );
     }
 
+    public QueryList<UnidadeDTO> listGeradoras( @NotNull Integer page, @NotNull Integer size ) {
+        Page<Unidade> all = unidadeRepository.findByUnidadeGeradora( true, PageRequest.ofPage( page, size, true ), Order.by( _Unidade.nomeUnidade.asc( ) ) );
+        return QueryList.<UnidadeDTO>builder( )
+                .totalElements( all.totalElements( ) )
+                .totalPages( all.totalPages( ) )
+                .results( all.content( ).stream( ).map( unidadeMapper::toDTO ).toList( ) )
+                .build( );
+    }
+
     public UnidadeDTO findById( Long id ) {
         return unidadeRepository.findById( id ).map( unidadeMapper::toDTO ).orElse( null );
     }
