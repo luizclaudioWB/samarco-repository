@@ -1,8 +1,11 @@
 package br.com.wisebyte.samarco.model.unidade;
 
 import br.com.wisebyte.samarco.model.BaseModel;
+import br.com.wisebyte.samarco.model.distribuidora.Distribuidora;
 import br.com.wisebyte.samarco.model.estado.Estado;
 import jakarta.persistence.*;
+
+import static jakarta.persistence.FetchType.LAZY;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +36,8 @@ public class Unidade extends BaseModel {
     @Column( nullable = false )
     @Enumerated( EnumType.STRING )
     private Estado estado;
+
+    @ManyToOne( fetch = LAZY )
+    @JoinColumn( nullable = false )
+    private Distribuidora distribuidora;
 }
