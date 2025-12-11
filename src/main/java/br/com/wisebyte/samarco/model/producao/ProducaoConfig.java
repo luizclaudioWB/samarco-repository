@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "ano" }) })
+@Table( uniqueConstraints = {@UniqueConstraint( columnNames = {"revisao_id"} )} )
 public class ProducaoConfig extends BaseModel {
 
     @NotNull

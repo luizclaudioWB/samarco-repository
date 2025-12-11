@@ -16,9 +16,6 @@ public interface PlanejamentoProducaoRepository extends BasicRepository<Planejam
     @Find
     List<PlanejamentoProducao> findByRevisao(Revisao revisao);
 
-//    @Find
-//    List<PlanejamentoProducao> findByArea(Area area);
-
     @Find
     Optional<PlanejamentoProducao> findByRevisaoAndArea(
             Revisao revisao,
