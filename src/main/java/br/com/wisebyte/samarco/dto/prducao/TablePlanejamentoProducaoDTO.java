@@ -1,5 +1,6 @@
 package br.com.wisebyte.samarco.dto.prducao;
 
+import br.com.wisebyte.samarco.dto.area.AreaIdDTO;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -12,6 +13,8 @@ import java.math.BigDecimal;
 public class TablePlanejamentoProducaoDTO {
 
     PlanejamentoProducaoDTO planejamentoProducao;
+
+    private AreaIdDTO area;
 
     private BigDecimal valorPlanejadoJaneiro;
 

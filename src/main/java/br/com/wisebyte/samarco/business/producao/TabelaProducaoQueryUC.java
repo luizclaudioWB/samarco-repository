@@ -2,6 +2,7 @@ package br.com.wisebyte.samarco.business.producao;
 
 import br.com.wisebyte.samarco.business.exception.ValidadeExceptionBusiness;
 import br.com.wisebyte.samarco.dto.QueryList;
+import br.com.wisebyte.samarco.dto.area.AreaIdDTO;
 import br.com.wisebyte.samarco.dto.prducao.TablePlanejamentoProducaoDTO;
 import br.com.wisebyte.samarco.mapper.planejamento.PlanejamentoProducaoMapper;
 import br.com.wisebyte.samarco.model.producao.PlanejamentoProducao;
@@ -51,6 +52,7 @@ public class TabelaProducaoQueryUC {
     private TablePlanejamentoProducaoDTO calcProducao( PlanejamentoProducao it, BigDecimal multiplicador ) {
         return TablePlanejamentoProducaoDTO.builder( )
                 .planejamentoProducao( mapper.toDTO( it ) )
+                .area( AreaIdDTO.builder( ).id( it.getArea( ).getId( ) ).build( ) )
                 .valorPlanejadoJaneiro( it.getValorJaneiro( ).multiply( multiplicador, DECIMAL64 ) )
                 .valorPlanejadoFevereiro( it.getValorFevereiro( ).multiply( multiplicador, DECIMAL64 ) )
                 .valorPlanejadoMarco( it.getValorMarco( ).multiply( multiplicador, DECIMAL64 ) )

@@ -31,13 +31,10 @@ public class PlanejamentoProducaoDTO {
     private BigDecimal valorDezembro;
 
     public BigDecimal getTotalAnual() {
-        return Stream.of(
-                        valorJaneiro, valorFevereiro, valorMarco, valorAbril,
+        return Stream.of( valorJaneiro, valorFevereiro, valorMarco, valorAbril,
                         valorMaio, valorJunho, valorJulho, valorAgosto,
-                        valorSetembro, valorOutubro, valorNovembro, valorDezembro
-                )
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                        valorSetembro, valorOutubro, valorNovembro, valorDezembro )
+                .filter( Objects::nonNull ).reduce( BigDecimal.ZERO, BigDecimal::add );
     }
 }
 
