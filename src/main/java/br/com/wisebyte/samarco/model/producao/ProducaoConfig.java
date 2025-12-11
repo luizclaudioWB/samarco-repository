@@ -30,11 +30,7 @@ public class ProducaoConfig extends BaseModel {
 
     private Integer multiplicador;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
+    @OneToMany( fetch = FetchType.LAZY )
     @JoinTable(
             name = "producao_config_areas",
             joinColumns = @JoinColumn(name = "producao_config_id"),
