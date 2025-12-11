@@ -1,6 +1,7 @@
 package br.com.wisebyte.samarco.business.tarifa.distribuidora;
 
 import br.com.wisebyte.samarco.business.exception.ValidadeExceptionBusiness;
+import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.tarifa.ComponenteTarifarioDTO;
 import br.com.wisebyte.samarco.dto.tarifa.TipoComponenteTarifarioDTO;
 import br.com.wisebyte.samarco.mapper.distribuidora.DistribuidoraMapper;
@@ -44,7 +45,7 @@ public class CalcComponentesTarifariosTarifaDistribuidoraUC {
     @Inject
     DistribuidoraMapper distribuidoraMapper;
 
-    public List<ComponenteTarifarioDTO> calcComponentesTarifarios( @NotNull Long revisaoId, @NotNull Long distribuidoraId ) {
+    public QueryList<ComponenteTarifarioDTO> calcComponentesTarifarios( @NotNull Long revisaoId, @NotNull Long distribuidoraId ) {
         Revisao revisao = revisaoRepository.findById( revisaoId ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Revisao", "Revisao", "Revisao Não Encontrada" ) );
         Distribuidora distribuidora = distribuidoraRepository.findById( distribuidoraId ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora", "Distribuidora Não Encontrada" ) );
         List<TarifaDistribuidora> tarifas = tarifaDistribuidoraRepository.findByDistribuidora( distribuidora )
@@ -53,20 +54,26 @@ public class CalcComponentesTarifariosTarifaDistribuidoraUC {
         AliquotaImpostos aliquotaImpostos = aliquotaRepository.findByTarifaPlanejamento( tarifas.iterator( ).next( ).getPlanejamento( ) )
                 .stream( ).filter( it -> it.getEstado( ) == distribuidora.getEstado( ) )
                 .findFirst( ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Aliquota Impostos", "Aliquota Impostos", "Aliquota Impostos Não Encontrada" ) );
-        return tarifas.stream( ).map( it -> new ArrayList<ComponenteTarifarioDTO>( ) {{
-                    calcComponenteTarifarios( TipoComponenteTarifarioDTO.PONTA, it, aliquotaImpostos, it.getValorPonta( ) );
-                    calcComponenteTarifarios( TipoComponenteTarifarioDTO.FORA_PONTA, it, aliquotaImpostos, it.getValorForaPonta( ) );
-                    calcComponenteTarifarios( TipoComponenteTarifarioDTO.ENCARGO, it, aliquotaImpostos, it.getValorEncargos( ) );
+        List<ComponenteTarifarioDTO> list = tarifas.stream( ).map( it -> new ArrayList<ComponenteTarifarioDTO>( ) {{
+                    add( calcComponenteTarifarios( TipoComponenteTarifarioDTO.PONTA, it, aliquotaImpostos, it.getValorPonta( ) ) );
+                    add( calcComponenteTarifarios( TipoComponenteTarifarioDTO.FORA_PONTA, it, aliquotaImpostos, it.getValorForaPonta( ) ) );
+                    add( calcComponenteTarifarios( TipoComponenteTarifarioDTO.ENCARGO, it, aliquotaImpostos, it.getValorEncargos( ) ) );
                 }} ).flatMap( Collection::stream )
                 .sorted( Comparator.comparing( ComponenteTarifarioDTO::getInicioVigencia ) )
                 .toList( );
+        return QueryList
+                .<ComponenteTarifarioDTO>builder( )
+                .results( list )
+                .totalPages( 1L )
+                .totalElements( ( long ) list.size( ) )
+                .build( );
     }
 
     ComponenteTarifarioDTO calcComponenteTarifarios( @NotNull TipoComponenteTarifarioDTO componente, @NotNull TarifaDistribuidora tarifa, @NotNull AliquotaImpostos aliquota, @NotNull BigDecimal value ) {
         BigDecimal valueWithTaxes = calcTotalValueWithTaxes( tarifa, aliquota, value );
-        BigDecimal icms = calcTaxValue( tarifa.getValorPonta( ), (tarifa.isSobrescreverICMS( ) ? tarifa.getPercentualICMS( ) : aliquota.getPercentualIcms( )) );
-        BigDecimal pis = calcTaxValue( tarifa.getValorPonta( ), aliquota.getPercentualPis( ) );
-        BigDecimal cofins = calcTaxValue( tarifa.getValorPonta( ), aliquota.getPercentualCofins( ) );
+        BigDecimal icms = calcTaxValue( valueWithTaxes, (tarifa.isSobrescreverICMS( ) ? tarifa.getPercentualICMS( ) : aliquota.getPercentualIcms( )) );
+        BigDecimal pis = calcTaxValue( valueWithTaxes, aliquota.getPercentualPis( ) );
+        BigDecimal cofins = calcTaxValue( valueWithTaxes, aliquota.getPercentualCofins( ) );
         BigDecimal valueWithOutTaxes = valueWithTaxes.subtract( icms ).subtract( pis ).subtract( cofins ).setScale( 2, RoundingMode.HALF_UP );
         return ComponenteTarifarioDTO.builder( )
                 .distribuidora( distribuidoraMapper.toDTO( tarifa.getDistribuidora( ) ) )
@@ -81,7 +88,6 @@ public class CalcComponentesTarifariosTarifaDistribuidoraUC {
                 .build( );
     }
 
-
     BigDecimal calcTotalValueWithTaxes( TarifaDistribuidora tarifa, AliquotaImpostos aliquota, BigDecimal value ) {
         BigDecimal icms = ONE.subtract( tarifa.isSobrescreverICMS( ) ? tarifa.getPercentualICMS( ) : aliquota.getPercentualIcms( ).divide( BigDecimal.valueOf( 100 ), MathContext.DECIMAL64 ) );
         BigDecimal pisCofins = ONE.subtract( tarifa.getPercentualPisCofins( ).divide( BigDecimal.valueOf( 100 ), MathContext.DECIMAL64 ) );
@@ -89,7 +95,6 @@ public class CalcComponentesTarifariosTarifaDistribuidoraUC {
                 .divide( icms, MathContext.DECIMAL64 )
                 .divide( pisCofins, MathContext.DECIMAL64 ).setScale( 2, RoundingMode.HALF_UP );
     }
-
 
     BigDecimal calcTaxValue( BigDecimal value, BigDecimal percentage ) {
         BigDecimal percentual = percentage.divide( BigDecimal.valueOf( 100 ), MathContext.DECIMAL64 );

@@ -1,8 +1,10 @@
 package br.com.wisebyte.samarco.graphql.query.tarifa;
 
 import br.com.wisebyte.samarco.annotation.SecuredAccess;
+import br.com.wisebyte.samarco.business.tarifa.distribuidora.CalcComponentesTarifariosTarifaDistribuidoraUC;
 import br.com.wisebyte.samarco.business.tarifa.distribuidora.QueryTarifaDistribuidoraUC;
 import br.com.wisebyte.samarco.dto.QueryList;
+import br.com.wisebyte.samarco.dto.tarifa.ComponenteTarifarioDTO;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaDistribuidoraDTO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -20,6 +22,9 @@ public class TarifaDistribuidoraQuery {
 
     @Inject
     QueryTarifaDistribuidoraUC queryTarifaDistribuidoraUC;
+
+    @Inject
+    CalcComponentesTarifariosTarifaDistribuidoraUC calcComponentesTarifariosUC;
 
     @Query( value = "tarifasDistribuidora" )
     @SecuredAccess(
@@ -53,15 +58,11 @@ public class TarifaDistribuidoraQuery {
         return queryTarifaDistribuidoraUC.findByDistribuidora( distribuidoraId );
     }
 
-    @Query( value = "componentesTarifariosPorRevisaoDistribuidora" )
+    @Query( value = "calcComponentesTarifariosPorRevisaoDistribuidora" )
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {LIST_DISTRIBUTOR_RATES} )
-    public QueryList<TarifaDistribuidoraDTO> listarTarifasDistribuidoraPorDistribuidora( @NotNull Long revisaoId, @NotNull Long distribuidoraId ) {
-        return queryTarifaDistribuidoraUC.findByDistribuidora( distribuidoraId );
+    public QueryList<ComponenteTarifarioDTO> calcComponentesTarifariosPorRevisaoDistribuidora( @NotNull Long revisaoId, @NotNull Long distribuidoraId ) {
+        return calcComponentesTarifariosUC.calcComponentesTarifarios( revisaoId, distribuidoraId );
     }
-
-
-
-
 }

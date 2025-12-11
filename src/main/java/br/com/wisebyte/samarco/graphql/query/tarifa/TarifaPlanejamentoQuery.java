@@ -4,9 +4,6 @@ import br.com.wisebyte.samarco.annotation.SecuredAccess;
 import br.com.wisebyte.samarco.business.tarifa.planejamento.QueryTarifaPlanejamentoUC;
 import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaPlanejamentoDTO;
-import br.com.wisebyte.samarco.mapper.tarifa.TarifaPlanejamentoMapper;
-import br.com.wisebyte.samarco.repository.revisao.RevisaoRepository;
-import br.com.wisebyte.samarco.repository.tarifa.TarifaPlanejamentoRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
@@ -22,15 +19,6 @@ public class TarifaPlanejamentoQuery {
 
     @Inject
     QueryTarifaPlanejamentoUC queryTarifaPlanejamentoUC;
-
-    @Inject
-    TarifaPlanejamentoRepository repository;
-
-    @Inject
-    RevisaoRepository revisaoRepository;
-
-    @Inject
-    TarifaPlanejamentoMapper mapper;
 
     @Query( value = "tarifasPlanejamento" )
     @SecuredAccess(
