@@ -1,8 +1,10 @@
 package br.com.wisebyte.samarco.graphql.query.tarifa;
 
 import br.com.wisebyte.samarco.annotation.SecuredAccess;
+import br.com.wisebyte.samarco.business.tarifa.fornecedor.CalcMontanteEnergiaFornecedorUC;
 import br.com.wisebyte.samarco.business.tarifa.fornecedor.QueryTarifaFornecedorUC;
 import br.com.wisebyte.samarco.dto.QueryList;
+import br.com.wisebyte.samarco.dto.tarifa.MontanteTarifaFornecedorDTO;
 import br.com.wisebyte.samarco.dto.tarifa.TarifaFornecedorDTO;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -20,6 +22,9 @@ public class TarifaFornecedorQuery {
 
     @Inject
     QueryTarifaFornecedorUC queryTarifaFornecedorUC;
+
+    @Inject
+    CalcMontanteEnergiaFornecedorUC calcMontanteEnergiaFornecedorUC;
 
     @Query( value = "tarifasFornecedor" )
     @SecuredAccess(
@@ -52,5 +57,15 @@ public class TarifaFornecedorQuery {
     public QueryList<TarifaFornecedorDTO> listarTarifasFornecedorPorFornecedor( @NotNull Long fornecedorId ) {
         return queryTarifaFornecedorUC.findByFornecedor( fornecedorId );
     }
+
+    @Query( value = "calcValorMontanteTarifaFornecedor" )
+    @SecuredAccess(
+            roles = {ADMIN},
+            permissionsRequired = {LIST_SUPPLIER_RATES} )
+    public QueryList<MontanteTarifaFornecedorDTO> calcValorMontanteTarifaFornecedor( @NotNull Long revisaoId, @NotNull Long fornecedorId ) {
+        return calcMontanteEnergiaFornecedorUC.calcMontanteEnergiaFornecedor( revisaoId, fornecedorId );
+    }
+
+
 
 }

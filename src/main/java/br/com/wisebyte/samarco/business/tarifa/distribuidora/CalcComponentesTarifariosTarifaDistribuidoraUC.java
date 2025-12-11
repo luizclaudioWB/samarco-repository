@@ -50,6 +50,7 @@ public class CalcComponentesTarifariosTarifaDistribuidoraUC {
         Distribuidora distribuidora = distribuidoraRepository.findById( distribuidoraId ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Distribuidora", "Distribuidora", "Distribuidora Não Encontrada" ) );
         List<TarifaDistribuidora> tarifas = tarifaDistribuidoraRepository.findByDistribuidora( distribuidora )
                 .stream( ).filter( it -> it.getPlanejamento( ).getRevisao( ).getId( ).equals( revisao.getId( ) ) )
+                .filter( it -> it.getDistribuidora( ).getId( ).equals( distribuidoraId ) )
                 .toList( );
         AliquotaImpostos aliquotaImpostos = aliquotaRepository.findByTarifaPlanejamento( tarifas.iterator( ).next( ).getPlanejamento( ) )
                 .stream( ).filter( it -> it.getEstado( ) == distribuidora.getEstado( ) )

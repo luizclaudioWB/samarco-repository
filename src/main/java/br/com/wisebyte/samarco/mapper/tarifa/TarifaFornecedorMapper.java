@@ -25,16 +25,8 @@ public class TarifaFornecedorMapper implements EntityMapper<TarifaFornecedor, Ta
 
         return TarifaFornecedorDTO.builder()
                 .id(entity.getId())
-                .tarifaPlanejamentoId(
-                        entity.getPlanejamento() != null
-                                ? entity.getPlanejamento().getId()
-                                : null
-                )
-                .fornecedorId(
-                        entity.getFornecedor() != null
-                                ? entity.getFornecedor().getId()
-                                : null
-                )
+                .tarifaPlanejamentoId( entity.getPlanejamento( ) != null ? entity.getPlanejamento( ).getId( ) : null )
+                .fornecedorId( entity.getFornecedor( ) != null ? entity.getFornecedor( ).getId( ) : null )
                 .ipcaRealizada(entity.getIpcaRealizada())
                 .ipcaProjetado(entity.getIpcaProjetado())
                 .montante(entity.getMontante())
@@ -46,32 +38,16 @@ public class TarifaFornecedorMapper implements EntityMapper<TarifaFornecedor, Ta
         if (dto == null) {
             return null;
         }
-
         TarifaFornecedor entity = new TarifaFornecedor();
-
-        // Resolve relacionamento com TarifaPlanejamento
         if (dto.getTarifaPlanejamentoId() != null) {
-            entity.setPlanejamento(
-                    tarifaPlanejamentoRepository
-                            .findById(dto.getTarifaPlanejamentoId())
-                            .orElse(null)
-            );
+            entity.setPlanejamento( tarifaPlanejamentoRepository.findById( dto.getTarifaPlanejamentoId( ) ).orElse( null ) );
         }
-
-        // Resolve relacionamento com Fornecedor
         if (dto.getFornecedorId() != null) {
-            entity.setFornecedor(
-                    fornecedorRepository
-                            .findById(dto.getFornecedorId())
-                            .orElse(null)
-            );
+            entity.setFornecedor( fornecedorRepository.findById( dto.getFornecedorId( ) ).orElse( null ) );
         }
-
-        // Copia valores
         entity.setIpcaRealizada(dto.getIpcaRealizada());
         entity.setIpcaProjetado(dto.getIpcaProjetado());
         entity.setMontante(dto.getMontante());
-
         return entity;
     }
 }
