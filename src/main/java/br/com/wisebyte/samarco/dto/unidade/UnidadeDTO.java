@@ -21,4 +21,6 @@ public class UnidadeDTO {
     private Boolean conectadaRedeBasica;
 
     private Estado estado;
+
+    private Long distribuidoraId;
 }

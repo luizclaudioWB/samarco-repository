@@ -4,6 +4,7 @@ import br.com.wisebyte.samarco.business.exception.ValidadeExceptionBusiness;
 import br.com.wisebyte.samarco.dto.unidade.UnidadeDTO;
 import br.com.wisebyte.samarco.mapper.unidade.UnidadeMapper;
 import br.com.wisebyte.samarco.model.unidade.Unidade;
+import br.com.wisebyte.samarco.repository.distribuidora.DistribuidoraRepository;
 import br.com.wisebyte.samarco.repository.unidade.UnidadeRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -15,6 +16,9 @@ public class UpdateUnidadeUC {
 
     @Inject
     UnidadeRepository unidadeRepository;
+
+    @Inject
+    DistribuidoraRepository distribuidoraRepository;
 
     @Inject
     UnidadeMapper unidadeMapper;
@@ -33,6 +37,9 @@ public class UpdateUnidadeUC {
         if ( !validator.cedenteUnitCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser nulo" );
         }
+        if ( !validator.distribuidoraExists( dto.getDistribuidoraId( ) ) ) {
+            throw new ValidadeExceptionBusiness( "Unidade", "Distribuidora", "Distribuidora nao encontrada" );
+        }
         if ( !validator.exists(dto.getId() ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade não encontrada" );
         }
@@ -49,6 +56,10 @@ public class UpdateUnidadeUC {
         if ( unidade.getUnidadeGeradora( ) != null && unidade.getUnidadeGeradora( ) ) {
             unidadeRepository.findById( dto.getUnidadeCedenteCreditosDeInjecao( ) )
                     .ifPresent( unidade::setUnidadeCedenteCreditosDeInjecao );
+        }
+        if ( dto.getDistribuidoraId( ) != null ) {
+            distribuidoraRepository.findById( dto.getDistribuidoraId( ) )
+                    .ifPresent( unidade::setDistribuidora );
         }
     }
 
