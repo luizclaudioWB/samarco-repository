@@ -23,7 +23,6 @@ import static java.math.MathContext.DECIMAL64;
 @ApplicationScoped
 public class CalcMontanteEnergiaFornecedorUC {
 
-
     @Inject
     RevisaoRepository revisaoRepository;
 
