@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Query;
 
-import static br.com.wisebyte.samarco.auth.Permissao.LIST_DISTRIBUTOR_RATES;
+import static br.com.wisebyte.samarco.auth.Permissao.LIST_PRODUCTION_PLANNINGS;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 
 @GraphQLApi
@@ -23,7 +23,7 @@ public class TabelaProducaoQuery {
     @Query( value = "tableProducaoQuery" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_DISTRIBUTOR_RATES} )
+            permissionsRequired = {LIST_PRODUCTION_PLANNINGS} )
     public QueryList<TablePlanejamentoProducaoDTO> calcComponentesTarifariosPorRevisaoDistribuidora( @NotNull Long revisaoId ) {
         return tabelaProducaoQueryUC.calcTabelaProducao( revisaoId );
     }
