@@ -19,26 +19,44 @@ public class CalcTarifaDistribuidoraUC {
 
     }
 
+    /*
+     * Calcula para todas as unidades
+     */
     public void calcPonta( ) {
 
     }
 
+    /*
+     * Calcula para todas as unidades
+     */
     public void calcForaPonta( ) {
 
     }
 
+    /*
+     * Calcula somente para unidades conectadas na rede baisca
+     */
     public void calcEncargoTransmissao( ) {
 
     }
 
+    /*
+     * Calcula somente para unidades que recebem creditos de injeção
+     */
     public void calcDescontoGeracao( ) {
 
     }
 
+    /*
+     * Calcula somente para unidades que nao estejam conectadas a rede basica
+     */
     public void calcEncargoDistribuicao( ) {
 
     }
 
+    /*
+     *  Calculo geral por estado
+     */
     public void calcPMIX( ) {
 
     }

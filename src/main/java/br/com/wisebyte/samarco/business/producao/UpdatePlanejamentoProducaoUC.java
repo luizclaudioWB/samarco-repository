@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class UpdatePlanejamentoProducaoUC {
+
     @Inject
     PlanejamentoProducaoRepository repository;
 
@@ -23,34 +24,9 @@ public class UpdatePlanejamentoProducaoUC {
 
     @Transactional
     public PlanejamentoProducaoDTO update(@NotNull PlanejamentoProducaoDTO dto) {
+        validate( dto );
 
-        if (!validator.exists(dto.getId())) {
-            throw new ValidadeExceptionBusiness(
-                    "PlanejamentoProducao",
-                    "Id",
-                    "Registro nao encontrado"
-            );
-        }
-
-        PlanejamentoProducao atual = repository.findById(dto.getId())
-                .orElseThrow();
-
-        if (atual.getRevisao().isFinished()) {
-            throw new ValidadeExceptionBusiness(
-                    "PlanejamentoProducao",
-                    "Revisao",
-                    "Revisao finalizada nao pode ser alterada"
-            );
-        }
-
-        if (!validator.valoresMensaisValidos(dto)) {
-            throw new ValidadeExceptionBusiness(
-                    "PlanejamentoProducao",
-                    "Valores Mensais",
-                    "Valores de producao nao podem ser negativos"
-            );
-        }
-
+        PlanejamentoProducao atual = repository.findById( dto.getId( ) ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "PlanejamentoProducao", "Id", "PlanejamentoProducao nao encontrado" ) );
         atual.setValorJaneiro(dto.getValorJaneiro());
         atual.setValorFevereiro(dto.getValorFevereiro());
         atual.setValorMarco(dto.getValorMarco());
@@ -63,9 +39,21 @@ public class UpdatePlanejamentoProducaoUC {
         atual.setValorOutubro(dto.getValorOutubro());
         atual.setValorNovembro(dto.getValorNovembro());
         atual.setValorDezembro(dto.getValorDezembro());
-
         PlanejamentoProducao saved = repository.save(atual);
         return mapper.toDTO(saved);
+    }
+
+    private void validate( PlanejamentoProducaoDTO dto ) {
+        if ( !validator.exists( dto.getId( ) ) ) {
+            throw new ValidadeExceptionBusiness( "PlanejamentoProducao", "Id", "Registro nao encontrado" );
+        }
+        PlanejamentoProducao atual = repository.findById( dto.getId( ) ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "PlanejamentoProducao", "Id", "PlanejamentoProducao nao encontrado" ) );
+        if ( atual.getRevisao( ).isFinished( ) ) {
+            throw new ValidadeExceptionBusiness( "PlanejamentoProducao", "Revisao", "Revisao finalizada nao pode ser alterada" );
+        }
+        if ( !validator.valoresMensaisValidos( dto ) ) {
+            throw new ValidadeExceptionBusiness( "PlanejamentoProducao", "Valores Mensais", "Valores de producao nao podem ser negativos" );
+        }
     }
 }
 
