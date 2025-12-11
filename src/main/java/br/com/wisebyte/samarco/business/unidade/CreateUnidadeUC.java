@@ -27,6 +27,9 @@ public class CreateUnidadeUC {
         if ( !validator.cedenteUnitCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Cadastro inválido", "Unidade cedente não existe" );
         }
+        if ( !validator.distribuidoraExists( dto.getDistribuidoraId( ) ) ) {
+            throw new ValidadeExceptionBusiness( "Unidade", "Distribuidora", "Distribuidora nao encontrada" );
+        }
         if ( dto.getId( ) != null ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Id", "Unidade Id deve ser nulo" );
         }

@@ -2,6 +2,7 @@ package br.com.wisebyte.samarco.business.unidade;
 
 import br.com.wisebyte.samarco.dto.unidade.UnidadeDTO;
 import br.com.wisebyte.samarco.model.unidade.Unidade;
+import br.com.wisebyte.samarco.repository.distribuidora.DistribuidoraRepository;
 import br.com.wisebyte.samarco.repository.unidade.UnidadeRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -11,6 +12,9 @@ public class UnidadeValidationBusiness {
 
     @Inject
     UnidadeRepository unidadeRepository;
+
+    @Inject
+    DistribuidoraRepository distribuidoraRepository;
 
 
     public boolean cedenteUnitCannotBeNull( UnidadeDTO dto ) {
@@ -47,6 +51,11 @@ public class UnidadeValidationBusiness {
             return false;
         }
         return unidadeRepository.findByUnidadeCedenteCreditosDeInjecao( unidade ).isEmpty( );
+    }
+
+    public boolean distribuidoraExists( Long id ) {
+        return id != null &&
+                distribuidoraRepository.findById( id ).isPresent( );
     }
 
 }
