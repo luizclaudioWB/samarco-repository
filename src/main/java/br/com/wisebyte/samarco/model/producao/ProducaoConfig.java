@@ -2,7 +2,9 @@ package br.com.wisebyte.samarco.model.producao;
 
 import br.com.wisebyte.samarco.model.BaseModel;
 import br.com.wisebyte.samarco.model.area.Area;
+import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +23,12 @@ import java.util.Set;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "ano" }) })
 public class ProducaoConfig extends BaseModel {
 
-    @Column( nullable = false)
-    private Integer ano;
+    @NotNull
+    @ManyToOne
+    @JoinColumn( nullable = false )
+    private Revisao revisao;
+
+    private Integer multiplicador;
 
     @OneToMany(
             cascade = CascadeType.ALL,

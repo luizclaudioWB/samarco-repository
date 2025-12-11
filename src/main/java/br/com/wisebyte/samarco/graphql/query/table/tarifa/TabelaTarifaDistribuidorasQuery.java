@@ -21,6 +21,6 @@ public class TabelaTarifaDistribuidorasQuery {
             roles = {ADMIN},
             permissionsRequired = {LIST_DISTRIBUTOR_RATES} )
     public QueryList<ComponenteTarifarioDTO> calcComponentesTarifariosPorRevisaoDistribuidora( @NotNull Long revisaoId ) {
-
+        return null;
     }
 }
