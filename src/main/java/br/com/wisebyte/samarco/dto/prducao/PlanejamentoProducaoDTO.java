@@ -1,6 +1,6 @@
 package br.com.wisebyte.samarco.dto.prducao;
 
-
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -15,8 +15,13 @@ import java.util.stream.Stream;
 public class PlanejamentoProducaoDTO {
 
     private Long id;
+
+    @NotNull
     private Long revisaoId;
+
+    @NotNull
     private Long areaId;
+
     private BigDecimal valorJaneiro;
     private BigDecimal valorFevereiro;
     private BigDecimal valorMarco;

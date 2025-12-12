@@ -1,5 +1,6 @@
 package br.com.wisebyte.samarco.dto.tarifa;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 
@@ -10,8 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 public class TarifaPlanejamentoDTO {
 
-
     private Long id;
 
+    @NotNull
     private Long revisaoId;
 }

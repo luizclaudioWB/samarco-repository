@@ -1,5 +1,6 @@
 package br.com.wisebyte.samarco.dto.usuario;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -9,6 +10,7 @@ import lombok.*;
 @Builder
 public class UsuarioDTO {
 
+    @NotNull
     private String usuario;
 
     private String senha;

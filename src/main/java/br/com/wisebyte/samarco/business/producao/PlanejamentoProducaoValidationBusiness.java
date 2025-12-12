@@ -4,8 +4,10 @@ import br.com.wisebyte.samarco.dto.prducao.PlanejamentoProducaoDTO;
 import br.com.wisebyte.samarco.model.area.Area;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.model.producao.PlanejamentoProducao;
+import br.com.wisebyte.samarco.model.producao.ProducaoConfig;
 import br.com.wisebyte.samarco.repository.area.AreaRepository;
 import br.com.wisebyte.samarco.repository.producao.PlanejamentoProducaoRepository;
+import br.com.wisebyte.samarco.repository.producao.ProducaoConfigRepository;
 import br.com.wisebyte.samarco.repository.revisao.RevisaoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -25,6 +27,9 @@ public class PlanejamentoProducaoValidationBusiness {
 
     @Inject
     AreaRepository areaRepository;
+
+    @Inject
+    ProducaoConfigRepository producaoConfigRepository;
 
     public boolean idIsNull(PlanejamentoProducaoDTO dto) {
         return dto.getId() == null;
@@ -96,6 +101,17 @@ public class PlanejamentoProducaoValidationBusiness {
         return areaRepository.findById(areaId)
                 .map(Area::isAtivo)
                 .orElse(false);
+    }
+
+    // Verifica se a Area pertence ao ProducaoConfig da Revisao
+    public boolean areaEstaNaProducaoConfig(Long revisaoId, Long areaId) {
+        ProducaoConfig config = producaoConfigRepository.findByRevisao_id(revisaoId);
+        if (config == null || config.getAreas() == null || config.getAreas().isEmpty()) {
+            return false;
+        }
+
+        return config.getAreas().stream()
+                .anyMatch(area -> area.getId().equals(areaId));
     }
 }
 
