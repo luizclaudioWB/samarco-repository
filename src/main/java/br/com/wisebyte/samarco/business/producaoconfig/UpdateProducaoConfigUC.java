@@ -34,12 +34,7 @@ public class UpdateProducaoConfigUC {
     public ProducaoConfigDTO update(@NotNull ProducaoConfigDTO dto) {
         validate(dto);
 
-        ProducaoConfig atual = repository.findById(dto.getId())
-            .orElseThrow(() -> new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Id",
-                "Configuracao de producao nao encontrada"
-            ));
+        ProducaoConfig atual = repository.findById(dto.getId()).orElseThrow(() -> new ValidadeExceptionBusiness("ProducaoConfig", "Id", "Configuracao de producao nao encontrada"));
 
         applyNewValues(atual, dto);
         ProducaoConfig saved = repository.save(atual);
@@ -48,44 +43,24 @@ public class UpdateProducaoConfigUC {
 
     private void validate(ProducaoConfigDTO dto) {
         if (validator.idIsNull(dto)) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Id",
-                "Id nao pode ser nulo para atualizacao"
-            );
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Id", "Id nao pode ser nulo para atualizacao");
         }
 
         if (!validator.exists(dto.getId())) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Id",
-                "Configuracao de producao nao encontrada"
-            );
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Id", "Configuracao de producao nao encontrada");
         }
 
         ProducaoConfig atual = repository.findById(dto.getId()).orElseThrow();
         if (atual.getRevisao().isFinished()) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Revisao",
-                "Revisao finalizada nao pode ser alterada"
-            );
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Revisao", "Revisao finalizada nao pode ser alterada");
         }
 
         if (!validator.todasAreasExistem(dto.getAreaIds())) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Areas",
-                "Uma ou mais areas nao foram encontradas"
-            );
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Areas", "Uma ou mais areas nao foram encontradas");
         }
 
         if (!validator.todasAreasAtivas(dto.getAreaIds())) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Areas",
-                "Uma ou mais areas estao desativadas"
-            );
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Areas", "Uma ou mais areas estao desativadas");
         }
     }
 

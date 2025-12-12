@@ -22,29 +22,17 @@ public class DeleteProducaoConfigUC {
     public void delete(@NotNull ProducaoConfigDTO dto) {
 
         if (validator.idIsNull(dto)) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Id",
-                "Id nao pode ser nulo"
-            );
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Id", "Id nao pode ser nulo");
         }
 
         if (!validator.exists(dto.getId())) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Id",
-                "Configuracao de producao nao encontrada"
-            );
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Id", "Configuracao de producao nao encontrada");
         }
 
         ProducaoConfig entity = repository.findById(dto.getId()).orElseThrow();
 
         if (entity.getRevisao().isFinished()) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Revisao",
-                "Revisao finalizada nao pode ser alterada"
-            );
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Revisao", "Revisao finalizada nao pode ser alterada");
         }
 
         repository.delete(entity);

@@ -24,57 +24,36 @@ public class CreateProducaoConfigUC {
 
     @Transactional
     public ProducaoConfigDTO create(@NotNull ProducaoConfigDTO dto) {
-
-        if (!validator.idIsNull(dto)) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Id",
-                "Id deve ser nulo para criacao"
-            );
-        }
-
-        if (!validator.revisaoExists(dto.getRevisaoId())) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Revisao",
-                "Revisao nao encontrada"
-            );
-        }
-
-        if (!validator.revisaoNaoFinalizada(dto.getRevisaoId())) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Revisao",
-                "Revisao finalizada nao pode ser alterada"
-            );
-        }
-
-        if (!validator.revisaoUnica(dto)) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Revisao",
-                "Ja existe uma configuracao de producao para esta revisao"
-            );
-        }
-
-        if (!validator.todasAreasExistem(dto.getAreaIds())) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Areas",
-                "Uma ou mais areas nao foram encontradas"
-            );
-        }
-
-        if (!validator.todasAreasAtivas(dto.getAreaIds())) {
-            throw new ValidadeExceptionBusiness(
-                "ProducaoConfig",
-                "Areas",
-                "Uma ou mais areas estao desativadas"
-            );
-        }
+        validate(dto);
 
         ProducaoConfig entity = mapper.toEntity(dto);
         ProducaoConfig saved = repository.save(entity);
         return mapper.toDTO(saved);
+    }
+
+    private void validate(ProducaoConfigDTO dto) {
+        if (!validator.idIsNull(dto)) {
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Id", "Id deve ser nulo para criacao");
+        }
+
+        if (!validator.revisaoExists(dto.getRevisaoId())) {
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Revisao", "Revisao nao encontrada");
+        }
+
+        if (!validator.revisaoNaoFinalizada(dto.getRevisaoId())) {
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Revisao", "Revisao finalizada nao pode ser alterada");
+        }
+
+        if (!validator.revisaoUnica(dto)) {
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Revisao", "Ja existe uma configuracao de producao para esta revisao");
+        }
+
+        if (!validator.todasAreasExistem(dto.getAreaIds())) {
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Areas", "Uma ou mais areas nao foram encontradas");
+        }
+
+        if (!validator.todasAreasAtivas(dto.getAreaIds())) {
+            throw new ValidadeExceptionBusiness("ProducaoConfig", "Areas", "Uma ou mais areas estao desativadas");
+        }
     }
 }

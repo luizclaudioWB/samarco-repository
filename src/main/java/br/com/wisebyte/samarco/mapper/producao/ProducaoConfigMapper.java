@@ -33,11 +33,7 @@ public class ProducaoConfigMapper implements EntityMapper<ProducaoConfig, Produc
 
         return ProducaoConfig.builder()
                 .id(dto.getId())
-                .revisao(
-                    dto.getRevisaoId() != null
-                    ? revisaoRepository.findById(dto.getRevisaoId()).orElse(null)
-                    : null
-                )
+                .revisao(dto.getRevisaoId() != null ? revisaoRepository.findById(dto.getRevisaoId()).orElse(null) : null)
                 .multiplicador(dto.getMultiplicador())
                 .areas(areas)
                 .build();
@@ -45,9 +41,7 @@ public class ProducaoConfigMapper implements EntityMapper<ProducaoConfig, Produc
 
     @Override
     public ProducaoConfigDTO toDTO(ProducaoConfig entity) {
-        Set<Long> areaIds = entity.getAreas() != null
-                ? entity.getAreas().stream().map(Area::getId).collect(Collectors.toSet())
-                : new HashSet<>();
+        Set<Long> areaIds = entity.getAreas() != null ? entity.getAreas().stream().map(Area::getId).collect(Collectors.toSet()) : new HashSet<>();
 
         return ProducaoConfigDTO.builder()
                 .id(entity.getId())

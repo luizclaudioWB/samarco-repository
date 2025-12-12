@@ -59,11 +59,7 @@ public class CreatePlanejamentoProducaoUC {
             }
 
             if (!validator.areaEstaNaProducaoConfig(dto.getRevisaoId(), dto.getAreaId())) {
-                throw new ValidadeExceptionBusiness(
-                        "PlanejamentoProducao",
-                        "Area",
-                        "Area nao esta configurada para producao nesta revisao"
-                );
+                throw new ValidadeExceptionBusiness("PlanejamentoProducao", "Area", "Area nao esta configurada para producao nesta revisao");
             }
 
             if (!validator.combinacaoRevisaoAreaUnica(dto)) {

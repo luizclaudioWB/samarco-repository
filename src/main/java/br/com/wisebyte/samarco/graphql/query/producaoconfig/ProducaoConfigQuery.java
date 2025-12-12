@@ -21,33 +21,27 @@ public class ProducaoConfigQuery {
     @Inject
     QueryProducaoConfigUC queryProducaoConfigUC;
 
-    @Query("producoesConfig")
+    @Query( value = "producoesConfig" )
     @SecuredAccess(
-        roles = {ADMIN},
-        permissionsRequired = {LIST_PRODUCTION_CONFIGS}
-    )
-    public QueryList<ProducaoConfigDTO> listarProducoesConfig(
-        @NotNull Integer page,
-        @NotNull Integer size
-    ) {
-        return queryProducaoConfigUC.list(page, size);
+            roles = {ADMIN},
+            permissionsRequired = {LIST_PRODUCTION_CONFIGS} )
+    public QueryList<ProducaoConfigDTO> listarProducoesConfig( @NotNull Integer page, @NotNull Integer size ) {
+        return queryProducaoConfigUC.list( page, size );
     }
 
-    @Query("producaoConfigPorId")
+    @Query( value = "producaoConfigPorId" )
     @SecuredAccess(
-        roles = {ADMIN},
-        permissionsRequired = {GET_PRODUCTION_CONFIG_BY_ID}
-    )
-    public ProducaoConfigDTO buscarProducaoConfigPorId(Long id) {
-        return queryProducaoConfigUC.findById(id);
+            roles = {ADMIN},
+            permissionsRequired = {GET_PRODUCTION_CONFIG_BY_ID} )
+    public ProducaoConfigDTO buscarProducaoConfigPorId( Long id ) {
+        return queryProducaoConfigUC.findById( id );
     }
 
-    @Query("producaoConfigPorRevisao")
+    @Query( value = "producaoConfigPorRevisao" )
     @SecuredAccess(
-        roles = {ADMIN},
-        permissionsRequired = {GET_PRODUCTION_CONFIG_BY_ID}
-    )
-    public ProducaoConfigDTO buscarProducaoConfigPorRevisao(Long revisaoId) {
-        return queryProducaoConfigUC.findByRevisaoId(revisaoId);
+            roles = {ADMIN},
+            permissionsRequired = {GET_PRODUCTION_CONFIG_BY_ID} )
+    public ProducaoConfigDTO buscarProducaoConfigPorRevisao( Long revisaoId ) {
+        return queryProducaoConfigUC.findByRevisaoId( revisaoId );
     }
 }
