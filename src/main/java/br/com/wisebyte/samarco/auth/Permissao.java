@@ -62,6 +62,12 @@ public enum Permissao {
     LIST_PRODUCTION_PLANNINGS_BY_REVISION("Permite listar planejamentos de producao por revisao"),
     GET_PRODUCTION_PLANNING_BY_REVISION_AND_AREA("Permite buscar planejamento de producao por revisao e area"),
 
+    LIST_PRODUCTION_CONFIGS("Permite listar configuracoes de producao"),
+    GET_PRODUCTION_CONFIG_BY_ID("Permite buscar configuracao de producao por ID"),
+    CREATE_PRODUCTION_CONFIG("Permite cadastrar configuracao de producao"),
+    UPDATE_PRODUCTION_CONFIG("Permite alterar configuracao de producao"),
+    DELETE_PRODUCTION_CONFIG("Permite excluir configuracao de producao"),
+
     CREATE_TAX_RATE("Permite cadastrar aliquota de impostos"),
     UPDATE_TAX_RATE("Permite alterar aliquota de impostos"),
     DELETE_TAX_RATE("Permite excluir aliquota de impostos"),
