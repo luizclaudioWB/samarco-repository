@@ -61,7 +61,7 @@ public class TabelaDistribuidoraQueryUC {
                 .stream( ).filter( it -> it.getUnidadeGeradora( ) != null && it.getUnidadeGeradora( ) == false )
                 .findFirst( )
                 .orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Unidade", "Unidade", "Unidade Não Encontrada ou Unidade não válida." ) );
-        List<TarifaDistribuidora> tarifas = tarifaDistribuidoraRepository.findByTarifaPlanejamento_Revisao( revisao );
+        List<TarifaDistribuidora> tarifas = tarifaDistribuidoraRepository.findByRevisao( revisao );
         if ( tarifas.isEmpty( ) ) {
             return null;
         }

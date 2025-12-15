@@ -6,6 +6,7 @@ import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaDistribuidora;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaPlanejamento;
 import jakarta.data.repository.BasicRepository;
 import jakarta.data.repository.Find;
+import jakarta.data.repository.Query;
 import jakarta.data.repository.Repository;
 
 import java.util.List;
@@ -22,6 +23,6 @@ public interface TarifaDistribuidoraRepository extends BasicRepository<TarifaDis
     @Find
     List<TarifaDistribuidora> findByPlanejamentoAndDistribuidora( TarifaPlanejamento planejamento, Distribuidora distribuidora );
 
-    @Find
-    List<TarifaDistribuidora> findByTarifaPlanejamento_Revisao( Revisao revisao );
+    @Query( "SELECT t FROM TarifaDistribuidora t WHERE t.planejamento.revisao = :revisao" )
+    List<TarifaDistribuidora> findByRevisao( Revisao revisao );
 }
