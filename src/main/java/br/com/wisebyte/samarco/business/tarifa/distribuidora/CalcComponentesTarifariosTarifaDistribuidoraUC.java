@@ -70,7 +70,7 @@ public class CalcComponentesTarifariosTarifaDistribuidoraUC {
                 .build( );
     }
 
-    ComponenteTarifarioDTO calcComponenteTarifarios( @NotNull TipoComponenteTarifarioDTO componente, @NotNull TarifaDistribuidora tarifa, @NotNull AliquotaImpostos aliquota, @NotNull BigDecimal value ) {
+    public ComponenteTarifarioDTO calcComponenteTarifarios( @NotNull TipoComponenteTarifarioDTO componente, @NotNull TarifaDistribuidora tarifa, @NotNull AliquotaImpostos aliquota, @NotNull BigDecimal value ) {
         BigDecimal valueWithTaxes = calcTotalValueWithTaxes( tarifa, aliquota, value );
         BigDecimal icms = calcTaxValue( valueWithTaxes, (tarifa.isSobrescreverICMS( ) ? tarifa.getPercentualICMS( ) : aliquota.getPercentualIcms( )) );
         BigDecimal pis = calcTaxValue( valueWithTaxes, aliquota.getPercentualPis( ) );

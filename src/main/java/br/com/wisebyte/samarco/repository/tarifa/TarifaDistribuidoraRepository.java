@@ -1,6 +1,7 @@
 package br.com.wisebyte.samarco.repository.tarifa;
 
 import br.com.wisebyte.samarco.model.distribuidora.Distribuidora;
+import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaDistribuidora;
 import br.com.wisebyte.samarco.model.planejamento.tarifa.TarifaPlanejamento;
 import jakarta.data.repository.BasicRepository;
@@ -19,8 +20,8 @@ public interface TarifaDistribuidoraRepository extends BasicRepository<TarifaDis
     List<TarifaDistribuidora> findByDistribuidora(Distribuidora distribuidora);
 
     @Find
-    List<TarifaDistribuidora> findByPlanejamentoAndDistribuidora(
-            TarifaPlanejamento planejamento,
-            Distribuidora distribuidora
-    );
+    List<TarifaDistribuidora> findByPlanejamentoAndDistribuidora( TarifaPlanejamento planejamento, Distribuidora distribuidora );
+
+    @Find
+    List<TarifaDistribuidora> findByTarifaPlanejamento_Revisao( Revisao revisao );
 }

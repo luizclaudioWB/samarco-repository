@@ -18,50 +18,11 @@ public class TarifaDistribuidoraMapper implements EntityMapper<TarifaDistribuido
     DistribuidoraRepository distribuidoraRepository;
 
     @Override
-    public TarifaDistribuidora toEntity(TarifaDistribuidoraDTO dto) {
-        return TarifaDistribuidora.builder()
-                .id(dto.getId())
-                .planejamento(
-                        dto.getTarifaPlanejamentoId() != null
-                                ? tarifaPlanejamentoRepository
-                                    .findById(dto.getTarifaPlanejamentoId())
-                                    .orElse(null)
-                                : null
-                )
-                .distribuidora(
-                        dto.getDistribuidoraId() != null
-                                ? distribuidoraRepository
-                                    .findById(dto.getDistribuidoraId())
-                                    .orElse(null)
-                                : null
-                )
-                .periodoInicial(dto.getPeriodoInicial())
-                .periodoFinal(dto.getPeriodoFinal())
-                .valorPonta(dto.getValorPonta())
-                .valorForaPonta(dto.getValorForaPonta())
-                .valorEncargos(dto.getValorEncargos())
-                .valorEncargosAutoProducao(dto.getValorEncargosAutoProducao())
-                .percentualPisCofins(dto.getPercentualPisCofins())
-                .sobrescreverICMS(dto.isSobrescreverICMS())
-                .percentualICMS(dto.getPercentualICMS())
-                .qtdeDeHorasPonta(dto.getQtdeDeHorasPonta())
-                .build();
-    }
-
-    @Override
     public TarifaDistribuidoraDTO toDTO(TarifaDistribuidora entity) {
         return TarifaDistribuidoraDTO.builder()
                 .id(entity.getId())
-                .tarifaPlanejamentoId(
-                        entity.getPlanejamento() != null
-                                ? entity.getPlanejamento().getId()
-                                : null
-                )
-                .distribuidoraId(
-                        entity.getDistribuidora() != null
-                                ? entity.getDistribuidora().getId()
-                                : null
-                )
+                .tarifaPlanejamentoId( entity.getPlanejamento( ) != null ? entity.getPlanejamento( ).getId( ) : null )
+                .distribuidoraId( entity.getDistribuidora( ) != null ? entity.getDistribuidora( ).getId( ) : null )
                 .periodoInicial(entity.getPeriodoInicial())
                 .periodoFinal(entity.getPeriodoFinal())
                 .valorPonta(entity.getValorPonta())
@@ -72,6 +33,25 @@ public class TarifaDistribuidoraMapper implements EntityMapper<TarifaDistribuido
                 .sobrescreverICMS(entity.isSobrescreverICMS())
                 .percentualICMS(entity.getPercentualICMS())
                 .qtdeDeHorasPonta(entity.getQtdeDeHorasPonta())
+                .build();
+    }
+
+    @Override
+    public TarifaDistribuidora toEntity(TarifaDistribuidoraDTO dto) {
+        return TarifaDistribuidora.builder()
+                .id(dto.getId())
+                .planejamento( dto.getTarifaPlanejamentoId( ) != null ? tarifaPlanejamentoRepository.findById( dto.getTarifaPlanejamentoId( ) ).orElse( null ) : null )
+                .distribuidora( dto.getDistribuidoraId( ) != null ? distribuidoraRepository.findById( dto.getDistribuidoraId( ) ).orElse( null ) : null )
+                .periodoInicial(dto.getPeriodoInicial())
+                .periodoFinal(dto.getPeriodoFinal())
+                .valorPonta(dto.getValorPonta())
+                .valorForaPonta(dto.getValorForaPonta())
+                .valorEncargos(dto.getValorEncargos())
+                .valorEncargosAutoProducao(dto.getValorEncargosAutoProducao())
+                .percentualPisCofins(dto.getPercentualPisCofins())
+                .sobrescreverICMS(dto.isSobrescreverICMS())
+                .percentualICMS(dto.getPercentualICMS())
+                .qtdeDeHorasPonta(dto.getQtdeDeHorasPonta())
                 .build();
     }
 }
