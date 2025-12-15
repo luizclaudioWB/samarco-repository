@@ -65,9 +65,6 @@ public class TabelaDistribuidoraQueryUC {
         if ( tarifas.isEmpty( ) ) {
             return null;
         }
-        Set<Unidade> unidades = unidadeRepository.findAll( )
-                .filter( it -> it.getUnidadeGeradora( ) != null && it.getUnidadeGeradora( ) == false )
-                .collect( Collectors.toSet( ) );
         Set<AliquotaImpostos> aliquotas = aliquotaRepository.findByTarifaPlanejamento( tarifas.iterator( ).next( ).getPlanejamento( ) )
                 .stream( ).collect( Collectors.toSet( ) );
         return calcTableLine( unidade, tarifas, aliquotas );

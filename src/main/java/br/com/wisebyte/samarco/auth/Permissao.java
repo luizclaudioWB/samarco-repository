@@ -86,6 +86,7 @@ public enum Permissao {
     UPDATE_DISTRIBUTOR_RATE("Permite alterar tarifa de distribuidora"),
     DELETE_DISTRIBUTOR_RATE("Permite excluir tarifa de distribuidora"),
     LIST_DISTRIBUTOR_RATES("Permite listar tarifas de distribuidora"),
+    LIST_DISTRIBUTOR_TABLE( "Permite listar a tabela de tarifas de distribuidora" ),
     GET_DISTRIBUTOR_RATE_BY_ID("Permite buscar tarifa de distribuidora por ID"),
 
     CREATE_SUPPLIER_RATE("Permite cadastrar tarifa de fornecedor"),
