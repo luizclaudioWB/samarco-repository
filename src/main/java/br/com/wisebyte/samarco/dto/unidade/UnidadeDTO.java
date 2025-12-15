@@ -27,6 +27,5 @@ public class UnidadeDTO {
     @NotNull
     private Estado estado;
 
-    @NotNull
     private Long distribuidoraId;
 }
