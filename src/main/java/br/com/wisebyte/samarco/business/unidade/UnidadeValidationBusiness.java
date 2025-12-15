@@ -58,4 +58,8 @@ public class UnidadeValidationBusiness {
                 distribuidoraRepository.findById( id ).isPresent( );
     }
 
+    public boolean validateRedeBasicaDistribuidora(UnidadeDTO dto) {
+        return dto.getConectadaRedeBasica() == null || !dto.getConectadaRedeBasica() || dto.getDistribuidoraId() == null;
+    }
+
 }

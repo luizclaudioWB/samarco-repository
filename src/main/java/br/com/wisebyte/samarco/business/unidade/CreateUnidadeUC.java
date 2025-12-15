@@ -27,6 +27,7 @@ public class CreateUnidadeUC {
         if ( !validator.cedenteUnitCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Cadastro inválido", "Unidade cedente não existe" );
         }
+        if (!validator.validateRedeBasicaDistribuidora(dto)) throw new ValidadeExceptionBusiness("Unidade", "Rede Básica", "Unidade conectada à rede básica não pode estar associada a uma distribuidora");
         if ( !validator.distribuidoraExists( dto.getDistribuidoraId( ) ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Distribuidora", "Distribuidora nao encontrada" );
         }

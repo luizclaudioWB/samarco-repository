@@ -37,6 +37,7 @@ public class UpdateUnidadeUC {
         if ( !validator.cedenteUnitCannotBeNull( dto ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Unidade Geradora", "Id da unidade geradora não pode ser nulo" );
         }
+        if (!validator.validateRedeBasicaDistribuidora(dto)) throw new ValidadeExceptionBusiness("Unidade", "Rede Básica", "Unidade conectada à rede básica não pode estar associada a uma distribuidora");
         if ( !validator.distribuidoraExists( dto.getDistribuidoraId( ) ) ) {
             throw new ValidadeExceptionBusiness( "Unidade", "Distribuidora", "Distribuidora nao encontrada" );
         }
