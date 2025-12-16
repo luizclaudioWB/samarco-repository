@@ -19,6 +19,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
 
+import io.quarkus.logging.Log;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -63,6 +65,7 @@ public class TabelaDistribuidoraQueryUC {
                 .orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Unidade", "Unidade", "Unidade Não Encontrada ou Unidade não válida." ) );
         List<TarifaDistribuidora> tarifas = tarifaDistribuidoraRepository.findByRevisao( revisao );
         if ( tarifas.isEmpty( ) ) {
+            Log.warnf( "[TARIFA] Sem tarifas para revisao=%d, unidade=%d", revisaoId, unidadeId );
             return null;
         }
         Set<AliquotaImpostos> aliquotas = aliquotaRepository.findByTarifaPlanejamento( tarifas.iterator( ).next( ).getPlanejamento( ) )
@@ -77,6 +80,7 @@ public class TabelaDistribuidoraQueryUC {
                 .toList( );
         AliquotaImpostos aliquota = aliquotas.stream( ).filter( it -> it.getEstado( ) == unidade.getEstado( ) ).findFirst( ).orElse( null );
         if ( tarifasToUse.size( ) != 2 ) {
+            Log.warnf( "[TARIFA] Esperado 2 tarifas, encontrado %d para unidade=%d", tarifasToUse.size( ), unidade.getId( ) );
             return null;
         }
         TarifaDistribuidora firstPeriod = tarifasToUse.get( 0 );

@@ -5,6 +5,7 @@ import br.com.wisebyte.samarco.dto.revisao.RevisaoDTO;
 import br.com.wisebyte.samarco.mapper.revisao.RevisaoMapper;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.repository.revisao.RevisaoRepository;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -20,7 +21,7 @@ public class FinalizarRevisaoUC {
     RevisaoMapper revisaoMapper;
 
     @Transactional
-    public RevisaoDTO finalizar(Long revisaoId) {
+    public RevisaoDTO finalizar(Long revisaoId, String username) {
         if (revisaoId == null) {
             throw new ValidadeExceptionBusiness(
                 "Revisao",
@@ -47,6 +48,9 @@ public class FinalizarRevisaoUC {
         revisao.setFinished(true);
 
         Revisao saved = revisaoRepository.save(revisao);
+
+        Log.infof( "[REVISAO] Finalizada: id=%d, planejamento=%d, numero=%d, usuario=%s", saved.getId( ), saved.getPlanejamento( ).getId( ), saved.getNumeroRevisao( ), username );
+
         return revisaoMapper.toDTO(saved);
     }
 }

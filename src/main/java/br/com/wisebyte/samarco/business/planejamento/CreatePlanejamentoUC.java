@@ -6,6 +6,7 @@ import br.com.wisebyte.samarco.dto.planejamento.PlanejamentoDTO;
 import br.com.wisebyte.samarco.mapper.planejamento.PlanejamentoMapper;
 import br.com.wisebyte.samarco.model.planejamento.Planejamento;
 import br.com.wisebyte.samarco.repository.planejamento.PlanejamentoRepository;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -88,6 +89,8 @@ public class CreatePlanejamentoUC {
             true,                       // oficial = true (ÚNICA revisão oficial)
             false                       // finished = false (começa aberta para edição)
         );
+
+        Log.infof( "[PLANEJAMENTO] Criado: id=%d, ano=%d, usuario=%s", saved.getId( ), saved.getAno( ), username );
 
         return planejamentoMapper.toDTO(saved);
     }
