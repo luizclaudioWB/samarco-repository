@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Query;
 
-import static br.com.wisebyte.samarco.auth.Permissao.*;
+import static br.com.wisebyte.samarco.auth.Permissao.LIST_REVISIONS;
 import static br.com.wisebyte.samarco.auth.Role.ADMIN;
 
 @GraphQLApi
@@ -31,15 +31,23 @@ public class RevisaoQuery {
     @Query( value = "revisaoPorId" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {GET_REVISION_BY_ID} )
+            permissionsRequired = {LIST_REVISIONS} )
     public RevisaoDTO buscarRevisaoPorId( Long id ) {
         return queryRevisaoUC.findById( id );
+    }
+
+    @Query( value = "revisaoPorPlanejamento" )
+    @SecuredAccess(
+            roles = {ADMIN},
+            permissionsRequired = {LIST_REVISIONS} )
+    public QueryList<RevisaoDTO> buscaPorPlanejamento( @NotNull Long idPlanejamento ) {
+        return queryRevisaoUC.findByPlanejamento( idPlanejamento );
     }
 
     @Query( value = "revisoesOficiais" )
     @SecuredAccess(
             roles = {ADMIN},
-            permissionsRequired = {LIST_OFFICIAL_REVISIONS} )
+            permissionsRequired = {LIST_REVISIONS} )
     public QueryList<RevisaoDTO> listarRevisoesOficiais( ) {
         return queryRevisaoUC.listRevisoesOficiais( );
     }

@@ -3,6 +3,7 @@ package br.com.wisebyte.samarco.business.revisao;
 import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.revisao.RevisaoDTO;
 import br.com.wisebyte.samarco.mapper.revisao.RevisaoMapper;
+import br.com.wisebyte.samarco.model.planejamento.Planejamento;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.model.planejamento._Revisao;
 import br.com.wisebyte.samarco.repository.revisao.RevisaoRepository;
@@ -11,6 +12,7 @@ import jakarta.data.page.Page;
 import jakarta.data.page.PageRequest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -42,6 +44,15 @@ public class QueryRevisaoUC {
                 .totalElements( ( long ) byOficial.size( ) )
                 .totalPages( 1L )
                 .results( byOficial.stream( ).map( revisaoMapper::toDTO ).toList( ) )
+                .build( );
+    }
+
+    public QueryList<RevisaoDTO> findByPlanejamento( @NotNull Long idPlanejamento ) {
+        List<Revisao> reviews = revisaoRepository.findByPlanejamento( Planejamento.builder( ).id( idPlanejamento ).build( ) );
+        return QueryList.<RevisaoDTO>builder( )
+                .totalElements( ( long ) reviews.size( ) )
+                .totalPages( 1L )
+                .results( reviews.stream( ).map( revisaoMapper::toDTO ).toList( ) )
                 .build( );
     }
 }

@@ -1,6 +1,7 @@
 package br.com.wisebyte.samarco;
 
 import br.com.wisebyte.samarco.model.area.Area;
+import br.com.wisebyte.samarco.model.distribuidora.Distribuidora;
 import br.com.wisebyte.samarco.model.estado.Estado;
 import br.com.wisebyte.samarco.model.planejamento.Planejamento;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;
@@ -35,6 +36,7 @@ public class CadastrosTest {
                 .unidadeGeradora( true )
                 .conectadaRedeBasica( false )
                 .estado( Estado.MG )
+                .distribuidora( entityManager.find( Distribuidora.class, 1L ) )
                 .build( );
         guilmanAmorim = entityManager.merge( guilmanAmorim );
         Unidade germano = Unidade.builder( )
@@ -43,6 +45,7 @@ public class CadastrosTest {
                 .conectadaRedeBasica( false )
                 .unidadeCedenteCreditosDeInjecao( guilmanAmorim )
                 .estado( Estado.MG )
+                .distribuidora( entityManager.find( Distribuidora.class, 1L ) )
                 .build( );
         entityManager.persist( germano );
         Unidade matipo = Unidade.builder( )
@@ -50,6 +53,7 @@ public class CadastrosTest {
                 .unidadeGeradora( false )
                 .conectadaRedeBasica( false )
                 .estado( Estado.MG )
+                .distribuidora( entityManager.find( Distribuidora.class, 3L ) )
                 .build( );
         entityManager.persist( matipo );
         Unidade munizFreire = Unidade.builder( )
@@ -57,6 +61,7 @@ public class CadastrosTest {
                 .unidadeGeradora( true )
                 .conectadaRedeBasica( false )
                 .estado( Estado.ES )
+                .distribuidora( entityManager.find( Distribuidora.class, 3L ) )
                 .build( );
         munizFreire = entityManager.merge( munizFreire );
         Unidade ubu = Unidade.builder( )
@@ -65,6 +70,7 @@ public class CadastrosTest {
                 .unidadeCedenteCreditosDeInjecao( munizFreire )
                 .conectadaRedeBasica( false )
                 .estado( Estado.ES )
+                .distribuidora( entityManager.find( Distribuidora.class, 2L ) )
                 .build( );
         entityManager.persist( ubu );
     }
@@ -87,7 +93,7 @@ public class CadastrosTest {
                         .planejamento( entityManager.find( Planejamento.class, 1L ) )
                         .oficial( true )
                         .descricao( "Primeiro Planejamento de 2026" )
-                        .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                        .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                         .build( )
         );
     }
@@ -98,7 +104,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 2L ) )
                 .tipoArea( FILTRAGEM )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( filtragem );
         Area usina1 = Area.builder( )
@@ -106,7 +112,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 2L ) )
                 .tipoArea( USINA )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( usina1 );
         Area usina2 = Area.builder( )
@@ -114,7 +120,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 2L ) )
                 .tipoArea( USINA )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( usina2 );
         Area usina3 = Area.builder( )
@@ -122,7 +128,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 2L ) )
                 .tipoArea( USINA )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( usina3 );
     }
@@ -133,7 +139,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 3L ) )
                 .tipoArea( MINERODUTO )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( area1 );
         Area area2 = Area.builder( )
@@ -141,7 +147,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 3L ) )
                 .tipoArea( MINERODUTO )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( area2 );
         Area area3 = Area.builder( )
@@ -149,7 +155,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 3L ) )
                 .tipoArea( MINERODUTO )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( area3 );
 
@@ -161,7 +167,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( PREPARACAO )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( preparacao1 );
         Area preparacao2 = Area.builder( )
@@ -169,7 +175,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( PREPARACAO )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( preparacao2 );
         Area usina1 = Area.builder( )
@@ -177,7 +183,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( USINA )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( usina1 );
         Area usina2 = Area.builder( )
@@ -185,7 +191,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( USINA )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( usina2 );
         Area usina3 = Area.builder( )
@@ -193,7 +199,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( USINA )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( usina3 );
         Area usina4 = Area.builder( )
@@ -201,7 +207,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( USINA )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( usina4 );
         Area vendas = Area.builder( )
@@ -209,7 +215,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( VENDAS )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( vendas );
         Area producao = Area.builder( )
@@ -217,7 +223,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( PRODUCAO )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( producao );
         Area embarque = Area.builder( )
@@ -225,7 +231,7 @@ public class CadastrosTest {
                 .unidade( entityManager.find( Unidade.class, 5L ) )
                 .tipoArea( PRODUCAO )
                 .ativo( true )
-                .usuario( entityManager.find( Usuario.class, "leandro@samarco.com.br" ) )
+                .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( embarque );
     }
