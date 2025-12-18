@@ -42,11 +42,12 @@ public class ProducaoConfigValidationBusiness {
     }
 
     public boolean revisaoUnica(ProducaoConfigDTO dto) {
-        ProducaoConfig existente = producaoConfigRepository.findByRevisao_id(dto.getRevisaoId());
-
-        if (existente == null) return true;
-
-        return existente.getId().equals(dto.getId());
+        if (dto.getId() != null) {
+            // Editando - ignora o próprio registro
+            return !producaoConfigRepository.existsByRevisaoIdExcludingId(dto.getRevisaoId(), dto.getId());
+        }
+        // Criando - verifica se não existe
+        return !producaoConfigRepository.existsByRevisaoId(dto.getRevisaoId());
     }
 
     public boolean todasAreasExistem(Set<Long> areaIds) {
@@ -79,12 +80,6 @@ public class ProducaoConfigValidationBusiness {
     }
 
     public boolean areaEstaNaProducaoConfig(Long revisaoId, Long areaId) {
-        ProducaoConfig config = producaoConfigRepository.findByRevisao_id(revisaoId);
-        if (config == null || config.getAreas() == null || config.getAreas().isEmpty()) {
-            return false;
-        }
-
-        return config.getAreas().stream()
-                .anyMatch(area -> area.getId().equals(areaId));
+        return producaoConfigRepository.countAreaInProducaoConfig(revisaoId, areaId) > 0;
     }
 }
