@@ -15,6 +15,9 @@ import java.util.stream.Stream;
 public interface RevisaoRepository extends BasicRepository<Revisao, Long> {
 
     @Find
+    List<Revisao> findByPlanejamentoId( Long id );
+
+    @Find
     Stream<Revisao> findAll( );
 
     @Find

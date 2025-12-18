@@ -3,7 +3,6 @@ package br.com.wisebyte.samarco.business.revisao;
 import br.com.wisebyte.samarco.dto.QueryList;
 import br.com.wisebyte.samarco.dto.revisao.RevisaoDTO;
 import br.com.wisebyte.samarco.mapper.revisao.RevisaoMapper;
-import br.com.wisebyte.samarco.model.planejamento.Planejamento;
 import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.model.planejamento._Revisao;
 import br.com.wisebyte.samarco.repository.revisao.RevisaoRepository;
@@ -48,7 +47,7 @@ public class QueryRevisaoUC {
     }
 
     public QueryList<RevisaoDTO> findByPlanejamento( @NotNull Long idPlanejamento ) {
-        List<Revisao> reviews = revisaoRepository.findByPlanejamento( Planejamento.builder( ).id( idPlanejamento ).build( ) );
+        List<Revisao> reviews = revisaoRepository.findByPlanejamentoId( idPlanejamento );
         return QueryList.<RevisaoDTO>builder( )
                 .totalElements( ( long ) reviews.size( ) )
                 .totalPages( 1L )
