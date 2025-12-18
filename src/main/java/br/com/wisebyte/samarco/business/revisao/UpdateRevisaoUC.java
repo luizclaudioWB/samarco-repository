@@ -36,51 +36,40 @@ public class UpdateRevisaoUC {
             throw new ValidadeExceptionBusiness("Revisao", "Revisao Id", "Id da Revisão não deve ser nulo para atualização");
         }
 
-        Revisao revisao = revisaoRepository.findById(inputDTO.getId())
-            .orElseThrow(() -> new ValidadeExceptionBusiness("Revisao", "Revisao Id", "Revisão não encontrada"));
+        Revisao revisao = revisaoRepository.findById( inputDTO.getId( ) ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Revisao", "Revisao Id", "Revisão não encontrada" ) );
+        validate( revisao, inputDTO );
 
-        // REGRA CRÍTICA: Revisão finalizada NÃO pode ser editada (nem pelo admin)
-        if (revisao.isFinished()) {
-            throw new ValidadeExceptionBusiness(
-                "Revisao",
-                "Finished",
-                "Revisão finalizada não pode ser editada. Depois de finalizado, NINGUÉM mais mexe (nem o admin)."
-            );
-        }
-
-        if (!validator.planningExists(inputDTO.getPlanejamentoId())) {
-            throw new ValidadeExceptionBusiness("Revisao", "Planejamento", "Planejamento não encontrado");
-        }
-
-        if (!validator.userExists(inputDTO.getUsuarioId())) {
-            throw new ValidadeExceptionBusiness("Revisao", "Usuario", "Usuário não encontrado");
-        }
-
-        if (inputDTO.getDescricao() == null || inputDTO.getDescricao().trim().isEmpty()) {
-            throw new ValidadeExceptionBusiness("Revisao", "Descricao", "Descrição da revisão é obrigatória");
-        }
-
-        if (inputDTO.getNumeroRevisao() == null || inputDTO.getNumeroRevisao() <= 0) {
-            throw new ValidadeExceptionBusiness("Revisao", "Numero Revisao", "Número da revisão deve ser maior que zero");
-        }
 
         applyNewValues(revisao, inputDTO);
         return revisaoMapper.toDTO(revisaoRepository.save(revisao));
     }
 
+    public void validate( Revisao revisao, RevisaoInputDTO inputDTO ) {
+        if ( revisao.isFinished( ) ) {
+            throw new ValidadeExceptionBusiness( "Revisao", "Finished", "Revisão finalizada não pode ser editada. Depois de finalizado, NINGUÉM mais mexe (nem o admin)." );
+        }
+
+        if ( !validator.planningExists( inputDTO.getPlanejamentoId( ) ) ) {
+            throw new ValidadeExceptionBusiness( "Revisao", "Planejamento", "Planejamento não encontrado" );
+        }
+
+        if ( !validator.userExists( inputDTO.getUsuarioId( ) ) ) {
+            throw new ValidadeExceptionBusiness( "Revisao", "Usuario", "Usuário não encontrado" );
+        }
+
+        if ( inputDTO.getDescricao( ) == null || inputDTO.getDescricao( ).trim( ).isEmpty( ) ) {
+            throw new ValidadeExceptionBusiness( "Revisao", "Descricao", "Descrição da revisão é obrigatória" );
+        }
+
+        if ( inputDTO.getNumeroRevisao( ) == null || inputDTO.getNumeroRevisao( ) <= 0 ) {
+            throw new ValidadeExceptionBusiness( "Revisao", "Numero Revisao", "Número da revisão deve ser maior que zero" );
+        }
+    }
+
     private void applyNewValues(Revisao revisao, RevisaoInputDTO inputDTO) {
         revisao.setNumeroRevisao(inputDTO.getNumeroRevisao());
         revisao.setDescricao(inputDTO.getDescricao());
-        // NÃO permite alterar 'oficial' e 'finished' via InputDTO
-        revisao.setPlanejamento(
-            inputDTO.getPlanejamentoId() != null
-                ? planejamentoRepository.findById(inputDTO.getPlanejamentoId()).orElse(null)
-                : null
-        );
-        revisao.setUsuario(
-            inputDTO.getUsuarioId() != null
-                ? usuarioRepository.findById(inputDTO.getUsuarioId()).orElse(null)
-                : null
-        );
+        revisao.setPlanejamento( inputDTO.getPlanejamentoId( ) != null ? planejamentoRepository.findById( inputDTO.getPlanejamentoId( ) ).orElse( null ) : null );
+        revisao.setUsuario( inputDTO.getUsuarioId( ) != null ? usuarioRepository.findById( inputDTO.getUsuarioId( ) ).orElse( null ) : null );
     }
 }
