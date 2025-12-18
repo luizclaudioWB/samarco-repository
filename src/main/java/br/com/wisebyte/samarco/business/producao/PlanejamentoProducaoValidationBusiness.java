@@ -105,13 +105,7 @@ public class PlanejamentoProducaoValidationBusiness {
 
     // Verifica se a Area pertence ao ProducaoConfig da Revisao
     public boolean areaEstaNaProducaoConfig(Long revisaoId, Long areaId) {
-        ProducaoConfig config = producaoConfigRepository.findByRevisao_id(revisaoId);
-        if (config == null || config.getAreas() == null || config.getAreas().isEmpty()) {
-            return false;
-        }
-
-        return config.getAreas().stream()
-                .anyMatch(area -> area.getId().equals(areaId));
+        return producaoConfigRepository.countAreaInProducaoConfig(revisaoId, areaId) > 0;
     }
 }
 

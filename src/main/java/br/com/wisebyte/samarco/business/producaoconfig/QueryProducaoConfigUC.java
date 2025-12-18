@@ -11,6 +11,7 @@ import jakarta.data.page.Page;
 import jakarta.data.page.PageRequest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 @ApplicationScoped
@@ -22,6 +23,7 @@ public class QueryProducaoConfigUC {
     @Inject
     ProducaoConfigMapper mapper;
 
+    @Transactional
     public QueryList<ProducaoConfigDTO> list(@NotNull Integer page, @NotNull Integer size) {
         Page<ProducaoConfig> all = repository.findAll(
             PageRequest.ofPage(page, size, true),
@@ -35,11 +37,10 @@ public class QueryProducaoConfigUC {
     }
 
     public ProducaoConfigDTO findById(Long id) {
-        return repository.findById(id).map(mapper::toDTO).orElse(null);
+        return repository.findByIdComAreas(id).map(mapper::toDTO).orElse(null);
     }
 
     public ProducaoConfigDTO findByRevisaoId(Long revisaoId) {
-        ProducaoConfig config = repository.findByRevisao_id(revisaoId);
-        return config != null ? mapper.toDTO(config) : null;
+        return repository.findByRevisaoIdComAreas(revisaoId).map(mapper::toDTO).orElse(null);
     }
 }

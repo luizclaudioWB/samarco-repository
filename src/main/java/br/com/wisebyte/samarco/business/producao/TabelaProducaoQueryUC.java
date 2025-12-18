@@ -33,10 +33,9 @@ public class TabelaProducaoQueryUC {
     PlanejamentoProducaoMapper mapper;
 
     public QueryList<TablePlanejamentoProducaoDTO> calcTabelaProducao( @NotNull Long revisaoId ) {
-        ProducaoConfig config = producaoConfigRepository.findByRevisao_id( revisaoId );
-        if ( config == null ) {
-            throw new ValidadeExceptionBusiness( "ProducaoConfig", "ProducaoConfig", "Config não encontrada" );
-        }
+        ProducaoConfig config = producaoConfigRepository.findByRevisaoId( revisaoId )
+                .orElseThrow(() -> new ValidadeExceptionBusiness( "ProducaoConfig", "ProducaoConfig", "Config não encontrada" ));
+
         Integer multiplicador = config.getMultiplicador( );
         List<TablePlanejamentoProducaoDTO> list = planejamentoProducaoRepository.findByRevisao( config.getRevisao( ) ).stream( )
                 .map( it -> calcProducao( it, valueOf( multiplicador ) ) )
