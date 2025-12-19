@@ -158,7 +158,6 @@ public class CadastrosTest {
                 .usuario( entityManager.find( Usuario.class, "leandro@wisebyte.com.br" ) )
                 .build( );
         entityManager.merge( area3 );
-
     }
 
     public void criaAreasUbu( ) {
