@@ -9,8 +9,13 @@ import br.com.wisebyte.samarco.model.unidade.Unidade;
 import br.com.wisebyte.samarco.repository.geracao.GeracaoRepository;
 import br.com.wisebyte.samarco.repository.revisao.RevisaoRepository;
 import br.com.wisebyte.samarco.repository.unidade.UnidadeRepository;
+import jakarta.data.Order;
+import jakarta.data.Sort;
+import jakarta.data.page.Page;
+import jakarta.data.page.PageRequest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
@@ -30,25 +35,29 @@ public class QueryGeracaoUC {
     @Inject
     UnidadeRepository unidadeRepository;
 
-    public QueryList<GeracaoDTO> list(Integer page, Integer size) {
-        List<GeracaoDTO> items = geracaoRepository.findAll()
-            .skip((long) page * size)
-            .limit(size)
-            .map(geracaoMapper::toDTO)
-            .toList();
+    public QueryList<GeracaoDTO> list(@NotNull Integer page, @NotNull Integer size) {
+        Page<Geracao> resultado = geracaoRepository.findAll(
+            PageRequest.ofPage(page, size, true),
+            Order.by(Sort.asc("id"))
+        );
 
-        long total = geracaoRepository.findAll().count();
-
-        return new QueryList<>(items, total);
+        return QueryList.<GeracaoDTO>builder()
+            .totalElements(resultado.totalElements())
+            .totalPages(resultado.totalPages())
+            .results(
+                resultado.content().stream()
+                    .map(geracaoMapper::toDTO)
+                    .toList()
+            )
+            .build();
     }
 
     public GeracaoDTO findById(Long id) {
-        Geracao entity = geracaoRepository.findById(id)
+        return geracaoRepository.findById(id)
+            .map(geracaoMapper::toDTO)
             .orElseThrow(() -> new NotFoundException(
                 "Geração não encontrada com o ID: " + id
             ));
-
-        return geracaoMapper.toDTO(entity);
     }
 
     public List<GeracaoDTO> findByRevisao(Long revisaoId) {
