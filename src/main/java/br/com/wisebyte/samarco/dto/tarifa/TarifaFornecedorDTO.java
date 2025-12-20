@@ -2,7 +2,6 @@ package br.com.wisebyte.samarco.dto.tarifa;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.eclipse.microprofile.graphql.Name;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -34,42 +33,37 @@ public class TarifaFornecedorDTO {
     @NotNull
     private BigDecimal montante;
 
-    /**
-     * IPCA Total = IPCA Realizada + IPCA Projetado
-     * Fórmula da planilha: =D12+E12
-     */
-    @Name("ipcaTotal")
-    public BigDecimal getIpcaTotal() {
-        if (ipcaRealizada == null || ipcaProjetado == null) {
-            return BigDecimal.ZERO;
-        }
-        return ipcaRealizada.add(ipcaProjetado);
-    }
+    // Campos calculados (preenchidos no mapper/builder)
+    private BigDecimal ipcaTotal;
+    private BigDecimal preco;
+    private BigDecimal valorMontante;
 
     /**
-     * Preço atualizado = Preço Base × (1 + IPCA Total)
-     * Fórmula da planilha: =(C12)+(C12*F12) ou simplificando: =C12*(1+F12)
+     * Calcula e preenche os campos calculados.
+     * Deve ser chamado após setar os valores base.
      */
-    @Name("preco")
-    public BigDecimal getPreco() {
-        if (precoBase == null) {
-            return BigDecimal.ZERO;
+    public void calcularCampos() {
+        // IPCA Total = IPCA Realizada + IPCA Projetado
+        if (ipcaRealizada != null && ipcaProjetado != null) {
+            this.ipcaTotal = ipcaRealizada.add(ipcaProjetado);
+        } else {
+            this.ipcaTotal = BigDecimal.ZERO;
         }
-        BigDecimal ipcaTotal = getIpcaTotal();
-        return precoBase.multiply(BigDecimal.ONE.add(ipcaTotal))
-            .setScale(2, RoundingMode.HALF_UP);
-    }
 
-    /**
-     * Valor do Montante = Montante × Preço
-     * Fórmula da planilha: =H12*G12
-     */
-    @Name("valorMontante")
-    public BigDecimal getValorMontante() {
-        if (montante == null) {
-            return BigDecimal.ZERO;
+        // Preço = Preço Base × (1 + IPCA Total)
+        if (precoBase != null) {
+            this.preco = precoBase.multiply(BigDecimal.ONE.add(this.ipcaTotal))
+                .setScale(2, RoundingMode.HALF_UP);
+        } else {
+            this.preco = BigDecimal.ZERO;
         }
-        return montante.multiply(getPreco())
-            .setScale(2, RoundingMode.HALF_UP);
+
+        // Valor Montante = Montante × Preço
+        if (montante != null && this.preco != null) {
+            this.valorMontante = montante.multiply(this.preco)
+                .setScale(2, RoundingMode.HALF_UP);
+        } else {
+            this.valorMontante = BigDecimal.ZERO;
+        }
     }
 }

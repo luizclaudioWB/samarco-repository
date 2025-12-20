@@ -23,7 +23,7 @@ public class TarifaFornecedorMapper implements EntityMapper<TarifaFornecedor, Ta
             return null;
         }
 
-        return TarifaFornecedorDTO.builder()
+        TarifaFornecedorDTO dto = TarifaFornecedorDTO.builder()
                 .id(entity.getId())
                 .tarifaPlanejamentoId( entity.getPlanejamento( ) != null ? entity.getPlanejamento( ).getId( ) : null )
                 .fornecedorId( entity.getFornecedor( ) != null ? entity.getFornecedor( ).getId( ) : null )
@@ -32,6 +32,10 @@ public class TarifaFornecedorMapper implements EntityMapper<TarifaFornecedor, Ta
                 .ipcaProjetado(entity.getIpcaProjetado())
                 .montante(entity.getMontante())
                 .build();
+
+        // Calcula campos derivados
+        dto.calcularCampos();
+        return dto;
     }
 
     @Override
