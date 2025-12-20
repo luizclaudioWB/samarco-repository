@@ -46,6 +46,14 @@ public class FinalizarRevisaoUC {
 
         revisao.setFinished(true);
 
+        // Força o carregamento das entidades lazy para evitar erro de detached entity
+        if (revisao.getPlanejamento() != null) {
+            revisao.getPlanejamento().getId();
+        }
+        if (revisao.getUsuario() != null) {
+            revisao.getUsuario().getUsuario();
+        }
+
         Revisao saved = revisaoRepository.save(revisao);
         return revisaoMapper.toDTO(saved);
     }
