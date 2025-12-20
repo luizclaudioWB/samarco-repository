@@ -38,7 +38,7 @@ public class DistribuidoraMutation {
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {UPDATE_DISTRIBUTOR} )
-    public DistribuidoraDTO alterarUnidade( DistribuidoraDTO dto ) {
+    public DistribuidoraDTO alterarDistribuidora( DistribuidoraDTO dto ) {
         return alterarDistribuidora.update( dto );
     }
 
@@ -46,7 +46,7 @@ public class DistribuidoraMutation {
     @SecuredAccess(
             roles = {ADMIN},
             permissionsRequired = {DELETE_DISTRIBUTOR} )
-    public DistribuidoraDTO excluirUnidade( DistribuidoraDTO dto ) {
+    public DistribuidoraDTO excluirDistribuidora( DistribuidoraDTO dto ) {
         excluirDistribuidora.delete( dto );
         return dto;
     }
