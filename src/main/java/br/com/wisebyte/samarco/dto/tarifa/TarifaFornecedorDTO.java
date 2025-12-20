@@ -2,6 +2,7 @@ package br.com.wisebyte.samarco.dto.tarifa;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.eclipse.microprofile.graphql.Name;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -37,6 +38,7 @@ public class TarifaFornecedorDTO {
      * IPCA Total = IPCA Realizada + IPCA Projetado
      * Fórmula da planilha: =D12+E12
      */
+    @Name("ipcaTotal")
     public BigDecimal getIpcaTotal() {
         if (ipcaRealizada == null || ipcaProjetado == null) {
             return BigDecimal.ZERO;
@@ -48,6 +50,7 @@ public class TarifaFornecedorDTO {
      * Preço atualizado = Preço Base × (1 + IPCA Total)
      * Fórmula da planilha: =(C12)+(C12*F12) ou simplificando: =C12*(1+F12)
      */
+    @Name("preco")
     public BigDecimal getPreco() {
         if (precoBase == null) {
             return BigDecimal.ZERO;
@@ -61,6 +64,7 @@ public class TarifaFornecedorDTO {
      * Valor do Montante = Montante × Preço
      * Fórmula da planilha: =H12*G12
      */
+    @Name("valorMontante")
     public BigDecimal getValorMontante() {
         if (montante == null) {
             return BigDecimal.ZERO;
