@@ -93,7 +93,31 @@ public enum Permissao {
     UPDATE_SUPPLIER_RATE("Permite alterar tarifa de fornecedor"),
     DELETE_SUPPLIER_RATE("Permite excluir tarifa de fornecedor"),
     LIST_SUPPLIER_RATES("Permite listar tarifas de fornecedor"),
-    GET_SUPPLIER_RATE_BY_ID("Permite buscar tarifa de fornecedor por ID");
+    GET_SUPPLIER_RATE_BY_ID("Permite buscar tarifa de fornecedor por ID"),
+
+    // Permissões de Demanda (kW por unidade/horário)
+    CREATE_DEMAND("Permite cadastrar demanda"),
+    UPDATE_DEMAND("Permite alterar demanda"),
+    DELETE_DEMAND("Permite excluir demanda"),
+    LIST_DEMANDS("Permite listar demandas"),
+    GET_DEMAND_BY_ID("Permite buscar demanda por ID"),
+    LIST_DEMANDS_BY_REVISION("Permite listar demandas por revisão"),
+
+    // Permissões de Consumo Específico (kWh/tms por área)
+    CREATE_SPECIFIC_CONSUMPTION("Permite cadastrar consumo específico"),
+    UPDATE_SPECIFIC_CONSUMPTION("Permite alterar consumo específico"),
+    DELETE_SPECIFIC_CONSUMPTION("Permite excluir consumo específico"),
+    LIST_SPECIFIC_CONSUMPTIONS("Permite listar consumos específicos"),
+    GET_SPECIFIC_CONSUMPTION_BY_ID("Permite buscar consumo específico por ID"),
+    LIST_SPECIFIC_CONSUMPTIONS_BY_REVISION("Permite listar consumos específicos por revisão"),
+
+    // Permissões de Geração Própria (MWh por unidade geradora)
+    CREATE_GENERATION("Permite cadastrar geração própria"),
+    UPDATE_GENERATION("Permite alterar geração própria"),
+    DELETE_GENERATION("Permite excluir geração própria"),
+    LIST_GENERATIONS("Permite listar gerações próprias"),
+    GET_GENERATION_BY_ID("Permite buscar geração própria por ID"),
+    LIST_GENERATIONS_BY_REVISION("Permite listar gerações próprias por revisão");
 
     private final String descricao;
 
