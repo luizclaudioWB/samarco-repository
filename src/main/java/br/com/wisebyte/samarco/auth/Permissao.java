@@ -117,7 +117,11 @@ public enum Permissao {
     DELETE_GENERATION("Permite excluir geração própria"),
     LIST_GENERATIONS("Permite listar gerações próprias"),
     GET_GENERATION_BY_ID("Permite buscar geração própria por ID"),
-    LIST_GENERATIONS_BY_REVISION("Permite listar gerações próprias por revisão");
+    LIST_GENERATIONS_BY_REVISION("Permite listar gerações próprias por revisão"),
+
+    // Permissões de Cálculo de Consumo de Área
+    CALC_AREA_CONSUMPTION("Permite calcular consumo de área"),
+    CALC_AREA_CONSUMPTION_BY_REVISION("Permite calcular consumo de área por revisão");
 
     private final String descricao;
 
