@@ -26,22 +26,22 @@ public class GeracaoMutation {
     @Inject
     DeleteGeracaoUC deleteGeracaoUC;
 
-    @Mutation(value = "criarGeracao")
+    @Mutation(value = "cadastrarGeracao")
     @SecuredAccess(roles = {ADMIN}, permissionsRequired = {CREATE_GENERATION})
-    public GeracaoDTO criarGeracao(GeracaoDTO input) {
-        return createGeracaoUC.execute(input);
+    public GeracaoDTO cadastrarGeracao(GeracaoDTO dto) {
+        return createGeracaoUC.create(dto);
     }
 
-    @Mutation(value = "atualizarGeracao")
+    @Mutation(value = "alterarGeracao")
     @SecuredAccess(roles = {ADMIN}, permissionsRequired = {UPDATE_GENERATION})
-    public GeracaoDTO atualizarGeracao(GeracaoDTO input) {
-        return updateGeracaoUC.execute(input);
+    public GeracaoDTO alterarGeracao(GeracaoDTO dto) {
+        return updateGeracaoUC.update(dto);
     }
 
-    @Mutation(value = "deletarGeracao")
+    @Mutation(value = "excluirGeracao")
     @SecuredAccess(roles = {ADMIN}, permissionsRequired = {DELETE_GENERATION})
-    public Boolean deletarGeracao(Long id) {
-        deleteGeracaoUC.execute(id);
-        return true;
+    public GeracaoDTO excluirGeracao(GeracaoDTO dto) {
+        deleteGeracaoUC.delete(dto);
+        return dto;
     }
 }

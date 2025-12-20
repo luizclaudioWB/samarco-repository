@@ -33,19 +33,19 @@ public class GeracaoQuery {
 
     @Query(value = "geracaoPorId")
     @SecuredAccess(roles = {ADMIN}, permissionsRequired = {GET_GENERATION_BY_ID})
-    public GeracaoDTO buscarGeracaoPorId(Long id) {
+    public GeracaoDTO buscarGeracaoPorId(@NotNull Long id) {
         return queryGeracaoUC.findById(id);
     }
 
     @Query(value = "geracoesPorRevisao")
     @SecuredAccess(roles = {ADMIN}, permissionsRequired = {LIST_GENERATIONS})
-    public List<GeracaoDTO> listarGeracoesPorRevisao(Long revisaoId) {
+    public List<GeracaoDTO> listarGeracoesPorRevisao(@NotNull Long revisaoId) {
         return queryGeracaoUC.findByRevisao(revisaoId);
     }
 
     @Query(value = "geracoesPorUnidade")
     @SecuredAccess(roles = {ADMIN}, permissionsRequired = {LIST_GENERATIONS})
-    public List<GeracaoDTO> listarGeracoesPorUnidade(Long unidadeId) {
+    public List<GeracaoDTO> listarGeracoesPorUnidade(@NotNull Long unidadeId) {
         return queryGeracaoUC.findByUnidade(unidadeId);
     }
 }
