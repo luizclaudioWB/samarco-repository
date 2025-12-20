@@ -695,3 +695,369 @@ Todas as operações requerem autenticação. Adicione o header de autorização
 ```
 Authorization: Bearer <seu_token_jwt>
 ```
+
+---
+
+## DISTRIBUIDORA
+
+### Queries
+
+#### Listar Distribuidoras
+```graphql
+query ListarDistribuidoras($page: Int!, $size: Int!) {
+  distribuidoras(page: $page, size: $size) {
+    totalElements
+    totalPages
+    results {
+      id
+      nome
+      cnpj
+      siglaAgente
+      estado
+    }
+  }
+}
+```
+
+**Query Variables:**
+```json
+{
+  "page": 1,
+  "size": 10
+}
+```
+
+### Mutations
+
+#### Cadastrar Distribuidora
+```graphql
+mutation CadastrarDistribuidora($dto: DistribuidoraDTOInput!) {
+  cadastrarDistribuidora(dto: $dto) {
+    id
+    nome
+    cnpj
+    siglaAgente
+    estado
+  }
+}
+```
+
+**Query Variables:**
+```json
+{
+  "dto": {
+    "nome": "CEMIG Distribuição S.A.",
+    "cnpj": "06.981.180/0001-16",
+    "siglaAgente": "CEMIG-D",
+    "estado": "MG"
+  }
+}
+```
+
+---
+
+## FORNECEDOR
+
+### Queries
+
+#### Listar Fornecedores
+```graphql
+query ListarFornecedores($page: Int!, $size: Int!) {
+  fornecedores(page: $page, size: $size) {
+    totalElements
+    totalPages
+    results {
+      id
+      nome
+      cnpj
+      inicioDatabase
+      precoBase
+      estado
+    }
+  }
+}
+```
+
+**Query Variables:**
+```json
+{
+  "page": 1,
+  "size": 10
+}
+```
+
+### Mutations
+
+#### Cadastrar Fornecedor
+```graphql
+mutation CadastrarFornecedor($dto: FornecedorDTOInput!) {
+  cadastrarFornecedor(dto: $dto) {
+    id
+    nome
+    cnpj
+    inicioDatabase
+    precoBase
+    estado
+  }
+}
+```
+
+**Query Variables:**
+```json
+{
+  "dto": {
+    "nome": "Cemig Convencional",
+    "cnpj": "06.981.180/0001-16",
+    "inicioDatabase": "2021-05-01",
+    "precoBase": 142.59,
+    "estado": "MG"
+  }
+}
+```
+
+---
+
+## TARIFA FORNECEDOR (com campos calculados)
+
+### Queries
+
+#### Listar Tarifas de Fornecedor
+```graphql
+query ListarTarifasFornecedor {
+  tarifasFornecedor {
+    id
+    tarifaPlanejamentoId
+    fornecedorId
+    precoBase
+    ipcaRealizada
+    ipcaProjetado
+    montante
+    # Campos CALCULADOS automaticamente:
+    ipcaTotal        # = ipcaRealizada + ipcaProjetado
+    preco            # = precoBase × (1 + ipcaTotal)
+    valorMontante    # = montante × preco
+  }
+}
+```
+
+### Mutations
+
+#### Cadastrar Tarifa Fornecedor
+```graphql
+mutation CadastrarTarifaFornecedor($dto: TarifaFornecedorDTOInput!) {
+  cadastrarTarifaFornecedor(dto: $dto) {
+    id
+    fornecedorId
+    precoBase
+    ipcaRealizada
+    ipcaProjetado
+    montante
+    ipcaTotal
+    preco
+    valorMontante
+  }
+}
+```
+
+**Query Variables:**
+```json
+{
+  "dto": {
+    "tarifaPlanejamentoId": 1,
+    "fornecedorId": 1,
+    "ipcaRealizada": 0.276,
+    "ipcaProjetado": 0.0235,
+    "montante": 80
+  }
+}
+```
+
+**Resultado esperado (exemplo):**
+```json
+{
+  "data": {
+    "cadastrarTarifaFornecedor": {
+      "id": 1,
+      "fornecedorId": 1,
+      "precoBase": 142.59,
+      "ipcaRealizada": 0.276,
+      "ipcaProjetado": 0.0235,
+      "montante": 80,
+      "ipcaTotal": 0.2995,
+      "preco": 185.28,
+      "valorMontante": 14822.40
+    }
+  }
+}
+```
+
+---
+
+## TARIFA DISTRIBUIDORA (Uso de Rede Ponta/Fora Ponta)
+
+### Queries
+
+#### Listar Tarifas de Distribuidora
+```graphql
+query ListarTarifasDistribuidora {
+  tarifasDistribuidora {
+    id
+    distribuidoraId
+    periodoInicial
+    periodoFinal
+    valorPonta           # USO DA REDE PONTA
+    valorForaPonta       # USO DA REDE FORA PONTA
+    valorEncargos
+    valorEncargosAutoProducao
+    percentualPisCofins
+    sobrescreverICMS
+    percentualICMS
+    qtdeDeHorasPonta
+  }
+}
+```
+
+### Mutations
+
+#### Cadastrar Tarifa Distribuidora
+```graphql
+mutation CadastrarTarifaDistribuidora($dto: TarifaDistribuidoraDTOInput!) {
+  cadastrarTarifaDistribuidora(dto: $dto) {
+    id
+    distribuidoraId
+    periodoInicial
+    periodoFinal
+    valorPonta
+    valorForaPonta
+    valorEncargos
+    valorEncargosAutoProducao
+    percentualPisCofins
+    sobrescreverICMS
+    percentualICMS
+    qtdeDeHorasPonta
+  }
+}
+```
+
+**Query Variables:**
+```json
+{
+  "dto": {
+    "tarifaPlanejamentoId": 1,
+    "distribuidoraId": 1,
+    "periodoInicial": "2026-01-01",
+    "periodoFinal": "2026-12-31",
+    "valorPonta": 7.099,
+    "valorForaPonta": 7.086,
+    "valorEncargos": 112.50,
+    "valorEncargosAutoProducao": 56.25,
+    "percentualPisCofins": 0.0925,
+    "sobrescreverICMS": false,
+    "percentualICMS": null,
+    "qtdeDeHorasPonta": 3
+  }
+}
+```
+
+---
+
+## PLANEJAMENTO PRODUÇÃO (ktms por área/mês)
+
+### Queries
+
+#### Listar Planejamentos de Produção
+```graphql
+query ListarPlanejamentosProducao($page: Int!, $size: Int!) {
+  planejamentosProducao(page: $page, size: $size) {
+    totalElements
+    totalPages
+    results {
+      id
+      revisaoId
+      areaId
+      valorJaneiro
+      valorFevereiro
+      valorMarco
+      valorAbril
+      valorMaio
+      valorJunho
+      valorJulho
+      valorAgosto
+      valorSetembro
+      valorOutubro
+      valorNovembro
+      valorDezembro
+    }
+  }
+}
+```
+
+**Query Variables:**
+```json
+{
+  "page": 1,
+  "size": 10
+}
+```
+
+### Mutations
+
+#### Cadastrar Planejamento Produção
+```graphql
+mutation CadastrarPlanejamentoProducao($dto: PlanejamentoProducaoDTOInput!) {
+  cadastrarPlanejamentoProducao(dto: $dto) {
+    id
+    revisaoId
+    areaId
+    valorJaneiro
+    valorFevereiro
+    valorMarco
+    valorAbril
+    valorMaio
+    valorJunho
+    valorJulho
+    valorAgosto
+    valorSetembro
+    valorOutubro
+    valorNovembro
+    valorDezembro
+  }
+}
+```
+
+**Query Variables (Filtragem Germano - exemplo da planilha):**
+```json
+{
+  "dto": {
+    "revisaoId": 1,
+    "areaId": 1,
+    "valorJaneiro": 1059.0685,
+    "valorFevereiro": 1021.0325,
+    "valorMarco": 1004.4553,
+    "valorAbril": 1119.8197,
+    "valorMaio": 1137.3524,
+    "valorJunho": 1148.2281,
+    "valorJulho": 1188.5720,
+    "valorAgosto": 1138.5105,
+    "valorSetembro": 1149.7826,
+    "valorOutubro": 1051.4632,
+    "valorNovembro": 1120.4833,
+    "valorDezembro": 1120.4833
+  }
+}
+```
+
+---
+
+## Resumo: Mapeamento Planilha → Sistema
+
+| Aba da Planilha | Entidade | GraphQL | Tipo |
+|-----------------|----------|---------|------|
+| Demanda | `Demanda` | ✅ Disponível | INPUT |
+| Planejamento Geração | `Geracao` | ✅ Disponível | INPUT |
+| Planejamento Consumo Específico | `ConsumoEspecifico` | ✅ Disponível | INPUT |
+| Planejamento Produção | `PlanejamentoProducao` | ✅ Disponível | INPUT |
+| Distribuidora | `Distribuidora` | ✅ Disponível | INPUT |
+| Fornecedor | `Fornecedor` | ✅ Disponível | INPUT |
+| Tarifa Fornecedor (IPCA) | `TarifaFornecedor` | ✅ Disponível | MISTO |
+| Tarifa Distribuidora (Uso Rede) | `TarifaDistribuidora` | ✅ Disponível | MISTO |

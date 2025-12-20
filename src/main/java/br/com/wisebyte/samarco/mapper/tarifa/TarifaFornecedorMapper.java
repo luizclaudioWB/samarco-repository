@@ -27,6 +27,7 @@ public class TarifaFornecedorMapper implements EntityMapper<TarifaFornecedor, Ta
                 .id(entity.getId())
                 .tarifaPlanejamentoId( entity.getPlanejamento( ) != null ? entity.getPlanejamento( ).getId( ) : null )
                 .fornecedorId( entity.getFornecedor( ) != null ? entity.getFornecedor( ).getId( ) : null )
+                .precoBase( entity.getFornecedor( ) != null ? entity.getFornecedor( ).getPrecoBase( ) : null )
                 .ipcaRealizada(entity.getIpcaRealizada())
                 .ipcaProjetado(entity.getIpcaProjetado())
                 .montante(entity.getMontante())
