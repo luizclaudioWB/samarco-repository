@@ -71,7 +71,17 @@ public class UpdateRevisaoUC {
     private void applyNewValues(Revisao revisao, RevisaoInputDTO inputDTO) {
         revisao.setNumeroRevisao(inputDTO.getNumeroRevisao());
         revisao.setDescricao(inputDTO.getDescricao());
-        revisao.setPlanejamento( inputDTO.getPlanejamentoId( ) != null ? planejamentoRepository.findById( inputDTO.getPlanejamentoId( ) ).orElse( null ) : null );
-        revisao.setUsuario( inputDTO.getUsuarioId( ) != null ? usuarioRepository.findById( inputDTO.getUsuarioId( ) ).orElse( null ) : null );
+
+        // Só busca Planejamento se o ID mudou (evita query desnecessária)
+        if (inputDTO.getPlanejamentoId() != null &&
+            !inputDTO.getPlanejamentoId().equals(revisao.getPlanejamento().getId())) {
+            revisao.setPlanejamento(planejamentoRepository.findById(inputDTO.getPlanejamentoId()).orElse(null));
+        }
+
+        // Só busca Usuario se o ID mudou (evita query desnecessária)
+        if (inputDTO.getUsuarioId() != null &&
+            !inputDTO.getUsuarioId().equals(revisao.getUsuario().getId())) {
+            revisao.setUsuario(usuarioRepository.findById(inputDTO.getUsuarioId()).orElse(null));
+        }
     }
 }
