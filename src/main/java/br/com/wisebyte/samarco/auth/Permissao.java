@@ -93,7 +93,14 @@ public enum Permissao {
     UPDATE_SUPPLIER_RATE("Permite alterar tarifa de fornecedor"),
     DELETE_SUPPLIER_RATE("Permite excluir tarifa de fornecedor"),
     LIST_SUPPLIER_RATES("Permite listar tarifas de fornecedor"),
-    GET_SUPPLIER_RATE_BY_ID("Permite buscar tarifa de fornecedor por ID");
+    GET_SUPPLIER_RATE_BY_ID("Permite buscar tarifa de fornecedor por ID"),
+
+    CREATE_SPECIFIC_CONSUMPTION("Permite cadastrar consumo especifico"),
+    UPDATE_SPECIFIC_CONSUMPTION("Permite alterar consumo especifico"),
+    DELETE_SPECIFIC_CONSUMPTION("Permite excluir consumo especifico"),
+    LIST_SPECIFIC_CONSUMPTIONS("Permite listar consumos especificos"),
+    GET_SPECIFIC_CONSUMPTION_BY_ID("Permite buscar consumo especifico por ID"),
+    CALC_CONSUMPTION_AREA("Permite calcular consumo por area");
 
     private final String descricao;
 
