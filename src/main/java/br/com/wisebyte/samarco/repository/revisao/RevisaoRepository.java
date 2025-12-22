@@ -5,6 +5,7 @@ import br.com.wisebyte.samarco.model.planejamento.Revisao;
 import br.com.wisebyte.samarco.model.usuario.Usuario;
 import jakarta.data.repository.BasicRepository;
 import jakarta.data.repository.Find;
+import jakarta.data.repository.Query;
 import jakarta.data.repository.Repository;
 
 import java.util.List;
@@ -13,6 +14,13 @@ import java.util.stream.Stream;
 
 @Repository
 public interface RevisaoRepository extends BasicRepository<Revisao, Long> {
+
+    /**
+     * Busca revisão por ID com Planejamento e Usuario carregados (JOIN FETCH).
+     * Necessário para operações de update que precisam das entidades relacionadas inicializadas.
+     */
+    @Query("SELECT r FROM Revisao r JOIN FETCH r.planejamento JOIN FETCH r.usuario WHERE r.id = :id")
+    Optional<Revisao> findByIdWithRelations(Long id);
 
     @Find
     List<Revisao> findByPlanejamentoId( Long id );

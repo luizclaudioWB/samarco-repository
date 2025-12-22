@@ -36,7 +36,9 @@ public class UpdateRevisaoUC {
             throw new ValidadeExceptionBusiness("Revisao", "Revisao Id", "Id da Revisão não deve ser nulo para atualização");
         }
 
-        Revisao revisao = revisaoRepository.findById( inputDTO.getId( ) ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Revisao", "Revisao Id", "Revisão não encontrada" ) );
+        // Usa findByIdWithRelations para carregar Planejamento e Usuario com JOIN FETCH
+        // Isso evita o erro "Detached entity with uninitialized version" ao salvar
+        Revisao revisao = revisaoRepository.findByIdWithRelations( inputDTO.getId( ) ).orElseThrow( ( ) -> new ValidadeExceptionBusiness( "Revisao", "Revisao Id", "Revisão não encontrada" ) );
         validate( revisao, inputDTO );
 
 
