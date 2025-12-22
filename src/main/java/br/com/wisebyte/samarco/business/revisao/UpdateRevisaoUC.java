@@ -79,8 +79,9 @@ public class UpdateRevisaoUC {
         }
 
         // Só busca Usuario se o ID mudou (evita query desnecessária)
+        // Nota: Usuario usa String como @Id (campo 'usuario'), não Long
         if (inputDTO.getUsuarioId() != null &&
-            !inputDTO.getUsuarioId().equals(revisao.getUsuario().getId())) {
+            !inputDTO.getUsuarioId().equals(revisao.getUsuario().getUsuario())) {
             revisao.setUsuario(usuarioRepository.findById(inputDTO.getUsuarioId()).orElse(null));
         }
     }
