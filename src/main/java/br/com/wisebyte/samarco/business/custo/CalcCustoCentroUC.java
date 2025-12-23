@@ -61,7 +61,7 @@ public class CalcCustoCentroUC {
         List<ConsumoAreaComEstado> consumosComEstado = new ArrayList<>();
 
         for (ConsumoAreaResultDTO consumo : consumoAreas) {
-            var area = areaRepository.findById(consumo.getArea().getId()).orElse(null);
+            var area = areaRepository.findById(consumo.getAreaId()).orElse(null);
             if (area == null) continue;
 
             Estado estado = area.getUnidade().getEstado();
@@ -92,7 +92,7 @@ public class CalcCustoCentroUC {
 
             // Ratear custos
             CentroCustoDTO centro = CentroCustoDTO.builder()
-                    .areaId(cae.consumo.getArea().getId())
+                    .areaId(cae.consumo.getAreaId())
                     .nomeArea(cae.consumo.getNomeArea())
                     .centroCusto(cae.centroCusto)
                     .percentualRateio(percentualRateio)
@@ -143,18 +143,18 @@ public class CalcCustoCentroUC {
 
     private BigDecimal calcularConsumoTotalMWh(ConsumoAreaResultDTO consumo) {
         BigDecimal total = ZERO;
-        total = total.add(dividirPorMil(consumo.getConsumoJaneiro()));
-        total = total.add(dividirPorMil(consumo.getConsumoFevereiro()));
-        total = total.add(dividirPorMil(consumo.getConsumoMarco()));
-        total = total.add(dividirPorMil(consumo.getConsumoAbril()));
-        total = total.add(dividirPorMil(consumo.getConsumoMaio()));
-        total = total.add(dividirPorMil(consumo.getConsumoJunho()));
-        total = total.add(dividirPorMil(consumo.getConsumoJulho()));
-        total = total.add(dividirPorMil(consumo.getConsumoAgosto()));
-        total = total.add(dividirPorMil(consumo.getConsumoSetembro()));
-        total = total.add(dividirPorMil(consumo.getConsumoOutubro()));
-        total = total.add(dividirPorMil(consumo.getConsumoNovembro()));
-        total = total.add(dividirPorMil(consumo.getConsumoDezembro()));
+        total = total.add(dividirPorMil(consumo.getValorJaneiro()));
+        total = total.add(dividirPorMil(consumo.getValorFevereiro()));
+        total = total.add(dividirPorMil(consumo.getValorMarco()));
+        total = total.add(dividirPorMil(consumo.getValorAbril()));
+        total = total.add(dividirPorMil(consumo.getValorMaio()));
+        total = total.add(dividirPorMil(consumo.getValorJunho()));
+        total = total.add(dividirPorMil(consumo.getValorJulho()));
+        total = total.add(dividirPorMil(consumo.getValorAgosto()));
+        total = total.add(dividirPorMil(consumo.getValorSetembro()));
+        total = total.add(dividirPorMil(consumo.getValorOutubro()));
+        total = total.add(dividirPorMil(consumo.getValorNovembro()));
+        total = total.add(dividirPorMil(consumo.getValorDezembro()));
         return total;
     }
 
