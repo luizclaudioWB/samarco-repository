@@ -17,7 +17,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.math.BigDecimal.ZERO;
 import static java.math.BigDecimal.valueOf;
@@ -305,25 +308,39 @@ public class CalcResumoGeralUC {
         if (revisao == null) return ZERO;
 
         var config = producaoConfigRepository.findByRevisaoId(revisaoId).orElse(null);
-        BigDecimal multiplicador = config != null ? valueOf(config.getMultiplicador()) : BigDecimal.ONE;
+
+        // Multiplicador com null-check
+        BigDecimal multiplicador = config != null && config.getMultiplicador() != null
+                ? valueOf(config.getMultiplicador())
+                : BigDecimal.ONE;
+
+        // Obter IDs das áreas configuradas para cálculo de produção
+        // Se vazio, soma todas as áreas; senão filtra pelas áreas configuradas
+        Set<Long> areasParaCalculo = config != null && config.getAreas() != null && !config.getAreas().isEmpty()
+                ? config.getAreas().stream()
+                        .map(area -> area.getId())
+                        .collect(Collectors.toSet())
+                : Collections.emptySet();
 
         List<PlanejamentoProducao> producoes = producaoRepository.findByRevisao(revisao);
 
         BigDecimal total = ZERO;
         for (PlanejamentoProducao p : producoes) {
-            // Somar todos os meses × multiplicador
-            total = total.add(safe(p.getValorJaneiro()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorFevereiro()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorMarco()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorAbril()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorMaio()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorJunho()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorJulho()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorAgosto()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorSetembro()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorOutubro()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorNovembro()).multiply(multiplicador, DECIMAL64));
-            total = total.add(safe(p.getValorDezembro()).multiply(multiplicador, DECIMAL64));
+            // Se areasParaCalculo vazio = soma todas; senão filtra pelas áreas configuradas
+            if (areasParaCalculo.isEmpty() || areasParaCalculo.contains(p.getArea().getId())) {
+                total = total.add(safe(p.getValorJaneiro()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorFevereiro()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorMarco()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorAbril()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorMaio()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorJunho()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorJulho()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorAgosto()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorSetembro()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorOutubro()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorNovembro()).multiply(multiplicador, DECIMAL64));
+                total = total.add(safe(p.getValorDezembro()).multiply(multiplicador, DECIMAL64));
+            }
         }
 
         return total;
