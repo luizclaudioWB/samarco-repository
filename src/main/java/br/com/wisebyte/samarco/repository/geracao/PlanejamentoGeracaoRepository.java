@@ -21,6 +21,9 @@ public interface PlanejamentoGeracaoRepository extends BasicRepository<Planejame
     List<PlanejamentoGeracao> findByRevisaoId(Long revisaoId);
 
     @Find
+    List<PlanejamentoGeracao> findByUnidade(Unidade unidade);
+
+    @Find
     Optional<PlanejamentoGeracao> findByRevisaoAndUnidade(Revisao revisao, Unidade unidade);
 
     @Query("SELECT pg FROM PlanejamentoGeracao pg WHERE pg.revisao.id = :revisaoId AND pg.unidade.id = :unidadeId")
