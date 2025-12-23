@@ -100,7 +100,21 @@ public enum Permissao {
     DELETE_SPECIFIC_CONSUMPTION("Permite excluir consumo especifico"),
     LIST_SPECIFIC_CONSUMPTIONS("Permite listar consumos especificos"),
     GET_SPECIFIC_CONSUMPTION_BY_ID("Permite buscar consumo especifico por ID"),
-    CALC_CONSUMPTION_AREA("Permite calcular consumo por area");
+    CALC_CONSUMPTION_AREA("Permite calcular consumo por area"),
+
+    CREATE_DEMAND("Permite cadastrar demanda"),
+    UPDATE_DEMAND("Permite alterar demanda"),
+    DELETE_DEMAND("Permite excluir demanda"),
+    LIST_DEMANDS("Permite listar demandas"),
+    GET_DEMAND_BY_ID("Permite buscar demanda por ID"),
+
+    CREATE_GENERATION_PLANNING("Permite cadastrar planejamento de geracao"),
+    UPDATE_GENERATION_PLANNING("Permite alterar planejamento de geracao"),
+    DELETE_GENERATION_PLANNING("Permite excluir planejamento de geracao"),
+    LIST_GENERATION_PLANNINGS("Permite listar planejamentos de geracao"),
+    GET_GENERATION_PLANNING_BY_ID("Permite buscar planejamento de geracao por ID"),
+
+    CALC_ENERGY_COST("Permite calcular custo de energia");
 
     private final String descricao;
 

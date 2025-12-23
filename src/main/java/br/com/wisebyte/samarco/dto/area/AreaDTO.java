@@ -26,4 +26,6 @@ public class AreaDTO {
     private String nomeArea;
 
     private boolean ativo;
+
+    private String centroCusto;
 }

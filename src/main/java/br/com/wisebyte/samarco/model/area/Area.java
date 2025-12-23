@@ -40,4 +40,7 @@ public class Area extends BaseModel {
     @Column( nullable = false)
     private boolean ativo;
 
+    @Column(length = 10)
+    private String centroCusto;
+
 }
