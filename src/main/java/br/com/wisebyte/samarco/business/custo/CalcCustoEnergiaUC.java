@@ -67,7 +67,7 @@ public class CalcCustoEnergiaUC {
             BigDecimal consumoMWhSet = dividirPorMil(consumo.getConsumoSetembro());
             BigDecimal consumoMWhOut = dividirPorMil(consumo.getConsumoOutubro());
             BigDecimal consumoMWhNov = dividirPorMil(consumo.getConsumoNovembro());
-            BigDecimal consumoMWhDez = dividirPorMil(consumo.getConsumoFevereiro());
+            BigDecimal consumoMWhDez = dividirPorMil(consumo.getConsumoDezembro());
 
             BigDecimal totalArea = consumoMWhJan.add(consumoMWhFev).add(consumoMWhMar)
                     .add(consumoMWhAbr).add(consumoMWhMai).add(consumoMWhJun)
