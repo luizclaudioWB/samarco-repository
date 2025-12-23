@@ -114,7 +114,18 @@ public enum Permissao {
     LIST_GENERATION_PLANNINGS("Permite listar planejamentos de geracao"),
     GET_GENERATION_PLANNING_BY_ID("Permite buscar planejamento de geracao por ID"),
 
-    CALC_ENERGY_COST("Permite calcular custo de energia");
+    CALC_ENERGY_COST("Permite calcular custo de energia"),
+
+    CREATE_CALENDARIO("Permite cadastrar calendario"),
+    GET_CALENDARIO("Permite buscar calendario"),
+
+    CREATE_ENCARGOS("Permite cadastrar encargos ESS/EER"),
+    GET_ENCARGOS("Permite buscar encargos ESS/EER"),
+
+    CALC_DISTRIBUICAO_CARGA("Permite calcular distribuicao de carga"),
+    CALC_CUSTO_CLASSE("Permite calcular custo por classe"),
+    CALC_CUSTO_CENTRO("Permite calcular custo por centro de custo"),
+    CALC_RESUMO_GERAL("Permite calcular resumo geral");
 
     private final String descricao;
 
