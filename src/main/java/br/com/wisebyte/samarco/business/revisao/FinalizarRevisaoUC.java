@@ -29,7 +29,9 @@ public class FinalizarRevisaoUC {
             );
         }
 
-        Revisao revisao = revisaoRepository.findById(revisaoId)
+        // Usa findByIdWithRelations para carregar Planejamento e Usuario com JOIN FETCH
+        // Isso evita o erro "Detached entity with uninitialized version" ao salvar
+        Revisao revisao = revisaoRepository.findByIdWithRelations(revisaoId)
             .orElseThrow(() -> new ValidadeExceptionBusiness(
                 "Revisao",
                 "Revisao Id",

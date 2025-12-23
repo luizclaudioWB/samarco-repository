@@ -9,6 +9,7 @@ import br.com.wisebyte.samarco.repository.area.AreaRepository;
 import br.com.wisebyte.samarco.repository.producao.ProducaoConfigRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
@@ -30,14 +31,24 @@ public class UpdateProducaoConfigUC {
     @Inject
     ProducaoConfigValidationBusiness validator;
 
+    @Inject
+    EntityManager entityManager;
+
     @Transactional
     public ProducaoConfigDTO update(@NotNull ProducaoConfigDTO dto) {
         validate(dto);
 
-        ProducaoConfig atual = repository.findById(dto.getId()).orElseThrow(() -> new ValidadeExceptionBusiness("ProducaoConfig", "Id", "Configuracao de producao nao encontrada"));
+        // Usa findByIdComAreas para carregar a entidade com as áreas (JOIN FETCH)
+        ProducaoConfig atual = repository.findByIdComAreas(dto.getId())
+            .orElseThrow(() -> new ValidadeExceptionBusiness("ProducaoConfig", "Id", "Configuracao de producao nao encontrada"));
 
         applyNewValues(atual, dto);
-        ProducaoConfig saved = repository.save(atual);
+
+        // Usa EntityManager.merge() ao invés de repository.save()
+        // porque StatelessSession não suporta bem ManyToMany collections
+        ProducaoConfig saved = entityManager.merge(atual);
+        entityManager.flush();
+
         return mapper.toDTO(saved);
     }
 

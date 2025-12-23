@@ -24,6 +24,7 @@ public class AreaMapper implements EntityMapper<Area, AreaDTO> {
                 .nomeArea( entity.getNomeArea( ) )
                 .tipoArea( entity.getTipoArea( ) )
                 .ativo( entity.isAtivo( ) )
+                .centroCusto( entity.getCentroCusto( ) )
                 .unidadeId( entity.getUnidade( ) != null ? entity.getUnidade( ).getId( ) : null )
                 .usuarioId( entity.getUsuario( ) != null ? entity.getUsuario( ).getUsuario( ) : null )
                 .build( );
@@ -36,6 +37,7 @@ public class AreaMapper implements EntityMapper<Area, AreaDTO> {
                 .nomeArea( dto.getNomeArea( ) )
                 .tipoArea( dto.getTipoArea( ) )
                 .ativo( dto.isAtivo( ) )
+                .centroCusto( dto.getCentroCusto( ) )
                 .unidade( dto.getUnidadeId( ) != null ? unidadeRepository.findById( dto.getUnidadeId( ) ).orElse( null ) : null )
                 .usuario( dto.getUsuarioId( ) != null ? usuarioRepository.findById( dto.getUsuarioId( ) ).orElse( null ) : null )
                 .build( );
