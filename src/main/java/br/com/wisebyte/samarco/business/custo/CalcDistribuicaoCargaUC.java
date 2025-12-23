@@ -64,25 +64,25 @@ public class CalcDistribuicaoCargaUC {
         }
 
         for (ConsumoAreaResultDTO consumo : consumoAreas) {
-            var area = areaRepository.findById(consumo.getArea().getId()).orElse(null);
+            var area = areaRepository.findById(consumo.getAreaId()).orElse(null);
             if (area == null) continue;
 
             Estado estado = area.getUnidade().getEstado();
             BigDecimal[] destino = (estado == Estado.MG) ? consumoMG : consumoES;
 
             // Converter kWh para MWh (dividir por 1000)
-            destino[0] = destino[0].add(dividirPorMil(consumo.getConsumoJaneiro()));
-            destino[1] = destino[1].add(dividirPorMil(consumo.getConsumoFevereiro()));
-            destino[2] = destino[2].add(dividirPorMil(consumo.getConsumoMarco()));
-            destino[3] = destino[3].add(dividirPorMil(consumo.getConsumoAbril()));
-            destino[4] = destino[4].add(dividirPorMil(consumo.getConsumoMaio()));
-            destino[5] = destino[5].add(dividirPorMil(consumo.getConsumoJunho()));
-            destino[6] = destino[6].add(dividirPorMil(consumo.getConsumoJulho()));
-            destino[7] = destino[7].add(dividirPorMil(consumo.getConsumoAgosto()));
-            destino[8] = destino[8].add(dividirPorMil(consumo.getConsumoSetembro()));
-            destino[9] = destino[9].add(dividirPorMil(consumo.getConsumoOutubro()));
-            destino[10] = destino[10].add(dividirPorMil(consumo.getConsumoNovembro()));
-            destino[11] = destino[11].add(dividirPorMil(consumo.getConsumoDezembro()));
+            destino[0] = destino[0].add(dividirPorMil(consumo.getValorJaneiro()));
+            destino[1] = destino[1].add(dividirPorMil(consumo.getValorFevereiro()));
+            destino[2] = destino[2].add(dividirPorMil(consumo.getValorMarco()));
+            destino[3] = destino[3].add(dividirPorMil(consumo.getValorAbril()));
+            destino[4] = destino[4].add(dividirPorMil(consumo.getValorMaio()));
+            destino[5] = destino[5].add(dividirPorMil(consumo.getValorJunho()));
+            destino[6] = destino[6].add(dividirPorMil(consumo.getValorJulho()));
+            destino[7] = destino[7].add(dividirPorMil(consumo.getValorAgosto()));
+            destino[8] = destino[8].add(dividirPorMil(consumo.getValorSetembro()));
+            destino[9] = destino[9].add(dividirPorMil(consumo.getValorOutubro()));
+            destino[10] = destino[10].add(dividirPorMil(consumo.getValorNovembro()));
+            destino[11] = destino[11].add(dividirPorMil(consumo.getValorDezembro()));
         }
 
         // 3. Buscar geração por usina e separar por estado
